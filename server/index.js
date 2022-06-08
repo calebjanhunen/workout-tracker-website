@@ -2,9 +2,13 @@ import mongoose from "mongoose";
 import express from "express";
 import cors from "cors";
 
+import workoutRouter from "./routers/workoutRouter.js";
+
 const app = express();
 
 app.use(cors());
+
+app.use("/workouts", workoutRouter);
 
 app.get("/", (req, res) => {
     res.send("hey");
