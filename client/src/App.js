@@ -1,9 +1,10 @@
 import React from "react";
+import WorkoutForm from "./components/WorkoutForm/WorkoutForm.js";
 
 const App = () => {
     return (
         <div>
-            <h1>Hello</h1>
+            <WorkoutForm />
         </div>
     );
 };

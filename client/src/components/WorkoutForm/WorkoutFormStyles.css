@@ -1,0 +1,24 @@
+#form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 500px;
+    background-color: orange;
+}
+
+#txt--workout-name {
+    width: 100px;
+}
+
+#workout-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.exercise-input {
+    display: flex;
+}
+
+#btn--remove-exercise {
+    margin-left: 20px;
+}

@@ -1,0 +1,5 @@
+.set-component {
+    display: flex;
+    flex-direction: row;
+    padding-left: 20px;
+}
