@@ -3,30 +3,33 @@ import { nanoid } from "nanoid";
 
 import "./WorkoutFormStyles.css";
 import ExerciseForm from "../ExerciseForm/ExerciseForm";
+import ExerciseModal from "../ExerciseModal/ExerciseModal";
 
 const WorkoutForm = () => {
     const [exerciseComponents, setExerciseComponents] = React.useState([]);
-    const [workoutForm, setWorkoutForm] = React.useState({});
+    const [workoutForm, setWorkoutForm] = React.useState({ name: "" });
     const [numExercises, setNumExercises] = React.useState(0);
-
-    // console.log(numExercises);
+    const [showExerciseModal, setShowExerciseModal] = React.useState(false);
 
     function addExercise() {
-        setNumExercises(prev => prev + 1);
-        setWorkoutForm({
-            ...workoutForm,
-            [`exercise${numExercises}`]: { name: "" },
-        });
-        setExerciseComponents([
-            ...exerciseComponents,
-            <ExerciseForm
-                key={nanoid()}
-                // workoutForm={workoutForm}
-                setWorkoutForm={setWorkoutForm}
-                exerciseNum={numExercises}
-            />,
-        ]);
+        setShowExerciseModal(prev => !prev);
+        // setNumExercises(prev => prev + 1);
+        // setWorkoutForm({
+        //     ...workoutForm,
+        //     [`exercise${numExercises}`]: { name: "" },
+        // });
+        // setExerciseComponents([
+        //     ...exerciseComponents,
+        //     <ExerciseForm
+        //         key={nanoid()}
+        //         // workoutForm={workoutForm}
+        //         setWorkoutForm={setWorkoutForm}
+        //         exerciseNum={numExercises}
+        //     />,
+        // ]);
     }
+
+    // console.log(workoutForm);
 
     function removeExercise(e, exercise) {
         e.preventDefault();
@@ -47,20 +50,24 @@ const WorkoutForm = () => {
     }
 
     // console.log(exerciseComponents);
-    console.log(workoutForm);
+    // console.log(workoutForm);
     return (
-        <div id="form">
-            <form id="workout-form">
-                <input
-                    id="txt--workout-name"
-                    name="workoutName"
-                    type="text"
-                    placeholder="Workout Name"
-                    onChange={e =>
-                        setWorkoutForm({ ...workoutForm, name: e.target.value })
-                    }
-                />
-                {exerciseComponents &&
+        <div className="App">
+            <div id="form">
+                <form id="workout-form">
+                    <input
+                        id="txt--workout-name"
+                        name="workoutName"
+                        type="text"
+                        placeholder="Workout Name"
+                        onChange={e =>
+                            setWorkoutForm({
+                                ...workoutForm,
+                                name: e.target.value,
+                            })
+                        }
+                    />
+                    {/* {exerciseComponents &&
                     exerciseComponents.map(comp => (
                         <div key={nanoid()} className="exercise-input">
                             {comp}
@@ -71,9 +78,16 @@ const WorkoutForm = () => {
                                 Remove Exercise
                             </button>
                         </div>
-                    ))}
-            </form>
-            <button onClick={addExercise}>Add Exercise</button>
+                    ))} */}
+                </form>
+                <button onClick={addExercise}>Add Exercise</button>
+                <button onClick={() => {}}>Submit Workout</button>
+            </div>
+            <ExerciseModal
+                showExerciseModal={showExerciseModal}
+                setShowExerciseModal={setShowExerciseModal}
+                setWorkoutForm={setWorkoutForm}
+            />
         </div>
     );
 };

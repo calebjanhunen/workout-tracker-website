@@ -48,9 +48,9 @@ const ExerciseForm = ({ setWorkoutForm, exerciseNum }) => {
                     setWorkoutForm(prev => {
                         return {
                             ...prev,
-                            [`exercise${exerciseNum}`]: {
-                                name: e.target.value,
-                            },
+                            // [`exercise${exerciseNum}`]: {
+                            //     name: e.target.value,
+                            // },
                         };
                     })
                 }

@@ -1,11 +1,26 @@
 import React from "react";
 import "./SetFormStyles.css";
 
-const SetForm = () => {
+const SetForm = ({ setExerciseInfo }) => {
     return (
-        <div className="set-component">
-            <input name="reps" type="number" placeholder="Reps" />
-            <input name="weight" type="number" placeholder="Weight" />
+        <div>
+            <input
+                type="Number"
+                name="reps"
+                placeholder="Reps"
+                onChange={e =>
+                    setExerciseInfo(prev => {
+                        //TODO: get index from ExerciseModal to change correct object value
+                        return prev.map((eachSet, index) => {
+                            if (index === 0) {
+                                eachSet.reps = e.target.value;
+                            }
+                            return eachSet;
+                        });
+                    })
+                }
+            />
+            <input type="Number" name="weight" placeholder="Weight" />
         </div>
     );
 };

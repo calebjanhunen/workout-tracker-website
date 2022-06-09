@@ -1,5 +1,7 @@
-.set-component {
-    display: flex;
-    flex-direction: row;
-    padding-left: 20px;
+.exercise-modal__info h1 {
+    font-size: 20px;
+}
+
+.exercise-modal__info input {
+    height: 25px;
 }
