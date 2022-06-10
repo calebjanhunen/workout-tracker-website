@@ -2,12 +2,14 @@ import React from "react";
 import { nanoid } from "nanoid";
 
 import "./ExerciseModalStyles.css";
-import SetForm from "../ExerciseForm/SetForm/SetForm";
-
+import SetForm from "../SetForm/SetForm";
 const ExerciseModal = ({
     showExerciseModal,
     setShowExerciseModal,
-    setWorkoutForm,
+    setExerciseForm,
+    isEdit,
+    exerToEdit,
+    setIsEdit,
 }) => {
     const [exerciseInfo, setExerciseInfo] = React.useState([]);
     const [exerciseName, setExerciseName] = React.useState("");
@@ -16,15 +18,40 @@ const ExerciseModal = ({
     if (showExerciseModal === false) return null;
 
     function addSet() {
-        setExerciseInfo([...exerciseInfo, { reps: "", weight: "" }]);
+        const id = nanoid();
+        setExerciseInfo([...exerciseInfo, { reps: "", weight: "", id }]);
 
         setExInfoComponents([
             ...exerInfoComponents,
-            <SetForm key={nanoid()} setExerciseInfo={setExerciseInfo} />,
+            <SetForm
+                key={nanoid()}
+                id={id}
+                setExerciseInfo={setExerciseInfo}
+            />,
         ]);
     }
 
-    console.log(exerciseInfo);
+    function removeSet(id) {
+        setExerciseInfo(exerciseInfo.filter(eachSet => eachSet.id !== id));
+        setExInfoComponents(
+            exerInfoComponents.filter(comp => comp.props.id !== id)
+        );
+    }
+
+    function clearExerciseModal() {
+        setExerciseInfo([]);
+        setExInfoComponents([]);
+        setShowExerciseModal(prev => !prev);
+    }
+
+    function submitExercise() {
+        setExerciseForm(prev => {
+            return [...prev, { exerciseName, exerciseInfo, id: nanoid() }];
+        });
+        clearExerciseModal();
+    }
+
+    // console.log(exerciseInfo);
     return (
         <div className="exercise-modal">
             <div className="exercise-modal__content">
@@ -36,6 +63,7 @@ const ExerciseModal = ({
                         // autoComplete="off"
                         onChange={e => setExerciseName(e.target.value)}
                     />
+                    <button onClick={clearExerciseModal}>X</button>
                 </div>
 
                 <div className="exercise-modal__body">
@@ -44,25 +72,18 @@ const ExerciseModal = ({
                             <div key={index} className="exercise-modal__info">
                                 <h1>Set {index + 1}</h1>
                                 {info}
+                                <button
+                                    onClick={() => removeSet(info.props.id)}
+                                >
+                                    Remove Set
+                                </button>
                             </div>
                         ))}
                     <button onClick={addSet}>Add Set</button>
                     <form className="exercise-modal__form"></form>
                 </div>
                 <div className="exercise-modal__footer">
-                    <button
-                        onClick={() => {
-                            setShowExerciseModal(prev => !prev);
-                            setWorkoutForm(prev => {
-                                return {
-                                    ...prev,
-                                    [exerciseName]: exerciseInfo,
-                                };
-                            });
-                        }}
-                    >
-                        Submit Exercise
-                    </button>
+                    <button onClick={submitExercise}>Submit Exercise</button>
                 </div>
             </div>
         </div>

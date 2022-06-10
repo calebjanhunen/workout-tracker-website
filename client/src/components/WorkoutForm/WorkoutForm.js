@@ -1,92 +1,118 @@
 import React from "react";
 import { nanoid } from "nanoid";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./WorkoutFormStyles.css";
-import ExerciseForm from "../ExerciseForm/ExerciseForm";
 import ExerciseModal from "../ExerciseModal/ExerciseModal";
+import { createWorkout } from "../../actions/workoutActions.js";
 
 const WorkoutForm = () => {
-    const [exerciseComponents, setExerciseComponents] = React.useState([]);
-    const [workoutForm, setWorkoutForm] = React.useState({ name: "" });
-    const [numExercises, setNumExercises] = React.useState(0);
+    const dispatch = useDispatch();
+    const [workoutName, setWorkoutName] = React.useState("");
+    const [exerciseForm, setExerciseForm] = React.useState([]);
+    const [workoutForm, setWorkoutForm] = React.useState({
+        name: "",
+        exercises: [],
+    });
     const [showExerciseModal, setShowExerciseModal] = React.useState(false);
+    const [isEdit, setIsEdit] = React.useState(false);
+    const [exerToEdit, setExerToEdit] = React.useState({});
 
-    function addExercise() {
+    function displayExerciseModal(exercise = undefined) {
         setShowExerciseModal(prev => !prev);
-        // setNumExercises(prev => prev + 1);
-        // setWorkoutForm({
-        //     ...workoutForm,
-        //     [`exercise${numExercises}`]: { name: "" },
-        // });
-        // setExerciseComponents([
-        //     ...exerciseComponents,
-        //     <ExerciseForm
-        //         key={nanoid()}
-        //         // workoutForm={workoutForm}
-        //         setWorkoutForm={setWorkoutForm}
-        //         exerciseNum={numExercises}
-        //     />,
-        // ]);
+        exercise ? setIsEdit(true) : setIsEdit(false);
+        setExerToEdit(exercise);
     }
 
-    // console.log(workoutForm);
-
-    function removeExercise(e, exercise) {
-        e.preventDefault();
-        // console.log(exercise);
-        setExerciseComponents(prevComp => {
-            const index = prevComp.indexOf(exercise);
-            const before = prevComp.slice(0, index);
-            const after = prevComp.slice(index + 1);
-            return before.concat(after);
-        });
-        setWorkoutForm(prevForm => {
-            const tempForm = prevForm;
-            const exerciseToDelete = `exercise${exercise.props.exerciseNum}`;
-            console.log(exerciseToDelete);
-            delete tempForm[exerciseToDelete];
-            return tempForm;
-        });
+    function deleteExercise(id) {
+        setExerciseForm(exerciseForm.filter(exercise => exercise.id !== id));
     }
 
-    // console.log(exerciseComponents);
-    // console.log(workoutForm);
+    function handleSubmit() {
+        setWorkoutForm(_ => {
+            return {
+                name: workoutName,
+                exercises: exerciseForm,
+            };
+        });
+        console.log(workoutForm);
+        dispatch(createWorkout(workoutForm));
+    }
+
+    function displayExercises() {
+        const display = exerciseForm.map(exercise => {
+            const setRepWeightDisplay = exercise.exerciseInfo.map(
+                (info, index) => {
+                    return (
+                        <div key={index} className="exercise-display-info">
+                            <p className="exercise-info__set">
+                                Set {index + 1}:
+                            </p>
+                            <p className="exercise-info__reps">
+                                {info.reps} Reps
+                            </p>
+                            <p className="exercise-info__weight">
+                                {info.weight} lbs
+                            </p>
+                        </div>
+                    );
+                }
+            );
+            return (
+                <div key={nanoid()} className="exercise-display">
+                    <div className="exercise-display__values">
+                        <h1>{exercise.exerciseName}</h1>
+                        {setRepWeightDisplay}
+                    </div>
+                    <div className="exercise-display__btns">
+                        <button
+                            onClick={() => {
+                                setIsEdit(true);
+                                displayExerciseModal(exercise);
+                            }}
+                        >
+                            Edit Exercise
+                        </button>
+                        <button onClick={() => deleteExercise(exercise.id)}>
+                            Delete Exercise
+                        </button>
+                    </div>
+                </div>
+            );
+        });
+
+        return display;
+    }
+
     return (
         <div className="App">
             <div id="form">
-                <form id="workout-form">
-                    <input
-                        id="txt--workout-name"
-                        name="workoutName"
-                        type="text"
-                        placeholder="Workout Name"
-                        onChange={e =>
-                            setWorkoutForm({
-                                ...workoutForm,
-                                name: e.target.value,
-                            })
-                        }
-                    />
-                    {/* {exerciseComponents &&
-                    exerciseComponents.map(comp => (
-                        <div key={nanoid()} className="exercise-input">
-                            {comp}
-                            <button
-                                id="btn--remove-exercise"
-                                onClick={e => removeExercise(e, comp)}
-                            >
-                                Remove Exercise
-                            </button>
-                        </div>
-                    ))} */}
-                </form>
-                <button onClick={addExercise}>Add Exercise</button>
-                <button onClick={() => {}}>Submit Workout</button>
+                <input
+                    id="workout-form__name"
+                    name="workoutName"
+                    type="text"
+                    placeholder="Enter Workout Name..."
+                    onChange={e => setWorkoutName(e.target.value)}
+                />
+                {exerciseForm && displayExercises()}
+
+                <button
+                    onClick={() => {
+                        setIsEdit(false);
+                        displayExerciseModal();
+                    }}
+                >
+                    Add Exercise
+                </button>
+                <button onClick={handleSubmit}>Submit Workout</button>
             </div>
             <ExerciseModal
                 showExerciseModal={showExerciseModal}
                 setShowExerciseModal={setShowExerciseModal}
-                setWorkoutForm={setWorkoutForm}
+                setExerciseForm={setExerciseForm}
+                isEdit={isEdit}
+                setIsEdit={setIsEdit}
+                exerToEdit={exerToEdit}
             />
         </div>
     );

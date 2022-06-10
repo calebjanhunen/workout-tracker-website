@@ -15,10 +15,45 @@
     flex-direction: column;
 }
 
+input[name="workoutName"] {
+    background-color: transparent;
+    border: none;
+    font-size: 40px;
+}
+
+input[name="workoutName"]:focus {
+    outline: none;
+}
+
 .exercise-input {
     display: flex;
 }
 
 #btn--remove-exercise {
     margin-left: 20px;
+}
+
+.exercise-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.exercise-display h1 {
+    margin: 0;
+}
+
+.exercise-display-info {
+    display: flex;
+}
+
+.exercise-display-info p {
+    margin-left: 20px;
+    margin-top: 5px;
+    margin-bottom: 0px;
+}
+
+.exercise-display__btns {
+    display: flex;
+    flex-direction: column;
 }
