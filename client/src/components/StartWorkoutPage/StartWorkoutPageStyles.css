@@ -1,0 +1,15 @@
+.start-workout-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.start-workout-btn {
+    height: 40px;
+    width: 100px;
+    border-radius: 10px;
+    border: 1px solid black;
+    background-color: aliceblue;
+    cursor: pointer;
+}

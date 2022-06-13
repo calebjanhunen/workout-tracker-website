@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import "./WorkoutFormStyles.css";
 import ExerciseModal from "../ExerciseModal/ExerciseModal";
-import { createWorkout } from "../../actions/workoutActions.js";
+import { createWorkout } from "../../../actions/workoutActions.js";
 
 const WorkoutForm = () => {
     const dispatch = useDispatch();
@@ -58,6 +58,7 @@ const WorkoutForm = () => {
                     );
                 }
             );
+
             return (
                 <div key={nanoid()} className="exercise-display">
                     <div className="exercise-display__values">

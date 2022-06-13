@@ -1,10 +1,13 @@
 import React from "react";
-import WorkoutForm from "./components/WorkoutForm/WorkoutForm.js";
+
+import Main from "./Main.js";
+import NavBar from "./components/NavBar/NavBar.js";
 
 const App = () => {
     return (
         <div>
-            <WorkoutForm />
+            <NavBar />
+            <Main />
         </div>
     );
 };

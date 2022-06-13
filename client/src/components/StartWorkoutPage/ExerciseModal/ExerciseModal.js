@@ -56,13 +56,16 @@ const ExerciseModal = ({
         <div className="exercise-modal">
             <div className="exercise-modal__content">
                 <div className="exercise-modal__header">
-                    <input
-                        type="text"
-                        name="exerciseName"
-                        placeholder="Enter Exercise Name..."
-                        // autoComplete="off"
-                        onChange={e => setExerciseName(e.target.value)}
-                    />
+                    <form id="exercise-form">
+                        <input
+                            type="text"
+                            required
+                            name="exerciseName"
+                            placeholder="Enter Exercise Name..."
+                            // autoComplete="off"
+                            onChange={e => setExerciseName(e.target.value)}
+                        />
+                    </form>
                     <button onClick={clearExerciseModal}>X</button>
                 </div>
 
@@ -80,10 +83,11 @@ const ExerciseModal = ({
                             </div>
                         ))}
                     <button onClick={addSet}>Add Set</button>
-                    <form className="exercise-modal__form"></form>
                 </div>
                 <div className="exercise-modal__footer">
-                    <button onClick={submitExercise}>Submit Exercise</button>
+                    <button form="exercise-form" onClick={submitExercise}>
+                        Submit Exercise
+                    </button>
                 </div>
             </div>
         </div>
