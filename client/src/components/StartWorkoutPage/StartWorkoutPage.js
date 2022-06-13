@@ -16,7 +16,9 @@ const StartWorkoutPage = () => {
                     Start Workout
                 </button>
             )}
-            {showWorkoutForm && <WorkoutForm />}
+            {showWorkoutForm && (
+                <WorkoutForm setShowWorkoutForm={setShowWorkoutForm} />
+            )}
         </div>
     );
 };

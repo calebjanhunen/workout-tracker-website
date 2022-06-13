@@ -9,26 +9,29 @@ const ExerciseModal = ({
     setExerciseForm,
     isEdit,
     exerToEdit,
-    setIsEdit,
+    exerciseInfo,
+    setExerciseInfo,
+    exerciseName,
+    setExerciseName,
+    exerInfoComponents,
+    setExInfoComponents,
 }) => {
-    const [exerciseInfo, setExerciseInfo] = React.useState([]);
-    const [exerciseName, setExerciseName] = React.useState("");
-    const [exerInfoComponents, setExInfoComponents] = React.useState([]);
-
     if (showExerciseModal === false) return null;
 
     function addSet() {
         const id = nanoid();
         setExerciseInfo([...exerciseInfo, { reps: "", weight: "", id }]);
 
-        setExInfoComponents([
-            ...exerInfoComponents,
-            <SetForm
-                key={nanoid()}
-                id={id}
-                setExerciseInfo={setExerciseInfo}
-            />,
-        ]);
+        setExInfoComponents(prev => {
+            return [
+                ...prev,
+                <SetForm
+                    key={nanoid()}
+                    id={id}
+                    setExerciseInfo={setExerciseInfo}
+                />,
+            ];
+        });
     }
 
     function removeSet(id) {
@@ -41,6 +44,7 @@ const ExerciseModal = ({
     function clearExerciseModal() {
         setExerciseInfo([]);
         setExInfoComponents([]);
+        setExerciseName("");
         setShowExerciseModal(prev => !prev);
     }
 
@@ -51,21 +55,36 @@ const ExerciseModal = ({
         clearExerciseModal();
     }
 
-    // console.log(exerciseInfo);
+    function editExercise() {
+        setExerciseForm(prev => {
+            return prev.map(info => {
+                if (info.id === exerToEdit.id) {
+                    return {
+                        exerciseName,
+                        exerciseInfo,
+                        id: exerToEdit.id,
+                    };
+                } else {
+                    return info;
+                }
+            });
+        });
+        clearExerciseModal();
+    }
+
     return (
         <div className="exercise-modal">
             <div className="exercise-modal__content">
                 <div className="exercise-modal__header">
-                    <form id="exercise-form">
-                        <input
-                            type="text"
-                            required
-                            name="exerciseName"
-                            placeholder="Enter Exercise Name..."
-                            // autoComplete="off"
-                            onChange={e => setExerciseName(e.target.value)}
-                        />
-                    </form>
+                    <input
+                        defaultValue={isEdit ? exerToEdit.exerciseName : ""}
+                        type="text"
+                        required
+                        name="exerciseName"
+                        placeholder="Enter Exercise Name..."
+                        // autoComplete="off"
+                        onChange={e => setExerciseName(e.target.value)}
+                    />
                     <button onClick={clearExerciseModal}>X</button>
                 </div>
 
@@ -85,8 +104,14 @@ const ExerciseModal = ({
                     <button onClick={addSet}>Add Set</button>
                 </div>
                 <div className="exercise-modal__footer">
-                    <button form="exercise-form" onClick={submitExercise}>
-                        Submit Exercise
+                    <button
+                        onClick={
+                            isEdit
+                                ? () => editExercise()
+                                : () => submitExercise()
+                        }
+                    >
+                        {isEdit ? "Confirm Edit" : "Submit Exercise"}
                     </button>
                 </div>
             </div>
