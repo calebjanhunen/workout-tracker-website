@@ -4,7 +4,9 @@
     background-attachment: fixed;
     background-size: cover;
 } */
-
-body {
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
     font-family: "Karla";
 }

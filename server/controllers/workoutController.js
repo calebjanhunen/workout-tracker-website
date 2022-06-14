@@ -12,3 +12,12 @@ export async function createWorkout(req, res) {
         res.status(400).json({ message: "Could not create workout" });
     }
 }
+
+export async function getWorkouts(req, res) {
+    try {
+        const data = await Workout.find();
+        res.json(data);
+    } catch (err) {
+        res.status(400).json({ message: "Could not get workouts" });
+    }
+}

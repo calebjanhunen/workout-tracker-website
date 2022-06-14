@@ -1,0 +1,34 @@
+.workout-card {
+    box-shadow: 0 0 10px 5px grey;
+    width: 400px;
+    margin: 20px;
+    margin-top: 30px;
+    padding: 7px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.workout-card__title {
+    font-weight: 1000;
+}
+
+.workout-card__time-values {
+    display: flex;
+}
+
+.time-values__date {
+    margin-right: 30px;
+    color: grey;
+}
+
+.time-values__workout-length {
+    color: grey;
+}
+
+.workout-card__workout-info {
+    margin-top: 10px;
+}
+
+.exercise-info {
+    display: flex;
+}

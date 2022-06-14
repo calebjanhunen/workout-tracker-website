@@ -15,7 +15,7 @@ const NavBar = () => {
                     <NavLink to="/startWorkout">Start Workout</NavLink>
                 </li>
                 <li>
-                    <NavLink to="/viewWorkouts">View Workouts</NavLink>
+                    <NavLink to="/viewWorkouts">Workout History</NavLink>
                 </li>
             </ul>
             <button className="login-btn">Login</button>

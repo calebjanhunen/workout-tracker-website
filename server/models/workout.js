@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const workoutSchema = mongoose.Schema({
     name: String,
+    createdAt: {
+        type: Date,
+        default: new Date(),
+    },
     exercises: [
         {
             exerciseName: String,

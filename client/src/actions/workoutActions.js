@@ -9,3 +9,12 @@ export const createWorkout = newWorkout => async dispatch => {
         console.log(err);
     }
 };
+
+export const getWorkouts = () => async dispatch => {
+    try {
+        const { data } = await api.getWorkouts();
+        dispatch({ type: FETCH_ALL, payload: data });
+    } catch (err) {
+        console.log(err);
+    }
+};

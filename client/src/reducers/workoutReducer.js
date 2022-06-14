@@ -4,6 +4,8 @@ export default function workoutReducer(workouts = [], action) {
     switch (action.type) {
         case CREATE:
             return [...workouts, action.payload];
+        case FETCH_ALL:
+            return action.payload;
         default:
             return workouts;
     }
