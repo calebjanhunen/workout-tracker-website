@@ -1,116 +1,32 @@
 import React from "react";
 import moment from "moment";
-import { FaTrashAlt } from "react-icons/fa";
 import TrashBinImage from "../../../images/trash-bin.png";
+import EditIcon from "../../../images/edit-btn-icon.png";
 
 import "./WorkoutCardStyles.css";
 import DeleteWorkoutModal from "./DeleteWorkoutModal";
+import EditWorkoutForm from "./EditWorkoutForm/EditWorkoutForm";
+import WorkoutCardInfo from "./WorkoutCardInfo";
 
 const WorkoutCard = ({ title, date, exercises, id }) => {
-    const [showWorkoutInfo, setShowWorkoutInfo] = React.useState(false);
-    const [showDeleteWorkout, setShowDeleteWorkout] = React.useState(false);
+    const [showEditForm, setShowEditForm] = React.useState(false);
 
-    function displayWorkoutInfo() {
-        return (
-            <div className="workout-card__more-info">
-                {exercises.map((exercise, index) => (
-                    <div key={index} className="exercise">
-                        <h3
-                            className="exercise-name"
-                            style={{ marginTop: "10px" }}
-                        >
-                            {exercise.exerciseName}
-                        </h3>
-                        {exercise.exerciseInfo.map((info, index) => (
-                            <div key={index} className="exercise-info">
-                                <p
-                                    className="exercise-info__set"
-                                    style={{ marginRight: "10px" }}
-                                >
-                                    Set {index + 1}
-                                </p>
-                                <p
-                                    className="exercise-info__weight"
-                                    style={{ marginRight: "10px" }}
-                                >
-                                    {info.weight} lbs
-                                </p>
-                                <p className="exercise-info__reps">
-                                    {info.reps} reps
-                                </p>
-                            </div>
-                        ))}
-                    </div>
-                ))}
-            </div>
-        );
-    }
-    /*
-{
-                    if (
-                        e.target.parentElement.className.includes(
-                            "workout-card"
-                        )
-                    )
-                        setShowWorkoutInfo(prev => !prev);
-                }
-                */
-    return (
-        <div>
-            <div
-                onClick={e => {
-                    if (
-                        e.target.parentElement.className !== "delete-btn" &&
-                        e.target.parentElement.className !==
-                            "delete-workout-confirmation"
-                    )
-                        setShowWorkoutInfo(prev => !prev);
-                }}
-                className="workout-card"
-            >
-                <div className="workout-card__header">
-                    <h1 className="workout-card__title">{title}</h1>
-                    {showDeleteWorkout ? (
-                        <DeleteWorkoutModal
-                            setShowDeleteWorkout={setShowDeleteWorkout}
-                            id={id}
-                        />
-                    ) : (
-                        <button
-                            className="delete-btn"
-                            onClick={() => {
-                                setShowDeleteWorkout(prev => !prev);
-                            }}
-                        >
-                            <img
-                                src={TrashBinImage}
-                                alt="Trash Bin"
-                                className="trash-bin-img"
-                            ></img>
-                        </button>
-                    )}
-                </div>
-                <div className="workout-card__time-values">
-                    <h2 className="time-values__date">
-                        {moment(date).format("MMM DD")}
-                    </h2>
-                    <h2 className="time-values__workout-length">
-                        Workout Length
-                    </h2>
-                </div>
-                <div className="workout-card__workout-info">
-                    {showWorkoutInfo ? (
-                        displayWorkoutInfo()
-                    ) : (
-                        <h2 className="exercises__num-exercises">
-                            {exercises.length > 1
-                                ? `${exercises.length} Exercises`
-                                : `${exercises.length} Exercise`}
-                        </h2>
-                    )}
-                </div>
-            </div>
-        </div>
+    return showEditForm ? (
+        <EditWorkoutForm
+            title={title}
+            date={date}
+            exercises={exercises}
+            id={id}
+            setShowEditForm={setShowEditForm}
+        />
+    ) : (
+        <WorkoutCardInfo
+            title={title}
+            date={date}
+            exercises={exercises}
+            id={id}
+            setShowEditForm={setShowEditForm}
+        />
     );
 };
 

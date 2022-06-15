@@ -18,7 +18,7 @@
 }
 
 .delete-btn {
-    margin-left: auto;
+    /* margin-left: auto; */
     margin-right: 10px;
     border: none;
     background-color: white;
@@ -30,8 +30,21 @@
     height: 20px;
 }
 
-.delete-workout-confirmation {
+.edit-btn {
     margin-left: auto;
+    margin-right: 10px;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+.edit-icon-img {
+    width: 20px;
+    height: 20px;
+}
+
+.delete-workout-confirmation {
+    /* margin-left: auto; */
     margin-right: 10px;
     display: flex;
 }
