@@ -6,6 +6,8 @@ export default function workoutReducer(workouts = [], action) {
             return [...workouts, action.payload];
         case FETCH_ALL:
             return action.payload;
+        case DELETE:
+            return workouts.filter(workout => workout._id !== action.payload);
         default:
             return workouts;
     }

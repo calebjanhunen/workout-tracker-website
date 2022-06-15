@@ -9,3 +9,7 @@ export function createWorkout(newWorkout) {
 export function getWorkouts() {
     return API.get("/workouts");
 }
+
+export function deleteWorkout(id) {
+    return API.delete(`/workouts/${id}`);
+}

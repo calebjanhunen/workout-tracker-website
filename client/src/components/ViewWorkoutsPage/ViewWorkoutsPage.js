@@ -27,11 +27,12 @@ const ViewWorkoutsPage = () => {
                                 title={workout.name}
                                 date={workout.createdAt}
                                 exercises={workout.exercises}
+                                id={workout._id}
                             />
                         </div>
                     ))}
                 </div>
-                <Calendar />
+                <Calendar className="react-calendar" />
             </div>
         </div>
     );

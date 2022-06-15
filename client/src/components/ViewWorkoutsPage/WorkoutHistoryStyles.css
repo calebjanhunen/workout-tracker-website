@@ -2,7 +2,6 @@
     display: flex;
 }
 
-/* .workout-cards {
-    display: flex;
-    flex-direction: column;
-} */
+.react-calendar {
+    height: 300px;
+}

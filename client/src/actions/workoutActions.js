@@ -18,3 +18,12 @@ export const getWorkouts = () => async dispatch => {
         console.log(err);
     }
 };
+
+export const deleteWorkout = id => async dispatch => {
+    try {
+        await api.deleteWorkout(id);
+        dispatch({ type: DELETE, payload: id });
+    } catch (err) {
+        console.log(err);
+    }
+};

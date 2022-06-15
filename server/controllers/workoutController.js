@@ -7,7 +7,7 @@ export async function createWorkout(req, res) {
 
     try {
         await newWorkout.save();
-        res.json(newWorkout);
+        res.status(201).json(newWorkout);
     } catch (err) {
         res.status(400).json({ message: "Could not create workout" });
     }
@@ -19,5 +19,15 @@ export async function getWorkouts(req, res) {
         res.json(data);
     } catch (err) {
         res.status(400).json({ message: "Could not get workouts" });
+    }
+}
+
+export async function deleteWorkout(req, res) {
+    const _id = req.params.id;
+    try {
+        const workoutToDelete = await Workout.findByIdAndDelete(_id);
+        res.json(workoutToDelete);
+    } catch (err) {
+        res.status(400).json({ message: "Could not delete workout" });
     }
 }
