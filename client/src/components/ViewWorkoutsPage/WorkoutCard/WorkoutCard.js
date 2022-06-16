@@ -8,7 +8,7 @@ import DeleteWorkoutModal from "./DeleteWorkoutModal";
 import EditWorkoutForm from "./EditWorkoutForm/EditWorkoutForm";
 import WorkoutCardInfo from "./WorkoutCardInfo";
 
-const WorkoutCard = ({ title, date, exercises, id }) => {
+const WorkoutCard = ({ title, date, exercises, id, setReload }) => {
     const [showEditForm, setShowEditForm] = React.useState(false);
 
     return showEditForm ? (
@@ -18,6 +18,7 @@ const WorkoutCard = ({ title, date, exercises, id }) => {
             exercises={exercises}
             id={id}
             setShowEditForm={setShowEditForm}
+            setReload={setReload}
         />
     ) : (
         <WorkoutCardInfo

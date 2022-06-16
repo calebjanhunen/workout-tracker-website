@@ -10,10 +10,11 @@ import WorkoutCard from "./WorkoutCard/WorkoutCard";
 const ViewWorkoutsPage = () => {
     const dispatch = useDispatch();
     const workouts = useSelector(state => state.workoutReducer);
+    const [reload, setReload] = React.useState(false);
 
     React.useEffect(() => {
         dispatch(getWorkouts());
-    }, [dispatch]);
+    }, [dispatch, reload]);
 
     //TODO: Add calednar functionality
     return (
@@ -28,6 +29,7 @@ const ViewWorkoutsPage = () => {
                                 date={workout.createdAt}
                                 exercises={workout.exercises}
                                 id={workout._id}
+                                setReload={setReload}
                             />
                         </div>
                     ))}

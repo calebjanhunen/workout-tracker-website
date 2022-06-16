@@ -5,6 +5,7 @@
     margin-top: 30px;
     padding: 7px;
     border-radius: 10px;
+    cursor: default;
 }
 
 .workout-card__header {
@@ -12,10 +13,27 @@
     align-items: center;
 }
 
+.edit-form-exercise-info {
+    display: flex;
+    margin-bottom: 7px;
+}
+
+.edit-form-exercise-info__set {
+    /* min-width: 37; */
+    width: 37px;
+}
+
 input[name="edit-form__workoutName"] {
     font-weight: 1000;
     font-size: 32px;
-    border: none;
+    /* border: none; */
+}
+
+input[name="edit-form-exercise-info__weight"],
+input[name="edit-form-exercise-info__reps"] {
+    height: 20px;
+    width: 40px;
+    margin-left: 10px;
 }
 
 .workout-card__time-values {
@@ -35,13 +53,59 @@ input[name="edit-form__workoutName"] {
     margin-top: 10px;
 }
 
-.exercise-info {
-    display: flex;
+.exercise-name {
+    margin-top: 0px;
+}
 
-    margin-bottom: 7px;
+/*Buttons*/
+button {
+    cursor: pointer;
+
+    border: none;
+    border-radius: 10px;
+    height: 20px;
+    font-weight: bold;
 }
 
 .delete-set-btn {
+    width: 20px;
     margin-left: auto;
-    margin-right: 130px;
+    margin-right: 150px;
+    background-color: #f5838d8c;
+    font-weight: bold;
+}
+
+.delete-exercise-btn {
+    width: 386px;
+    margin-bottom: 10px;
+    background-color: #f5838d8c;
+}
+
+.delete-exercise-btn:hover,
+.delete-set-btn:hover {
+    background-color: #e735438c;
+}
+
+.submit-btn {
+    width: 40px;
+    background-color: rgba(0, 128, 0, 0.555);
+}
+
+.add-set-btn {
+    width: 386px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: rgba(0, 128, 0, 0.555);
+}
+
+.add-exercise-btn {
+    width: 386px;
+    margin-top: 10px;
+    background-color: rgba(0, 128, 0, 0.555);
+}
+
+.submit-btn:hover,
+.add-set-btn:hover,
+.add-exercise-btn:hover {
+    background-color: rgba(0, 128, 0, 0.829);
 }

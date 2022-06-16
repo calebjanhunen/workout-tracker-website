@@ -13,3 +13,7 @@ export function getWorkouts() {
 export function deleteWorkout(id) {
     return API.delete(`/workouts/${id}`);
 }
+
+export function updateWorkout(id, workout) {
+    return API.patch(`/workouts/${id}`, workout);
+}

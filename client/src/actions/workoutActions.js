@@ -27,3 +27,12 @@ export const deleteWorkout = id => async dispatch => {
         console.log(err);
     }
 };
+
+export const updateWorkout = (id, workout) => async dispatch => {
+    try {
+        const { data } = await api.updateWorkout(id, workout);
+        dispatch({ type: UPDATE, payload: data });
+    } catch (err) {
+        console.log(err);
+    }
+};

@@ -7,7 +7,7 @@ import "./WorkoutCardStyles.css";
 import DeleteWorkoutModal from "./DeleteWorkoutModal";
 
 const WorkoutCardInfo = ({ title, date, exercises, id, setShowEditForm }) => {
-    const [showWorkoutInfo, setShowWorkoutInfo] = React.useState(false);
+    const [showWorkoutInfo, setShowWorkoutInfo] = React.useState(true);
     const [showDeleteWorkout, setShowDeleteWorkout] = React.useState(false);
 
     function displayWorkoutInfo() {

@@ -31,3 +31,16 @@ export async function deleteWorkout(req, res) {
         res.status(400).json({ message: "Could not delete workout" });
     }
 }
+
+export async function updateWorkout(req, res) {
+    const _id = req.params.id;
+    try {
+        const workoutToUpdate = await Workout.findByIdAndUpdate(_id, {
+            ...req.body,
+            _id,
+        });
+        res.json(workoutToUpdate);
+    } catch (err) {
+        res.status(400).json({ message: "Could not update workout" });
+    }
+}
