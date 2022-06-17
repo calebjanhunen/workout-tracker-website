@@ -34,13 +34,14 @@ export async function deleteWorkout(req, res) {
 
 export async function updateWorkout(req, res) {
     const _id = req.params.id;
+    // console.log(req.body);
+    // console.log(mongoose.isValidObjectId(req.body.exercises[0].exerciseInfo[0]));
     try {
         const workoutToUpdate = await Workout.findByIdAndUpdate(_id, {
             ...req.body,
-            _id,
         });
         res.json(workoutToUpdate);
     } catch (err) {
-        res.status(400).json({ message: "Could not update workout" });
+        res.status(400).json({ message: err });
     }
 }
