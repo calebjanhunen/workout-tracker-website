@@ -23,10 +23,27 @@
     width: 37px;
 }
 
+.visible {
+    opacity: 1;
+}
+
+.fade-out-effect {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 0.2s, opacity 0.2s linear;
+}
+
 input[name="edit-form__workoutName"] {
     font-weight: 1000;
     font-size: 32px;
     /* border: none; */
+}
+
+input[name="edit-form__exercise-name"] {
+    height: 30px;
+    margin-bottom: 5px;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 input[name="edit-form-exercise-info__weight"],

@@ -72,22 +72,69 @@ const EditWorkoutForm = ({
         );
     }
 
-    //TODO: Change it to delete the one actually wanting to delete
-    function handleDeleteSet(exerciseId, setIndex) {
-        const exercise = getExercise(exerciseId);
+    function handleDeleteSet(e, exerciseId, setIndex) {
+        e.target.parentElement.classList.add("fade-out-effect");
+        setTimeout(() => {
+            const exercise = getExercise(exerciseId);
 
-        const updatedExercise = {
-            exerciseName: exercise[0].exerciseName,
-            exerciseInfo: exercise[0].exerciseInfo.filter(
-                (_, index) => index !== setIndex
-            ),
-            _id: exercise[0]._id,
-        };
-        // console.log(updatedExercise.exerciseInfo);
-        changeExerciseForm(exerciseId, updatedExercise);
+            const updatedExercise = {
+                exerciseName: exercise[0].exerciseName,
+                exerciseInfo: exercise[0].exerciseInfo.filter(
+                    (_, index) => index !== setIndex
+                ),
+                _id: exercise[0]._id,
+            };
+
+            changeExerciseForm(exerciseId, updatedExercise);
+            e.target.parentElement.classList.remove("fade-out-effect");
+        }, 300);
+    }
+
+    function handleAddExercise() {
+        setExerciseForm(prev => [
+            ...prev,
+            { exerciseName: "", exerciseInfo: [{ reps: "", weight: "" }] },
+        ]);
+    }
+
+    function handleDeleteExercise(e, exerciseIndex) {
+        // console.log(exerciseIndex);
+        // console.log(e.target.parentElement);
+        e.target.parentElement.classList.add("fade-out-effect");
+        setTimeout(() => {
+            setExerciseForm(prev =>
+                prev.filter((_, index) => index !== exerciseIndex)
+            );
+            e.target.parentElement.classList.remove("fade-out-effect");
+        }, 300);
+    }
+
+    function handleEditExerciseName(e, exerciseIndex) {
+        // console.log(exerciseIndex);
+        setExerciseForm(prev =>
+            prev.map((exercise, index) =>
+                index === exerciseIndex
+                    ? { ...exercise, exerciseName: e.target.value }
+                    : exercise
+            )
+        );
     }
 
     function handleSubmit() {
+        let isInvalidSetInput = false;
+        let isInvalidExerciseName = false;
+        exerciseForm.forEach(exercise => {
+            if (exercise.exerciseName === "") isInvalidExerciseName = true;
+            exercise.exerciseInfo.forEach(set => {
+                if (set.reps === "" || set.weight === "") {
+                    isInvalidSetInput = true;
+                }
+            });
+        });
+
+        if (isInvalidSetInput) return console.log("Enter set or weight value");
+        if (isInvalidExerciseName) return console.log("Enter exercise name");
+
         dispatch(
             updateWorkout(id, {
                 name: workoutName,
@@ -102,15 +149,20 @@ const EditWorkoutForm = ({
     function displayWorkoutInfo() {
         return (
             <div className="workout-card__more-info">
-                {exerciseForm.map((exercise, index) => (
-                    <div key={index} className="exercise">
-                        <h3 className="exercise-name">
-                            {exercise.exerciseName}
-                        </h3>
+                {exerciseForm.map((exercise, exerciseIndex) => (
+                    <div key={exerciseIndex} className="exercise">
+                        <input
+                            name="edit-form__exercise-name"
+                            placeholder="Enter Exercise Name..."
+                            value={exercise.exerciseName}
+                            onChange={e =>
+                                handleEditExerciseName(e, exerciseIndex)
+                            }
+                        />
                         {exercise.exerciseInfo.map((info, setIndex) => (
                             <div
                                 key={setIndex}
-                                className="edit-form-exercise-info"
+                                className="edit-form-exercise-info visible"
                             >
                                 <p className="edit-form-exercise-info__set">
                                     Set {setIndex + 1}
@@ -147,9 +199,13 @@ const EditWorkoutForm = ({
                                 <p>reps</p>
                                 <button
                                     className="delete-set-btn"
-                                    onClick={() =>
-                                        handleDeleteSet(exercise._id, setIndex)
-                                    }
+                                    onClick={e => {
+                                        handleDeleteSet(
+                                            e,
+                                            exercise._id,
+                                            setIndex
+                                        );
+                                    }}
                                 >
                                     X
                                 </button>
@@ -161,7 +217,12 @@ const EditWorkoutForm = ({
                         >
                             Add Set
                         </button>
-                        <button className="delete-exercise-btn">
+                        <button
+                            className="delete-exercise-btn"
+                            onClick={e =>
+                                handleDeleteExercise(e, exerciseIndex)
+                            }
+                        >
                             Delete Exercise
                         </button>
                     </div>
@@ -198,7 +259,12 @@ const EditWorkoutForm = ({
                     justifyContent: "center",
                 }}
             >
-                <button className="add-exercise-btn">Add Exercise</button>
+                <button
+                    className="add-exercise-btn"
+                    onClick={handleAddExercise}
+                >
+                    Add Exercise
+                </button>
             </div>
         </div>
     );
