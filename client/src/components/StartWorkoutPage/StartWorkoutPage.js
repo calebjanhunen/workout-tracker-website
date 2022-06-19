@@ -13,7 +13,7 @@ const StartWorkoutPage = () => {
                     className="start-workout-btn"
                     onClick={() => setShowWorkoutForm(prev => !prev)}
                 >
-                    Start Workout
+                    Start Empty Workout
                 </button>
             )}
             {showWorkoutForm && (

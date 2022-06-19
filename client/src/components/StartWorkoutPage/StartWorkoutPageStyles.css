@@ -7,9 +7,14 @@
 
 .start-workout-btn {
     height: 40px;
-    width: 100px;
+    width: 150px;
     border-radius: 10px;
     border: 1px solid black;
     background-color: aliceblue;
     cursor: pointer;
+}
+
+.is-blurred {
+    filter: blur(2px);
+    /* -webkit-filter: blur(2px); */
 }

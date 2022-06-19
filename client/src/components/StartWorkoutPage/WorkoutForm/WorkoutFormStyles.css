@@ -12,11 +12,12 @@
 }
 
 #form {
+    box-shadow: 0 0 10px 5px grey;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 500px;
-    background-color: orange;
 }
 
 #txt--workout-name {

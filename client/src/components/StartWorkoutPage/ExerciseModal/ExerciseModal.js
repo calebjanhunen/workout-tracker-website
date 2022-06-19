@@ -41,21 +41,21 @@ const ExerciseModal = ({
         );
     }
 
-    function clearExerciseModal() {
+    function clearExerciseModal(e) {
         setExerciseInfo([]);
         setExInfoComponents([]);
         setExerciseName("");
         setShowExerciseModal(prev => !prev);
     }
 
-    function submitExercise() {
+    function submitExercise(e) {
         setExerciseForm(prev => {
             return [...prev, { exerciseName, exerciseInfo, id: nanoid() }];
         });
-        clearExerciseModal();
+        clearExerciseModal(e);
     }
 
-    function editExercise() {
+    function editExercise(e) {
         setExerciseForm(prev => {
             return prev.map(info => {
                 if (info.id === exerToEdit.id) {
@@ -69,7 +69,7 @@ const ExerciseModal = ({
                 }
             });
         });
-        clearExerciseModal();
+        clearExerciseModal(e);
     }
 
     return (
@@ -85,7 +85,7 @@ const ExerciseModal = ({
                         // autoComplete="off"
                         onChange={e => setExerciseName(e.target.value)}
                     />
-                    <button onClick={clearExerciseModal}>X</button>
+                    <button onClick={e => clearExerciseModal(e)}>X</button>
                 </div>
 
                 <div className="exercise-modal__body">
@@ -105,11 +105,10 @@ const ExerciseModal = ({
                 </div>
                 <div className="exercise-modal__footer">
                     <button
-                        onClick={
-                            isEdit
-                                ? () => editExercise()
-                                : () => submitExercise()
-                        }
+                        onClick={e => {
+                            if (!isEdit) submitExercise(e);
+                            else editExercise(e);
+                        }}
                     >
                         {isEdit ? "Confirm Edit" : "Submit Exercise"}
                     </button>

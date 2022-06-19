@@ -14,17 +14,12 @@ const WorkoutForm = ({ setShowWorkoutForm }) => {
     const [exerciseInfo, setExerciseInfo] = React.useState([]);
     const [exerciseName, setExerciseName] = React.useState("");
     const [exerInfoComponents, setExInfoComponents] = React.useState([]);
-    const [workoutForm, setWorkoutForm] = React.useState({
-        name: "",
-        exercises: [],
-    });
     const [showExerciseModal, setShowExerciseModal] = React.useState(false);
     const [isEdit, setIsEdit] = React.useState(false);
     const [exerToEdit, setExerToEdit] = React.useState({});
 
     function closeWorkoutForm() {
         setWorkoutName("");
-        setWorkoutForm({});
         setExerciseForm([]);
         setShowWorkoutForm(false);
     }
@@ -59,13 +54,6 @@ const WorkoutForm = ({ setShowWorkoutForm }) => {
     }
 
     function handleSubmit() {
-        setWorkoutForm(_ => {
-            return {
-                name: workoutName,
-                exercises: exerciseForm,
-            };
-        });
-
         dispatch(
             createWorkout({
                 name: workoutName,
@@ -122,7 +110,7 @@ const WorkoutForm = ({ setShowWorkoutForm }) => {
 
     return (
         <div className="App">
-            <div id="form">
+            <div id="form" className={showExerciseModal ? "is-blurred" : ""}>
                 <input
                     id="workout-form__name"
                     name="workoutName"
@@ -133,7 +121,7 @@ const WorkoutForm = ({ setShowWorkoutForm }) => {
                 {exerciseForm && displayExercises()}
 
                 <button
-                    onClick={() => {
+                    onClick={e => {
                         setIsEdit(false);
                         displayExerciseModal();
                     }}
