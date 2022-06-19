@@ -64,7 +64,7 @@ const EditWorkoutForm = ({
             ],
             _id: exercise[0]._id,
         };
-        console.log(updatedExercise);
+
         setExerciseForm(prev =>
             prev.map(exercise =>
                 exercise._id === exerciseId ? updatedExercise : exercise
@@ -73,13 +73,13 @@ const EditWorkoutForm = ({
     }
 
     //TODO: Change it to delete the one actually wanting to delete
-    function handleDeleteSet(exerciseId, setId) {
+    function handleDeleteSet(exerciseId, setIndex) {
         const exercise = getExercise(exerciseId);
 
         const updatedExercise = {
             exerciseName: exercise[0].exerciseName,
             exerciseInfo: exercise[0].exerciseInfo.filter(
-                set => set._id !== setId
+                (_, index) => index !== setIndex
             ),
             _id: exercise[0]._id,
         };
@@ -88,7 +88,6 @@ const EditWorkoutForm = ({
     }
 
     function handleSubmit() {
-        console.log(exerciseForm);
         dispatch(
             updateWorkout(id, {
                 name: workoutName,
@@ -108,24 +107,24 @@ const EditWorkoutForm = ({
                         <h3 className="exercise-name">
                             {exercise.exerciseName}
                         </h3>
-                        {exercise.exerciseInfo.map((info, index) => (
+                        {exercise.exerciseInfo.map((info, setIndex) => (
                             <div
-                                key={index}
+                                key={setIndex}
                                 className="edit-form-exercise-info"
                             >
                                 <p className="edit-form-exercise-info__set">
-                                    Set {index + 1}
+                                    Set {setIndex + 1}
                                 </p>
                                 <input
                                     name="edit-form-exercise-info__weight"
                                     type="text"
                                     inputMode="numeric"
-                                    defaultValue={info.weight}
+                                    value={info.weight}
                                     onChange={e =>
                                         handleEditSetValue(
                                             e,
                                             exercise._id,
-                                            index,
+                                            setIndex,
                                             "weight"
                                         )
                                     }
@@ -135,12 +134,12 @@ const EditWorkoutForm = ({
                                     name="edit-form-exercise-info__reps"
                                     type="text"
                                     inputMode="numeric"
-                                    defaultValue={info.reps}
+                                    value={info.reps}
                                     onChange={e =>
                                         handleEditSetValue(
                                             e,
                                             exercise._id,
-                                            index,
+                                            setIndex,
                                             "reps"
                                         )
                                     }
@@ -149,7 +148,7 @@ const EditWorkoutForm = ({
                                 <button
                                     className="delete-set-btn"
                                     onClick={() =>
-                                        handleDeleteSet(exercise._id, info._id)
+                                        handleDeleteSet(exercise._id, setIndex)
                                     }
                                 >
                                     X
