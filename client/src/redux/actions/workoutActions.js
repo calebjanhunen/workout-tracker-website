@@ -1,5 +1,5 @@
 import { CREATE, UPDATE, DELETE, FETCH_ALL } from "../constants/actionTypes.js";
-import * as api from "../api/apiCalls.js";
+import * as api from "../../api/apiCalls.js";
 
 export const createWorkout = newWorkout => async dispatch => {
     try {
@@ -29,7 +29,6 @@ export const deleteWorkout = id => async dispatch => {
 };
 
 export const updateWorkout = (id, workout) => async dispatch => {
-    console.log(workout);
     try {
         const { data } = await api.updateWorkout(id, workout);
         dispatch({ type: UPDATE, payload: data });

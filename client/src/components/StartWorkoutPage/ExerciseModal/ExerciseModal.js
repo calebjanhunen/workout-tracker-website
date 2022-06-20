@@ -49,6 +49,19 @@ const ExerciseModal = ({
     }
 
     function submitExercise(e) {
+        let isIllegalSetInput = false;
+
+        if (exerciseName === "") return console.log("Enter Exercise name");
+        if (exerciseInfo.length === 0)
+            return console.log("Need at least 1 set");
+
+        exerciseInfo.forEach(set =>
+            set.reps === "" || set.weight === ""
+                ? (isIllegalSetInput = true)
+                : (isIllegalSetInput = false)
+        );
+        if (isIllegalSetInput) return console.log("Enter Set Information");
+
         setExerciseForm(prev => {
             return [...prev, { exerciseName, exerciseInfo, id: nanoid() }];
         });

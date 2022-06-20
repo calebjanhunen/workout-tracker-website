@@ -1,14 +1,15 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { deleteWorkout } from "../../../actions/workoutActions";
+import { deleteWorkout } from "../../../redux/actions/workoutActions";
 
 const DeleteWorkoutModal = ({ setShowDeleteWorkout, id }) => {
     const dispatch = useDispatch();
+    const workouts = useSelector(state => state.workoutReducer);
 
     function handleDeleteWorkout() {
         setShowDeleteWorkout(prev => !prev);
-        console.log(id);
+        // console.log(workouts.length);
         dispatch(deleteWorkout(id));
     }
 

@@ -4,15 +4,16 @@ import { useDispatch, useSelector } from "react-redux";
 
 import "./WorkoutFormStyles.css";
 import ExerciseModal from "../ExerciseModal/ExerciseModal";
-import { createWorkout } from "../../../actions/workoutActions.js";
+import { createWorkout } from "../../../redux/actions/workoutActions.js";
 import SetForm from "../SetForm/SetForm";
 
 const WorkoutForm = ({ setShowWorkoutForm }) => {
+    const workouts = useSelector(state => state.workoutReducer);
     const dispatch = useDispatch();
     const [workoutName, setWorkoutName] = React.useState("");
+    const [exerciseName, setExerciseName] = React.useState("");
     const [exerciseForm, setExerciseForm] = React.useState([]);
     const [exerciseInfo, setExerciseInfo] = React.useState([]);
-    const [exerciseName, setExerciseName] = React.useState("");
     const [exerInfoComponents, setExInfoComponents] = React.useState([]);
     const [showExerciseModal, setShowExerciseModal] = React.useState(false);
     const [isEdit, setIsEdit] = React.useState(false);
@@ -54,12 +55,15 @@ const WorkoutForm = ({ setShowWorkoutForm }) => {
     }
 
     function handleSubmit() {
+        console.log(workouts.length);
+        if (workoutName === "") return console.log("Enter workout name");
         dispatch(
             createWorkout({
                 name: workoutName,
                 exercises: exerciseForm,
             })
         );
+        console.log(workouts.length);
     }
 
     function displayExercises() {

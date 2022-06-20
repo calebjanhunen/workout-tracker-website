@@ -1,7 +1,21 @@
-.view-workouts-page__info {
+.workout-history-page__info {
     display: flex;
 }
 
 .react-calendar {
     height: 300px;
+}
+
+.workout-history-page__cards {
+    width: 430px;
+}
+
+.loading-spinner-container {
+    display: flex;
+    justify-content: center;
+}
+
+.loading-spinner {
+    width: 100px;
+    height: 100px;
 }

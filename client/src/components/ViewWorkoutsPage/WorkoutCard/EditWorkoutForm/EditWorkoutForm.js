@@ -3,7 +3,7 @@ import moment from "moment";
 import { useDispatch } from "react-redux";
 import { nanoid } from "nanoid";
 
-import { updateWorkout } from "../../../../actions/workoutActions.js";
+import { updateWorkout } from "../../../../redux/actions/workoutActions.js";
 
 import "./EditWorkoutFormStyles.css";
 
