@@ -5,6 +5,12 @@
     margin-top: 20px;
 }
 
+.start-workout-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .start-workout-btn {
     height: 40px;
     width: 150px;

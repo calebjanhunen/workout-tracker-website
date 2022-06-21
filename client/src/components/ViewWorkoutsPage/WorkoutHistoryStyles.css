@@ -19,3 +19,13 @@
     width: 100px;
     height: 100px;
 }
+
+.dlt-workout-loading-spinner {
+    box-shadow: 0 0 10px 5px grey;
+    width: 400px;
+    margin: 20px;
+    margin-top: 30px;
+    padding: 7px;
+    cursor: pointer;
+    border-radius: 10px;
+}

@@ -14,6 +14,7 @@ const EditWorkoutForm = ({
     id,
     setShowEditForm,
     setReload,
+    setEditedWorkoutId,
 }) => {
     const dispatch = useDispatch();
     const [workoutName, setWorkoutName] = React.useState(title);
@@ -142,6 +143,7 @@ const EditWorkoutForm = ({
                 _id: id,
             })
         );
+        setEditedWorkoutId = id;
         setReload(prev => !prev);
         setShowEditForm(false);
     }

@@ -3,13 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { deleteWorkout } from "../../../redux/actions/workoutActions";
 
-const DeleteWorkoutModal = ({ setShowDeleteWorkout, id }) => {
+const DeleteWorkoutModal = ({
+    setShowDeleteWorkout,
+    id,
+    setDeletedWorkoutId,
+}) => {
     const dispatch = useDispatch();
     const workouts = useSelector(state => state.workoutReducer);
 
     function handleDeleteWorkout() {
         setShowDeleteWorkout(prev => !prev);
-        // console.log(workouts.length);
+        setDeletedWorkoutId(id);
         dispatch(deleteWorkout(id));
     }
 

@@ -7,8 +7,7 @@ import ExerciseModal from "../ExerciseModal/ExerciseModal";
 import { createWorkout } from "../../../redux/actions/workoutActions.js";
 import SetForm from "../SetForm/SetForm";
 
-const WorkoutForm = ({ setShowWorkoutForm }) => {
-    const workouts = useSelector(state => state.workoutReducer);
+const WorkoutForm = ({ setShowWorkoutForm, setIsSubmitted }) => {
     const dispatch = useDispatch();
     const [workoutName, setWorkoutName] = React.useState("");
     const [exerciseName, setExerciseName] = React.useState("");
@@ -55,7 +54,6 @@ const WorkoutForm = ({ setShowWorkoutForm }) => {
     }
 
     function handleSubmit() {
-        console.log(workouts.length);
         if (workoutName === "") return console.log("Enter workout name");
         dispatch(
             createWorkout({
@@ -63,7 +61,8 @@ const WorkoutForm = ({ setShowWorkoutForm }) => {
                 exercises: exerciseForm,
             })
         );
-        console.log(workouts.length);
+        closeWorkoutForm();
+        setIsSubmitted(true);
     }
 
     function displayExercises() {

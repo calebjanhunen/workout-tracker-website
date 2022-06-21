@@ -6,7 +6,14 @@ import EditIcon from "../../../images/edit-btn-icon.png";
 import "./WorkoutCardStyles.css";
 import DeleteWorkoutModal from "./DeleteWorkoutModal";
 
-const WorkoutCardInfo = ({ title, date, exercises, id, setShowEditForm }) => {
+const WorkoutCardInfo = ({
+    title,
+    date,
+    exercises,
+    id,
+    setShowEditForm,
+    setDeletedWorkoutId,
+}) => {
     const [showWorkoutInfo, setShowWorkoutInfo] = React.useState(true);
     const [showDeleteWorkout, setShowDeleteWorkout] = React.useState(false);
 
@@ -70,6 +77,7 @@ const WorkoutCardInfo = ({ title, date, exercises, id, setShowEditForm }) => {
                     <DeleteWorkoutModal
                         setShowDeleteWorkout={setShowDeleteWorkout}
                         id={id}
+                        setDeletedWorkoutId={setDeletedWorkoutId}
                     />
                 ) : (
                     <button
