@@ -3,7 +3,10 @@ import moment from "moment";
 import { useDispatch } from "react-redux";
 import { nanoid } from "nanoid";
 
-import { updateWorkout } from "../../../../redux/actions/workoutActions.js";
+import {
+    getWorkouts,
+    updateWorkout,
+} from "../../../../redux/actions/workoutActions.js";
 
 import "./EditWorkoutFormStyles.css";
 
@@ -143,9 +146,12 @@ const EditWorkoutForm = ({
                 _id: id,
             })
         );
-        setEditedWorkoutId = id;
+        setEditedWorkoutId(id);
+        // dispatch(getWorkouts());
         setReload(prev => !prev);
         setShowEditForm(false);
+        // setWorkoutName("");
+        // setExerciseForm([]);
     }
 
     function displayWorkoutInfo() {

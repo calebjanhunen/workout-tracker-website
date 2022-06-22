@@ -26,7 +26,7 @@ const WorkoutCard = ({
             id={id}
             setShowEditForm={setShowEditForm}
             setReload={setReload}
-            setDeletedWorkoutId={setChangedWorkoutId}
+            setEditedWorkoutId={setChangedWorkoutId}
         />
     ) : (
         <WorkoutCardInfo

@@ -1,4 +1,5 @@
 import { CREATE, UPDATE, DELETE, FETCH_ALL } from "../constants/actionTypes.js";
+import { createSlice } from "@reduxjs/toolkit";
 
 export default function workoutReducer(workouts = [], action) {
     switch (action.type) {
@@ -18,3 +19,11 @@ export default function workoutReducer(workouts = [], action) {
             return workouts;
     }
 }
+
+const workoutSlice = createSlice({
+    name: "workouts",
+    initialState: { value: [] },
+    reducers: {
+        createWorkout: (state, action) => {},
+    },
+});

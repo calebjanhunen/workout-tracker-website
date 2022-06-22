@@ -13,12 +13,12 @@ const ViewWorkoutsPage = () => {
     const workouts = useSelector(state => state.workoutReducer);
     const isLoading = useSelector(state => state.loadingReducer);
     const [reload, setReload] = React.useState(false);
-    const [changedWorkoutId, setChangedWorkoutId] = React.useState("");
+    const [changedWorkoutId, setChangedWorkoutId] = React.useState(" ");
 
     React.useEffect(() => {
         dispatch(getWorkouts());
-    }, [dispatch, reload]);
-    console.log();
+        console.log(workouts);
+    }, [dispatch]);
     //TODO: Add calednar functionality
     return (
         <div className="workout-history-page">
@@ -54,7 +54,7 @@ const ViewWorkoutsPage = () => {
                                         exercises={workout.exercises}
                                         id={workout._id}
                                         setReload={setReload}
-                                        setDeletedWorkoutId={
+                                        setChangedWorkoutId={
                                             setChangedWorkoutId
                                         }
                                     />

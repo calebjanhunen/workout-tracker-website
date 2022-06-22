@@ -35,11 +35,13 @@ export const deleteWorkout = id => async dispatch => {
 };
 
 export const updateWorkout = (id, workout) => async dispatch => {
+    // console.log(workout);
     dispatch(setLoadingTrue());
     try {
         const { data } = await api.updateWorkout(id, workout);
-        dispatch(setLoadingFalse());
+        dispatch(getWorkouts());
         dispatch({ type: UPDATE, payload: data });
+        dispatch(setLoadingFalse());
     } catch (err) {
         console.log(err);
     }
