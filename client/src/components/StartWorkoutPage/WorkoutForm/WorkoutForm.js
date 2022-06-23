@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import "./WorkoutFormStyles.css";
 import ExerciseModal from "../ExerciseModal/ExerciseModal";
-import { createWorkout } from "../../../redux/actions/workoutActions.js";
+import { createWorkout } from "../../../redux/features/workouts/workoutSlice";
 import SetForm from "../SetForm/SetForm";
 
 const WorkoutForm = ({ setShowWorkoutForm, setIsSubmitted }) => {
@@ -55,12 +55,7 @@ const WorkoutForm = ({ setShowWorkoutForm, setIsSubmitted }) => {
 
     function handleSubmit() {
         if (workoutName === "") return console.log("Enter workout name");
-        dispatch(
-            createWorkout({
-                name: workoutName,
-                exercises: exerciseForm,
-            })
-        );
+        dispatch(createWorkout(workoutName, exerciseForm));
         closeWorkoutForm();
         setIsSubmitted(true);
     }

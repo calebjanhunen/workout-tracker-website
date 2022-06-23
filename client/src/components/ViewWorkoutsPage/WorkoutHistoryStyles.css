@@ -10,7 +10,7 @@
     width: 430px;
 }
 
-.loading-spinner-container {
+.workout-history__loading-spinner-container {
     display: flex;
     justify-content: center;
 }
@@ -20,7 +20,7 @@
     height: 100px;
 }
 
-.dlt-workout-loading-spinner {
+.edit-workout-loading-spinner-container {
     box-shadow: 0 0 10px 5px grey;
     width: 400px;
     margin: 20px;
