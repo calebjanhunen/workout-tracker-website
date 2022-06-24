@@ -7,7 +7,7 @@ import thunk from "redux-thunk";
 import { BrowserRouter } from "react-router-dom";
 
 import "./index.css";
-import allReducers from "./redux/reducers";
+// import allReducers from "./redux/reducers";
 import App from "./App";
 import { store } from "./redux/store";
 

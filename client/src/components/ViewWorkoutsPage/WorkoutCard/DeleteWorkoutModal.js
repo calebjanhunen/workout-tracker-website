@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { deleteWorkout } from "../../../redux/actions/workoutActions";
+// import { deleteWorkout } from "../../../redux/actions/workoutActions";
 
 const DeleteWorkoutModal = ({
     setShowDeleteWorkout,
@@ -14,7 +14,7 @@ const DeleteWorkoutModal = ({
     function handleDeleteWorkout() {
         setShowDeleteWorkout(prev => !prev);
         setDeletedWorkoutId(id);
-        dispatch(deleteWorkout(id));
+        // dispatch(deleteWorkout(id));
     }
 
     return (

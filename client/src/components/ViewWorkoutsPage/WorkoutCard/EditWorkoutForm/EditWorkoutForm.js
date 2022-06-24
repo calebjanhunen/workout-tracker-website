@@ -3,10 +3,10 @@ import moment from "moment";
 import { useDispatch } from "react-redux";
 import { nanoid } from "nanoid";
 
-import {
-    getWorkouts,
-    updateWorkout,
-} from "../../../../redux/actions/workoutActions.js";
+// import {
+//     getWorkouts,
+//     updateWorkout,
+// } from "../../../../redux/actions/workoutActions.js";
 
 import "./EditWorkoutFormStyles.css";
 
@@ -139,13 +139,13 @@ const EditWorkoutForm = ({
         if (isInvalidSetInput) return console.log("Enter set or weight value");
         if (isInvalidExerciseName) return console.log("Enter exercise name");
 
-        dispatch(
-            updateWorkout(id, {
-                name: workoutName,
-                exercises: exerciseForm,
-                _id: id,
-            })
-        );
+        // dispatch(
+        //     updateWorkout(id, {
+        //         name: workoutName,
+        //         exercises: exerciseForm,
+        //         _id: id,
+        //     })
+        // );
         setEditedWorkoutId(id);
         // dispatch(getWorkouts());
         setReload(prev => !prev);

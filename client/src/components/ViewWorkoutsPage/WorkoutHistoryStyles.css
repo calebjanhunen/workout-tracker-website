@@ -1,3 +1,7 @@
+.workout-history-page__title {
+    margin: 20px;
+}
+
 .workout-history-page__info {
     display: flex;
 }
