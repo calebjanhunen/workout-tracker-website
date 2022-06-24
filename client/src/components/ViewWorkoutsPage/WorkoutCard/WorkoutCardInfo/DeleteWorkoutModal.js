@@ -1,5 +1,6 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { deleteWorkout } from "../../../../redux/features/workouts/workoutActions";
 
 // import { deleteWorkout } from "../../../redux/actions/workoutActions";
 
@@ -9,14 +10,21 @@ const DeleteWorkoutModal = ({
     setDeletedWorkoutId,
 }) => {
     const dispatch = useDispatch();
-    const workouts = useSelector(state => state.workoutReducer);
+    const [requestStatus, setRequestStatus] = React.useState("idle");
 
     function handleDeleteWorkout() {
         setShowDeleteWorkout(prev => !prev);
         setDeletedWorkoutId(id);
-        // dispatch(deleteWorkout(id));
+        try {
+            setRequestStatus("pending");
+            dispatch(deleteWorkout(id)).unwrap();
+        } catch (err) {
+            console.error("Failed to delete post: ", err);
+        } finally {
+            setRequestStatus("idle");
+        }
     }
-
+    console.log(requestStatus);
     return (
         <div className="delete-workout-confirmation">
             <p className="delete-workout-text">Are you sure?</p>

@@ -15,8 +15,37 @@ export const fetchWorkouts = createAsyncThunk("/fetchWorkouts", async () => {
 export const createWorkout = createAsyncThunk(
     "/postWorkouts",
     async newWorkout => {
+        const date = new Date();
         try {
-            const response = await axios.post(WORKOUTS_URL, newWorkout);
+            const response = await axios.post(WORKOUTS_URL, {
+                ...newWorkout,
+                createdAt: date,
+            });
+            return response.data;
+        } catch (err) {
+            return err.message;
+        }
+    }
+);
+
+export const deleteWorkout = createAsyncThunk("/deleteWorkout", async id => {
+    try {
+        await axios.delete(`${WORKOUTS_URL}/${id}`, id);
+        return id;
+    } catch (err) {
+        return err.message;
+    }
+});
+
+export const updateWorkout = createAsyncThunk(
+    "/updateWorkout",
+    async workout => {
+        try {
+            const response = await axios.patch(
+                `${WORKOUTS_URL}/${workout._id}`,
+                workout
+            );
+
             return response.data;
         } catch (err) {
             return err.message;

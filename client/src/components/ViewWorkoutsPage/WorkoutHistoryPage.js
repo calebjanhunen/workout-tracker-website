@@ -24,10 +24,10 @@ const ViewWorkoutsPage = () => {
     const isLoading = useSelector(state => state.loadingReducer);
     const [reload, setReload] = React.useState(false);
     const [changedWorkoutId, setChangedWorkoutId] = React.useState(" ");
-    console.log(workouts);
+
     React.useEffect(() => {
-        if (workoutsStatus === "idle") dispatch(fetchWorkouts());
-    }, [workoutsStatus, dispatch]);
+        dispatch(fetchWorkouts());
+    }, [dispatch, reload]);
 
     let displayContent;
     if (workoutsStatus === "loading") {
@@ -40,10 +40,7 @@ const ViewWorkoutsPage = () => {
         displayContent = workouts.map(workout => (
             <WorkoutCard
                 key={workout._id}
-                title={workout.name}
-                date={workout.createdAt}
-                exercises={workout.exercises}
-                id={workout._id}
+                workoutInfo={workout}
                 setReload={setReload}
                 setChangedWorkoutId={setChangedWorkoutId}
             />
@@ -57,7 +54,7 @@ const ViewWorkoutsPage = () => {
                 <div className="workout-history-page__cards">
                     {displayContent}
                 </div>
-                <Calendar className="react-calendar" />
+                {/* <Calendar className="react-calendar" /> */}
             </div>
         </div>
     );

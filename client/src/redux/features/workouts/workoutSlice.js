@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchWorkouts, createWorkout } from "./workoutActions";
+import {
+    fetchWorkouts,
+    createWorkout,
+    deleteWorkout,
+    updateWorkout,
+} from "./workoutActions";
 
 const initialState = {
     workouts: [],
@@ -24,14 +29,25 @@ export const workoutSlice = createSlice({
                 state.error = action.error.message;
             })
             .addCase(createWorkout.fulfilled, (state, action) => {
-                state.status = "succeeeded";
+                state.status = "succeeded";
                 state.workouts = [...state.workouts, action.payload];
+            })
+            .addCase(deleteWorkout.fulfilled, (state, action) => {
+                state.status = "succeeded";
+                state.workouts = state.workouts.filter(
+                    workout => workout._id !== action.payload
+                );
+            })
+            .addCase(updateWorkout.fulfilled, (state, action) => {
+                state.status = "succeeded";
+                state.workouts = state.workouts.map(workout =>
+                    workout._id === action.payload._id
+                        ? action.payload
+                        : workout
+                );
             });
     },
 });
-
-export const { getAllWorkouts, deleteWorkout, updateWorkout } =
-    workoutSlice.actions;
 
 export const selectAllWorkouts = state => state.workouts.workouts;
 export const getWorkoutsStatus = state => state.workouts.status;

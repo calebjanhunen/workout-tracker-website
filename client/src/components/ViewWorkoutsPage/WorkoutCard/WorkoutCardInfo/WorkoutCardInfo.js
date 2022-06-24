@@ -1,16 +1,13 @@
 import React from "react";
 import moment from "moment";
-import TrashBinImage from "../../../images/trash-bin.png";
-import EditIcon from "../../../images/edit-btn-icon.png";
+import TrashBinImage from "../../../../images/trash-bin.png";
+import EditIcon from "../../../../images/edit-btn-icon.png";
 
 import "./WorkoutCardStyles.css";
 import DeleteWorkoutModal from "./DeleteWorkoutModal";
 
 const WorkoutCardInfo = ({
-    title,
-    date,
-    exercises,
-    id,
+    workoutInfo,
     setShowEditForm,
     setDeletedWorkoutId,
 }) => {
@@ -20,7 +17,7 @@ const WorkoutCardInfo = ({
     function displayWorkoutInfo() {
         return (
             <div className="workout-card__more-info">
-                {exercises.map((exercise, index) => (
+                {workoutInfo.exercises.map((exercise, index) => (
                     <div key={index} className="exercise">
                         <h3
                             className="exercise-name"
@@ -52,6 +49,7 @@ const WorkoutCardInfo = ({
             </div>
         );
     }
+
     return (
         <div
             onClick={e => {
@@ -66,7 +64,7 @@ const WorkoutCardInfo = ({
             className="workout-card"
         >
             <div className="workout-card__header">
-                <h1 className="workout-card__title">{title}</h1>
+                <h1 className="workout-card__title">{workoutInfo.name}</h1>
                 <button
                     className="edit-btn"
                     onClick={() => setShowEditForm(prev => !prev)}
@@ -76,7 +74,7 @@ const WorkoutCardInfo = ({
                 {showDeleteWorkout ? (
                     <DeleteWorkoutModal
                         setShowDeleteWorkout={setShowDeleteWorkout}
-                        id={id}
+                        id={workoutInfo._id}
                         setDeletedWorkoutId={setDeletedWorkoutId}
                     />
                 ) : (
@@ -96,7 +94,7 @@ const WorkoutCardInfo = ({
             </div>
             <div className="workout-card__time-values">
                 <h2 className="time-values__date">
-                    {moment(date).format("MMM DD")}
+                    {moment(workoutInfo.date).format("MMM DD")}
                 </h2>
                 <h2 className="time-values__workout-length">Workout Length</h2>
             </div>
@@ -105,9 +103,9 @@ const WorkoutCardInfo = ({
                     displayWorkoutInfo()
                 ) : (
                     <h2 className="exercises__num-exercises">
-                        {exercises.length > 1
-                            ? `${exercises.length} Exercises`
-                            : `${exercises.length} Exercise`}
+                        {workoutInfo.exercises.length > 1
+                            ? `${workoutInfo.exercises.length} Exercises`
+                            : `${workoutInfo.exercises.length} Exercise`}
                     </h2>
                 )}
             </div>

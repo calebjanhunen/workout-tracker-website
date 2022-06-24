@@ -1,27 +1,23 @@
 import React from "react";
 import moment from "moment";
-import { useDispatch } from "react-redux";
-import { nanoid } from "nanoid";
-
-// import {
-//     getWorkouts,
-//     updateWorkout,
-// } from "../../../../redux/actions/workoutActions.js";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import "./EditWorkoutFormStyles.css";
+import { updateWorkout } from "../../../../redux/features/workouts/workoutActions";
 
 const EditWorkoutForm = ({
-    title,
-    date,
-    exercises,
-    id,
+    workoutInfo,
     setShowEditForm,
     setReload,
     setEditedWorkoutId,
 }) => {
     const dispatch = useDispatch();
-    const [workoutName, setWorkoutName] = React.useState(title);
-    const [exerciseForm, setExerciseForm] = React.useState(exercises);
+    const navigate = useNavigate();
+    const [workoutName, setWorkoutName] = React.useState(workoutInfo.name);
+    const [exerciseForm, setExerciseForm] = React.useState(
+        workoutInfo.exercises
+    );
 
     function getExercise(exerciseId) {
         return exerciseForm.filter(exercise => exercise._id === exerciseId);
@@ -102,8 +98,6 @@ const EditWorkoutForm = ({
     }
 
     function handleDeleteExercise(e, exerciseIndex) {
-        // console.log(exerciseIndex);
-        // console.log(e.target.parentElement);
         e.target.parentElement.classList.add("fade-out-effect");
         setTimeout(() => {
             setExerciseForm(prev =>
@@ -114,7 +108,6 @@ const EditWorkoutForm = ({
     }
 
     function handleEditExerciseName(e, exerciseIndex) {
-        // console.log(exerciseIndex);
         setExerciseForm(prev =>
             prev.map((exercise, index) =>
                 index === exerciseIndex
@@ -139,19 +132,23 @@ const EditWorkoutForm = ({
         if (isInvalidSetInput) return console.log("Enter set or weight value");
         if (isInvalidExerciseName) return console.log("Enter exercise name");
 
-        // dispatch(
-        //     updateWorkout(id, {
-        //         name: workoutName,
-        //         exercises: exerciseForm,
-        //         _id: id,
-        //     })
-        // );
-        setEditedWorkoutId(id);
-        // dispatch(getWorkouts());
+        setEditedWorkoutId(workoutInfo._id);
+        try {
+            dispatch(
+                updateWorkout({
+                    name: workoutName,
+                    exercises: exerciseForm,
+                    _id: workoutInfo._id,
+                    createdAt: workoutInfo.createdAt,
+                })
+            ).unwrap();
+        } catch (err) {
+            console.error("Could not update post: ", err);
+        }
+
+        // navigate("/WorkoutHistory");
         setReload(prev => !prev);
         setShowEditForm(false);
-        // setWorkoutName("");
-        // setExerciseForm([]);
     }
 
     function displayWorkoutInfo() {
@@ -245,7 +242,7 @@ const EditWorkoutForm = ({
                 <input
                     name="edit-form__workoutName"
                     type="text"
-                    defaultValue={title}
+                    defaultValue={workoutInfo.name}
                     onChange={e => setWorkoutName(e.target.value)}
                 />
                 <button className="submit-btn" onClick={handleSubmit}>
@@ -254,7 +251,7 @@ const EditWorkoutForm = ({
             </div>
             <div className="workout-card__time-values">
                 <h2 className="time-values__date">
-                    {moment(date).format("MMM DD")}
+                    {moment(workoutInfo.date).format("MMM DD")}
                 </h2>
                 <h2 className="time-values__workout-length">Workout Length</h2>
             </div>
