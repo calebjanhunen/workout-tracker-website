@@ -1,30 +1,24 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { deleteWorkout } from "../../../../redux/features/workouts/workoutActions";
-
-// import { deleteWorkout } from "../../../redux/actions/workoutActions";
+import { useDeleteWorkoutMutation } from "../../../../redux/features/api/workoutsApi";
 
 const DeleteWorkoutModal = ({
     setShowDeleteWorkout,
     id,
     setDeletedWorkoutId,
+    setIsUpdating,
 }) => {
-    const dispatch = useDispatch();
-    const [requestStatus, setRequestStatus] = React.useState("idle");
+    const [deleteWorkout] = useDeleteWorkoutMutation();
 
-    function handleDeleteWorkout() {
+    async function handleDeleteWorkout() {
         setShowDeleteWorkout(prev => !prev);
+
         setDeletedWorkoutId(id);
-        try {
-            setRequestStatus("pending");
-            dispatch(deleteWorkout(id)).unwrap();
-        } catch (err) {
-            console.error("Failed to delete post: ", err);
-        } finally {
-            setRequestStatus("idle");
-        }
+
+        setIsUpdating(true);
+        await deleteWorkout(id);
+        setIsUpdating(false);
     }
-    console.log(requestStatus);
+
     return (
         <div className="delete-workout-confirmation">
             <p className="delete-workout-text">Are you sure?</p>

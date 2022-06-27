@@ -1,10 +1,8 @@
 import React from "react";
 import moment from "moment";
-import TrashBinImage from "../../../../images/trash-bin.png";
 import EditIcon from "../../../../images/edit-btn-icon.png";
 
 import "./WorkoutCardStyles.css";
-import DeleteWorkoutModal from "./DeleteWorkoutModal";
 
 const WorkoutCardInfo = ({
     workoutInfo,
@@ -12,7 +10,6 @@ const WorkoutCardInfo = ({
     setDeletedWorkoutId,
 }) => {
     const [showWorkoutInfo, setShowWorkoutInfo] = React.useState(true);
-    const [showDeleteWorkout, setShowDeleteWorkout] = React.useState(false);
 
     function displayWorkoutInfo() {
         return (
@@ -71,26 +68,6 @@ const WorkoutCardInfo = ({
                 >
                     <img className="edit-icon-img" src={EditIcon} alt="Edit" />
                 </button>
-                {showDeleteWorkout ? (
-                    <DeleteWorkoutModal
-                        setShowDeleteWorkout={setShowDeleteWorkout}
-                        id={workoutInfo._id}
-                        setDeletedWorkoutId={setDeletedWorkoutId}
-                    />
-                ) : (
-                    <button
-                        className="delete-btn"
-                        onClick={() => {
-                            setShowDeleteWorkout(prev => !prev);
-                        }}
-                    >
-                        <img
-                            src={TrashBinImage}
-                            alt="Trash Bin"
-                            className="trash-bin-img"
-                        ></img>
-                    </button>
-                )}
             </div>
             <div className="workout-card__time-values">
                 <h2 className="time-values__date">

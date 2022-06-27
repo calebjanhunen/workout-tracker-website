@@ -1,23 +1,24 @@
 import React from "react";
 import moment from "moment";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
+import TrashBinImage from "../../../../images/trash-bin.png";
 import "./EditWorkoutFormStyles.css";
-import { updateWorkout } from "../../../../redux/features/workouts/workoutActions";
+import { useUpdateWorkoutMutation } from "../../../../redux/features/api/workoutsApi";
+import DeleteWorkoutModal from "./DeleteWorkoutModal";
 
 const EditWorkoutForm = ({
     workoutInfo,
     setShowEditForm,
-    setReload,
-    setEditedWorkoutId,
+    setChangedWorkoutId,
+    setIsUpdating,
 }) => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
     const [workoutName, setWorkoutName] = React.useState(workoutInfo.name);
     const [exerciseForm, setExerciseForm] = React.useState(
         workoutInfo.exercises
     );
+    const [showDeleteWorkout, setShowDeleteWorkout] = React.useState(false);
+
+    const [updateWorkout] = useUpdateWorkoutMutation();
 
     function getExercise(exerciseId) {
         return exerciseForm.filter(exercise => exercise._id === exerciseId);
@@ -117,7 +118,7 @@ const EditWorkoutForm = ({
         );
     }
 
-    function handleSubmit() {
+    async function handleSubmit() {
         let isInvalidSetInput = false;
         let isInvalidExerciseName = false;
         exerciseForm.forEach(exercise => {
@@ -132,22 +133,17 @@ const EditWorkoutForm = ({
         if (isInvalidSetInput) return console.log("Enter set or weight value");
         if (isInvalidExerciseName) return console.log("Enter exercise name");
 
-        setEditedWorkoutId(workoutInfo._id);
-        try {
-            dispatch(
-                updateWorkout({
-                    name: workoutName,
-                    exercises: exerciseForm,
-                    _id: workoutInfo._id,
-                    createdAt: workoutInfo.createdAt,
-                })
-            ).unwrap();
-        } catch (err) {
-            console.error("Could not update post: ", err);
-        }
+        setIsUpdating(true);
 
-        // navigate("/WorkoutHistory");
-        setReload(prev => !prev);
+        await updateWorkout({
+            name: workoutName,
+            exercises: exerciseForm,
+            _id: workoutInfo._id,
+            createdAt: workoutInfo.createdAt,
+        });
+        setIsUpdating(false);
+
+        setChangedWorkoutId(workoutInfo._id);
         setShowEditForm(false);
     }
 
@@ -248,6 +244,27 @@ const EditWorkoutForm = ({
                 <button className="submit-btn" onClick={handleSubmit}>
                     ✓
                 </button>
+                {showDeleteWorkout ? (
+                    <DeleteWorkoutModal
+                        setShowDeleteWorkout={setShowDeleteWorkout}
+                        id={workoutInfo._id}
+                        setDeletedWorkoutId={setChangedWorkoutId}
+                        setIsUpdating={setIsUpdating}
+                    />
+                ) : (
+                    <button
+                        className="delete-btn"
+                        onClick={() => {
+                            setShowDeleteWorkout(prev => !prev);
+                        }}
+                    >
+                        <img
+                            src={TrashBinImage}
+                            alt="Trash Bin"
+                            className="trash-bin-img"
+                        ></img>
+                    </button>
+                )}
             </div>
             <div className="workout-card__time-values">
                 <h2 className="time-values__date">

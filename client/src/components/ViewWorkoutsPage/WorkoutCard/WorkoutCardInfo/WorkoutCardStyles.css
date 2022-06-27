@@ -17,19 +17,6 @@
     font-weight: 1000;
 }
 
-.delete-btn {
-    /* margin-left: auto; */
-    margin-right: 10px;
-    border: none;
-    background-color: white;
-    cursor: pointer;
-}
-
-.trash-bin-img {
-    width: 20px;
-    height: 20px;
-}
-
 .edit-btn {
     margin-left: auto;
     margin-right: 10px;
@@ -41,30 +28,6 @@
 .edit-icon-img {
     width: 20px;
     height: 20px;
-}
-
-.delete-workout-confirmation {
-    /* margin-left: auto; */
-    margin-right: 10px;
-    display: flex;
-}
-
-.reject-delete-btn,
-.confirm-delete-btn {
-    margin-left: 7px;
-    width: 40px;
-    cursor: pointer;
-
-    border-radius: 5px;
-    border: 1px solid;
-}
-
-.reject-delete-btn {
-    background-color: aliceblue;
-}
-
-.confirm-delete-btn {
-    background-color: rgba(255, 0, 0, 0.616);
 }
 
 .workout-card__time-values {

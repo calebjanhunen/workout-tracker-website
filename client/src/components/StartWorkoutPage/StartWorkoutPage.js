@@ -1,18 +1,55 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-import LoadingSpinner from "../../images/Spinner-1s-200px.gif";
 import "./StartWorkoutPageStyles.css";
 import WorkoutForm from "./WorkoutForm/WorkoutForm";
+import LoadingSpinner from "../LoadingSpinner.js";
 
 const StartWorkoutPage = () => {
-    const isLoading = useSelector(state => state.loadingReducer);
     const [showWorkoutForm, setShowWorkoutForm] = React.useState(false);
     const [isSubmitted, setIsSubmitted] = React.useState(false);
+    const [isLoading, setIsLoading] = React.useState(false);
 
-    return (
-        <div className="start-workout-page">
-            {isLoading ? (
+    let displayContent;
+    if (isLoading) {
+        displayContent = <p>Loading...</p>;
+    } else {
+        if (showWorkoutForm) {
+            displayContent = (
+                <WorkoutForm
+                    setShowWorkoutForm={setShowWorkoutForm}
+                    setIsSubmitted={setIsSubmitted}
+                    setIsLoading={setIsLoading}
+                />
+            );
+        } else {
+            displayContent = (
+                <div className="start-workout-content">
+                    {isSubmitted && (
+                        <h1>
+                            Workout Submitted, Click the button to start a new
+                            workout
+                        </h1>
+                    )}
+                    <button
+                        className="start-workout-btn"
+                        onClick={() => setShowWorkoutForm(prev => !prev)}
+                    >
+                        Start Empty Workout
+                    </button>
+                    ;
+                </div>
+            );
+        }
+    }
+
+    return <div className="start-workout-page">{displayContent}</div>;
+};
+
+export default StartWorkoutPage;
+
+/*
+{isLoading ? (
                 <img
                     className="loading-spinner"
                     src={LoadingSpinner}
@@ -39,8 +76,4 @@ const StartWorkoutPage = () => {
                     </button>
                 </div>
             )}
-        </div>
-    );
-};
-
-export default StartWorkoutPage;
+*/

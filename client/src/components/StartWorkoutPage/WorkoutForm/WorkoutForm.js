@@ -1,14 +1,12 @@
 import React from "react";
 import { nanoid } from "nanoid";
-import { useDispatch, useSelector } from "react-redux";
 
 import "./WorkoutFormStyles.css";
 import ExerciseModal from "../ExerciseModal/ExerciseModal";
-import { createWorkout } from "../../../redux/features/workouts/workoutActions";
 import SetForm from "../SetForm/SetForm";
+import { useCreateWorkoutMutation } from "../../../redux/features/api/workoutsApi";
 
-const WorkoutForm = ({ setShowWorkoutForm, setIsSubmitted }) => {
-    const dispatch = useDispatch();
+const WorkoutForm = ({ setShowWorkoutForm, setIsSubmitted, setIsLoading }) => {
     const [workoutName, setWorkoutName] = React.useState("");
     const [exerciseName, setExerciseName] = React.useState("");
     const [exerciseForm, setExerciseForm] = React.useState([]);
@@ -17,6 +15,8 @@ const WorkoutForm = ({ setShowWorkoutForm, setIsSubmitted }) => {
     const [showExerciseModal, setShowExerciseModal] = React.useState(false);
     const [isEdit, setIsEdit] = React.useState(false);
     const [exerToEdit, setExerToEdit] = React.useState({});
+
+    const [createWorkout] = useCreateWorkoutMutation();
 
     function closeWorkoutForm() {
         setWorkoutName("");
@@ -53,19 +53,15 @@ const WorkoutForm = ({ setShowWorkoutForm, setIsSubmitted }) => {
         setExerciseForm(exerciseForm.filter(exercise => exercise.id !== id));
     }
 
-    function handleSubmit() {
-        console.log(workoutName, exerciseForm);
+    async function handleSubmit() {
         if (workoutName === "") return console.log("Enter workout name");
-        try {
-            dispatch(
-                createWorkout({ name: workoutName, exercises: exerciseForm })
-            ).unwrap();
 
-            closeWorkoutForm();
-            setIsSubmitted(true);
-        } catch (err) {
-            console.error("Failed to save post: ", err);
-        }
+        setIsLoading(true);
+        await createWorkout({ name: workoutName, exercises: exerciseForm });
+        setIsLoading(false);
+
+        closeWorkoutForm();
+        setIsSubmitted(true);
     }
 
     function displayExercises() {

@@ -2,29 +2,35 @@ import React from "react";
 
 import EditWorkoutForm from "./EditWorkoutForm/EditWorkoutForm";
 import WorkoutCardInfo from "./WorkoutCardInfo/WorkoutCardInfo";
-import { getWorkoutsStatus } from "../../../redux/features/workouts/workoutSlice";
-import { useSelector } from "react-redux";
+import { useGetWorkoutsQuery } from "../../../redux/features/api/workoutsApi";
+import "./WorkoutCardInfo/WorkoutCardStyles.css";
 
-let WorkoutCard = ({ workoutInfo, setReload, setChangedWorkoutId }) => {
+const WorkoutCard = ({ workoutInfo }) => {
     const [showEditForm, setShowEditForm] = React.useState(false);
-    const workoutsStatus = useSelector(getWorkoutsStatus);
-    console.log(workoutInfo);
+    const [changedWorkoutId, setChangedWorkoutId] = React.useState("");
+    const [isUpdating, setIsUpdating] = React.useState(false);
+    const { isFetching } = useGetWorkoutsQuery();
 
-    return showEditForm ? (
-        <EditWorkoutForm
-            workoutInfo={workoutInfo}
-            setShowEditForm={setShowEditForm}
-            setReload={setReload}
-            setEditedWorkoutId={setChangedWorkoutId}
-        />
-    ) : (
-        <WorkoutCardInfo
-            workoutInfo={workoutInfo}
-            setShowEditForm={setShowEditForm}
-            setDeletedWorkoutId={setChangedWorkoutId}
-        />
-    );
+    let displayContent;
+    if ((isFetching || isUpdating) && changedWorkoutId === workoutInfo._id) {
+        displayContent = <div className="workout-card">Loading...</div>;
+    } else {
+        displayContent = showEditForm ? (
+            <EditWorkoutForm
+                workoutInfo={workoutInfo}
+                setShowEditForm={setShowEditForm}
+                setChangedWorkoutId={setChangedWorkoutId}
+                setIsUpdating={setIsUpdating}
+            />
+        ) : (
+            <WorkoutCardInfo
+                workoutInfo={workoutInfo}
+                setShowEditForm={setShowEditForm}
+            />
+        );
+    }
+
+    return <>{displayContent}</>;
 };
 
-WorkoutCard = React.memo(WorkoutCard);
 export default WorkoutCard;
