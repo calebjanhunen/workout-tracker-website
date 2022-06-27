@@ -37,7 +37,6 @@ const StartWorkoutPage = () => {
                     >
                         Start Empty Workout
                     </button>
-                    ;
                 </div>
             );
         }
