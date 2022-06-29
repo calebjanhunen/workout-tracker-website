@@ -55,6 +55,7 @@ const CreateExerciseModal = ({ setShowModal }) => {
                         <div className="create-exercise-modal__content">
                             <h1>Create Exercise</h1>
                             <input
+                                id="exercise-name"
                                 className={
                                     showInvalidInput ? "text-input-error" : ""
                                 }

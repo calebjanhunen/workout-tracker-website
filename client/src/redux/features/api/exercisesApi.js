@@ -10,10 +10,8 @@ export const exercisesApi = createApi({
             providesTags: ["Exercises"],
         }),
         getExercisesByPage: builder.query({
-            query: page => ({
-                url: `/exercises/${page}`,
-                method: "GET",
-            }),
+            query: ({ pageNum, resultsPerPage }) =>
+                `/exercises?limit=${resultsPerPage}&page=${pageNum}`,
             providesTags: ["Exercises"],
         }),
         createExercise: builder.mutation({
@@ -24,6 +22,14 @@ export const exercisesApi = createApi({
             }),
             invalidatesTags: ["Exercises"],
         }),
+        deleteExercise: builder.mutation({
+            query: id => ({
+                url: `/exercises/${id}`,
+                method: "DELETE",
+                body: id,
+            }),
+            invalidatesTags: ["Exercises"],
+        }),
     }),
 });
 
@@ -31,4 +37,5 @@ export const {
     useGetExercisesQuery,
     useGetExercisesByPageQuery,
     useCreateExerciseMutation,
+    useDeleteExerciseMutation,
 } = exercisesApi;

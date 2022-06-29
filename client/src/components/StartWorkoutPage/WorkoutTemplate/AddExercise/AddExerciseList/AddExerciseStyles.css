@@ -49,12 +49,19 @@ input[name="search-exercise"] {
 
 /*add button*/
 .exercise-list-item button {
-    margin-left: auto;
     width: 40px;
     border: 1px solid;
 }
-button:hover {
+
+.exercise-list-item .add-btn {
+    margin-right: 5px;
+}
+.exercise-list-item .add-btn:hover {
     filter: brightness(85%);
+}
+
+.exercise-list-item .edit-btn {
+    border: none;
 }
 
 .add-exercise-footer {
@@ -90,4 +97,19 @@ button:hover {
 
 .change-page-icon {
     font-size: 30px;
+}
+
+.page-numbers button {
+    width: 20px;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.active-page {
+    cursor: default;
+    filter: brightness(85%);
+}
+
+.options-menu {
+    height: 150px;
 }

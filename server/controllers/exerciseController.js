@@ -12,19 +12,9 @@ export async function createExercise(req, res) {
 
 export async function getExercises(req, res) {
     try {
-        const data = await Exercise.find();
-        res.json(data);
-    } catch (err) {
-        res.status(400).json({ message: err });
-    }
-}
-
-export async function getExercisesByPage(req, res) {
-    const pageNum = req.params.page;
-    try {
         const data = await Exercise.find()
-            .limit(10)
-            .skip(10 * (pageNum - 1));
+            .limit(parseInt(req.query.limit))
+            .skip(parseInt(req.query.limit) * (parseInt(req.query.page) - 1));
         res.json(data);
     } catch (err) {
         res.status(400).json({ message: err });
@@ -34,7 +24,8 @@ export async function getExercisesByPage(req, res) {
 export async function deleteExercise(req, res) {
     const _id = req.params.id;
     try {
-        await Exercise.findByIdAndDelete(_id);
+        const deletedExercise = await Exercise.findByIdAndDelete(_id);
+        res.json(deletedExercise);
     } catch (err) {
         res.status(400).json({ message: err });
     }

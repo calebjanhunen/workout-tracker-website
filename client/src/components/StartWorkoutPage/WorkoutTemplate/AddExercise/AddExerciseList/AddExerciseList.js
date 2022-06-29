@@ -7,27 +7,32 @@ import {
     useGetExercisesQuery,
     useGetExercisesByPageQuery,
 } from "../../../../../redux/features/api/exercisesApi";
+import SingleExercise from "./SingleExercise";
 
 const AddExerciseList = ({ showModal, setShowModal }) => {
     const [pageNum, setPageNum] = React.useState(1);
+    const [resultsPerPage, setResutsPerPage] = React.useState(5);
     const { data: allExercises } = useGetExercisesQuery();
     const {
         data: exercisesByPage,
         isLoading,
         isFetching,
         isSuccess,
-    } = useGetExercisesByPageQuery(pageNum);
-    const maxNumPages = Math.ceil(allExercises.length / 10);
+    } = useGetExercisesByPageQuery({ pageNum, resultsPerPage });
+
     let exercisesDisplay;
     if (isLoading || isFetching) {
         exercisesDisplay = <p>Loading...</p>;
     } else if (isSuccess) {
         exercisesDisplay = exercisesByPage.map(exercise => (
-            <li key={exercise._id} className="exercise-list-item">
-                <p>{exercise.name}</p>
-                <button>Add</button>
-            </li>
+            <SingleExercise key={exercise._id} exercise={exercise} />
         ));
+    }
+
+    const maxNumPages = Math.ceil(allExercises?.length / resultsPerPage);
+    const pageNumbers = [];
+    for (let i = 1; i <= maxNumPages; i++) {
+        pageNumbers.push(i);
     }
 
     return (
@@ -62,6 +67,19 @@ const AddExerciseList = ({ showModal, setShowModal }) => {
                             icon={faArrowLeft}
                         />
                     </button>
+                    <div className="page-numbers">
+                        {pageNumbers.map(page => (
+                            <button
+                                key={page}
+                                className={
+                                    page === pageNum ? "active-page" : ""
+                                }
+                                onClick={() => setPageNum(page)}
+                            >
+                                {page}
+                            </button>
+                        ))}
+                    </div>
                     <button
                         className="page-btn-right"
                         onClick={() => setPageNum(prev => prev + 1)}
