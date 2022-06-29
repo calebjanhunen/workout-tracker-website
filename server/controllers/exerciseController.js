@@ -15,6 +15,7 @@ export async function getExercises(req, res) {
         const data = await Exercise.find()
             .limit(parseInt(req.query.limit))
             .skip(parseInt(req.query.limit) * (parseInt(req.query.page) - 1));
+        Exercise.aggregate();
         res.json(data);
     } catch (err) {
         res.status(400).json({ message: err });

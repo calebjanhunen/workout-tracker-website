@@ -12,6 +12,7 @@ import SingleExercise from "./SingleExercise";
 const AddExerciseList = ({ showModal, setShowModal }) => {
     const [pageNum, setPageNum] = React.useState(1);
     const [resultsPerPage, setResutsPerPage] = React.useState(5);
+    const [searchTerm, setSearchTerm] = React.useState("");
     const { data: allExercises } = useGetExercisesQuery();
     const {
         data: exercisesByPage,
@@ -24,9 +25,18 @@ const AddExerciseList = ({ showModal, setShowModal }) => {
     if (isLoading || isFetching) {
         exercisesDisplay = <p>Loading...</p>;
     } else if (isSuccess) {
-        exercisesDisplay = exercisesByPage.map(exercise => (
-            <SingleExercise key={exercise._id} exercise={exercise} />
-        ));
+        if (searchTerm) {
+            const matchingExercises = allExercises.filter(exercise =>
+                exercise.name.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            exercisesDisplay = matchingExercises.map(exercise => (
+                <SingleExercise key={exercise._id} exercise={exercise} />
+            ));
+        } else {
+            exercisesDisplay = exercisesByPage.map(exercise => (
+                <SingleExercise key={exercise._id} exercise={exercise} />
+            ));
+        }
     }
 
     const maxNumPages = Math.ceil(allExercises?.length / resultsPerPage);
@@ -47,6 +57,8 @@ const AddExerciseList = ({ showModal, setShowModal }) => {
                     <input
                         name="search-exercise"
                         placeholder="Search For Exercise"
+                        onChange={e => setSearchTerm(e.target.value)}
+                        autoComplete="off"
                     />
                     <button
                         className="create-exercise-btn"
