@@ -3,15 +3,17 @@ import express from "express";
 import cors from "cors";
 
 import workoutRouter from "./routers/workoutRouter.js";
+import exerciseRouter from "./routers/exerciseRouter.js";
 
 const app = express();
 
 app.use(cors());
 
 app.use("/workouts", workoutRouter);
+app.use("/exercises", exerciseRouter);
 
 app.get("/", (req, res) => {
-    res.send("hey");
+    res.send("Welcome to workout tracker api");
 });
 
 mongoose

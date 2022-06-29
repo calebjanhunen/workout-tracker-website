@@ -1,14 +1,16 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import "./StartWorkoutPageStyles.css";
 import WorkoutForm from "./WorkoutForm/WorkoutForm";
 import LoadingSpinner from "../LoadingSpinner.js";
 
 const StartWorkoutPage = () => {
+    const navigate = useNavigate();
     const [showWorkoutForm, setShowWorkoutForm] = React.useState(false);
     const [isSubmitted, setIsSubmitted] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(false);
+    const [showTemplates, setShowTemplates] = React.useState(false);
 
     let displayContent;
     if (isLoading) {
@@ -31,12 +33,39 @@ const StartWorkoutPage = () => {
                             workout
                         </h1>
                     )}
-                    <button
-                        className="start-workout-btn"
-                        onClick={() => setShowWorkoutForm(prev => !prev)}
-                    >
-                        Start Empty Workout
-                    </button>
+                    <div>
+                        <button
+                            className="start-workout-btn"
+                            onClick={() => setShowWorkoutForm(prev => !prev)}
+                        >
+                            Start Empty Workout
+                        </button>
+                        <button
+                            className="start-workout-btn"
+                            onClick={() => {
+                                setShowTemplates(true);
+                            }}
+                        >
+                            Start From Template
+                        </button>
+                    </div>
+                    {showTemplates && (
+                        <div className="template-dropdown">
+                            <label>Select a template: </label>
+                            <select>
+                                <option>Create a template</option>
+                                <option>Legs</option>
+                            </select>
+                            <button
+                                className="start-template-btn"
+                                onClick={() =>
+                                    navigate("/create-workout-template")
+                                }
+                            >
+                                GO
+                            </button>
+                        </div>
+                    )}
                 </div>
             );
         }

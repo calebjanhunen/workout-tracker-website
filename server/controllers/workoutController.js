@@ -1,5 +1,3 @@
-import mongoose from "mongoose";
-
 import Workout from "../models/workout.js";
 
 export async function createWorkout(req, res) {

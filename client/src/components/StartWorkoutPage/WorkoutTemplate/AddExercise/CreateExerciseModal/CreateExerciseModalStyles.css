@@ -1,0 +1,68 @@
+/*Create Exercise Modal*/
+.blurred {
+    filter: blur(2px);
+    -webkit-filter: blur(2px);
+    pointer-events: none;
+}
+
+.create-exercise-modal__background {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(128, 128, 128, 0.9);
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.create-exercise-modal__container {
+    background-color: white;
+    border: solid;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.create-exercise-modal__close-btn {
+    display: flex;
+}
+
+.create-exercise-modal__close-btn button {
+    margin-left: auto;
+    background-color: white;
+    font-size: 20px;
+}
+
+input[name="create-exercise__exercise-name"] {
+    margin-top: 10px;
+    width: 200px;
+    height: 30px;
+    border-radius: 10px;
+    padding-left: 5px;
+}
+
+/*invalid input */
+.text-input-error {
+    position: relative;
+    animation: shake 0.1s linear;
+    animation-iteration-count: 3;
+}
+@keyframes shake {
+    0% {
+        left: -5px;
+    }
+    100% {
+        right: -5px;
+    }
+}
+.invalid-input {
+    color: red;
+    font-size: 15px;
+}
+
+.hidden {
+    display: none;
+}
+
+.create-exercise-modal__footer {
+    margin-top: 10px;
+}

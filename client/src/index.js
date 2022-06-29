@@ -6,15 +6,15 @@ import { ApiProvider } from "@reduxjs/toolkit/dist/query/react";
 
 import "./index.css";
 import App from "./App";
-// import { store } from "./redux/store";
 import { workoutsApi } from "./redux/features/api/workoutsApi.js";
+import { exercisesApi } from "./redux/features/api/exercisesApi.js";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
-        {/* <Provider store={store}> */}
         <ApiProvider api={workoutsApi}>
-            <App />
+            <ApiProvider api={exercisesApi}>
+                <App />
+            </ApiProvider>
         </ApiProvider>
-        {/* </Provider> */}
     </BrowserRouter>
 );

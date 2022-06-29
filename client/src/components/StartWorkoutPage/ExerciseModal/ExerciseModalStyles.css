@@ -13,7 +13,6 @@
     background-color: white;
     box-shadow: 0 0 10px 5px grey;
     border-radius: 10px;
-    filter: blur(-2px);
 }
 
 .exercise-modal__header {
