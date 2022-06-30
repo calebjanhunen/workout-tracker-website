@@ -2,16 +2,3 @@
     display: flex;
     justify-content: center;
 }
-
-/*Form*/
-.workout-template-form {
-    display: flex;
-    flex-direction: column;
-    width: 500px;
-    height: 100px;
-    justify-content: center;
-    background-color: blue;
-
-    margin: 20px;
-    margin-right: 100px;
-}

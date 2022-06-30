@@ -10,7 +10,7 @@ import { useDeleteExerciseMutation } from "../../../../../redux/features/api/exe
 
 import "./AddExerciseStyles.css";
 
-const SingleExercise = ({ exercise }) => {
+const SingleExercise = ({ exercise, setExerciseForm }) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [deleteExercise] = useDeleteExerciseMutation();
     const [isDeleting, setIsDeleting] = React.useState(false);
@@ -36,7 +36,17 @@ const SingleExercise = ({ exercise }) => {
         <li className="exercise-list-item">
             <p>{exercise.name}</p>
             <div style={{ marginLeft: "auto" }}>
-                <button className="add-btn">Add</button>
+                <button
+                    onClick={() =>
+                        setExerciseForm(prev => [
+                            ...prev,
+                            { name: exercise.name, _id: exercise._id },
+                        ])
+                    }
+                    className="add-btn"
+                >
+                    Add
+                </button>
                 <button
                     onClick={e => setAnchorEl(e.target)}
                     className="edit-btn"
@@ -45,7 +55,6 @@ const SingleExercise = ({ exercise }) => {
                 </button>
             </div>
             <Menu
-                keepMounted
                 open={Boolean(anchorEl)}
                 anchorEl={anchorEl}
                 onClose={handleClose}

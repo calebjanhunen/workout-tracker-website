@@ -1,0 +1,50 @@
+/*Form*/
+.workout-template-form {
+    margin: 20px;
+    /* height: 100px; */
+    width: 400px;
+    /* min-height: 100px; */
+
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 2px;
+}
+
+.workout-template-form h2 {
+    margin-bottom: 20px;
+}
+
+/*Single Exercise*/
+.single-exercise {
+    border-top: 1px solid;
+    margin-bottom: 10px;
+    background-color: white;
+}
+
+.single-exercise__header {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.single-exercise__header p {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.delete-exercise__btn {
+    margin-left: auto;
+    margin-right: 10px;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.delete-exercise-icon {
+    height: 17px;
+    width: 17px;
+}
+
+.delete-exercise-icon:hover {
+    /* filter: brightness(85%); */
+    color: red;
+}

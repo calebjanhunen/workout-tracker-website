@@ -7,6 +7,7 @@ import CreateExerciseModal from "./AddExercise/CreateExerciseModal/CreateExercis
 
 const WorkoutTemplate = () => {
     const [showModal, setShowModal] = React.useState(false);
+    const [exerciseForm, setExerciseForm] = React.useState([]);
 
     //Closes create exercise when click outside modal
     React.useEffect(() => {
@@ -26,10 +27,15 @@ const WorkoutTemplate = () => {
 
     return (
         <div className="workout-template-page">
-            <Form showModal={showModal} />
+            <Form
+                showModal={showModal}
+                exerciseForm={exerciseForm}
+                setExerciseForm={setExerciseForm}
+            />
             <AddExerciseList
                 showModal={showModal}
                 setShowModal={setShowModal}
+                setExerciseForm={setExerciseForm}
             />
             {showModal && <CreateExerciseModal setShowModal={setShowModal} />}
         </div>

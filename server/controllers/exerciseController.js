@@ -22,6 +22,16 @@ export async function getExercises(req, res) {
     }
 }
 
+export async function getExerciseById(req, res) {
+    const _id = req.params.id;
+    try {
+        const exercise = await Exercise.findById(_id);
+        res.json(exercise);
+    } catch (err) {
+        res.status(400).json({ message: err });
+    }
+}
+
 export async function deleteExercise(req, res) {
     const _id = req.params.id;
     try {

@@ -14,6 +14,10 @@ export const exercisesApi = createApi({
                 `/exercises?limit=${resultsPerPage}&page=${pageNum}`,
             providesTags: ["Exercises"],
         }),
+        getExerciseById: builder.query({
+            query: id => `/exercises/${id}`,
+            providesTags: ["Exercises"],
+        }),
         createExercise: builder.mutation({
             query: exercise => ({
                 url: "/exercises",
@@ -36,6 +40,7 @@ export const exercisesApi = createApi({
 export const {
     useGetExercisesQuery,
     useGetExercisesByPageQuery,
+    useGetExerciseByIdQuery,
     useCreateExerciseMutation,
     useDeleteExerciseMutation,
 } = exercisesApi;

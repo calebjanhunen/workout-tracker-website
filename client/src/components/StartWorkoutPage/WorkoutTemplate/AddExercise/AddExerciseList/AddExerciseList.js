@@ -9,7 +9,7 @@ import {
 } from "../../../../../redux/features/api/exercisesApi";
 import SingleExercise from "./SingleExercise";
 
-const AddExerciseList = ({ showModal, setShowModal }) => {
+const AddExerciseList = ({ showModal, setShowModal, setExerciseForm }) => {
     const [pageNum, setPageNum] = React.useState(1);
     const [resultsPerPage, setResutsPerPage] = React.useState(5);
     const [searchTerm, setSearchTerm] = React.useState("");
@@ -30,11 +30,19 @@ const AddExerciseList = ({ showModal, setShowModal }) => {
                 exercise.name.toLowerCase().includes(searchTerm.toLowerCase())
             );
             exercisesDisplay = matchingExercises.map(exercise => (
-                <SingleExercise key={exercise._id} exercise={exercise} />
+                <SingleExercise
+                    key={exercise._id}
+                    exercise={exercise}
+                    setExerciseForm={setExerciseForm}
+                />
             ));
         } else {
             exercisesDisplay = exercisesByPage.map(exercise => (
-                <SingleExercise key={exercise._id} exercise={exercise} />
+                <SingleExercise
+                    key={exercise._id}
+                    exercise={exercise}
+                    setExerciseForm={setExerciseForm}
+                />
             ));
         }
     }
