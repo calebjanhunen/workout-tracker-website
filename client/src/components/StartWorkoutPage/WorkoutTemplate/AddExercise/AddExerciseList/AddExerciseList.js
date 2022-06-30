@@ -6,7 +6,7 @@ import "./AddExerciseStyles.css";
 import {
     useGetExercisesQuery,
     useGetExercisesByPageQuery,
-} from "../../../../../redux/features/api/exercisesApi";
+} from "../../../../../redux/features/api/workoutTrackerApi.js";
 import SingleExercise from "./SingleExercise";
 
 const AddExerciseList = ({ showModal, setShowModal, setExerciseForm }) => {

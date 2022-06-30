@@ -4,7 +4,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./WorkoutHistoryStyles.css";
 
-import { useGetWorkoutsQuery } from "../../redux/features/api/workoutsApi";
+import { useGetWorkoutsQuery } from "../../redux/features/api/workoutTrackerApi";
 import WorkoutCard from "./WorkoutCard/WorkoutCard";
 import LoadingSpinner from "../LoadingSpinner";
 

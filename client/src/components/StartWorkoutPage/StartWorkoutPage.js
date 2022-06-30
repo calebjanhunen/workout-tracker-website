@@ -1,6 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+// import { useGetWorkoutTemplatesQuery } from "../../redux/features/api/workoutTemplatesApi";
+
 import "./StartWorkoutPageStyles.css";
 import WorkoutForm from "./WorkoutForm/WorkoutForm";
 import LoadingSpinner from "../LoadingSpinner.js";
@@ -11,6 +13,7 @@ const StartWorkoutPage = () => {
     const [isSubmitted, setIsSubmitted] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(false);
     const [showTemplates, setShowTemplates] = React.useState(false);
+    // const { data: workoutTemplates } = useGetWorkoutTemplatesQuery();
 
     let displayContent;
     if (isLoading) {

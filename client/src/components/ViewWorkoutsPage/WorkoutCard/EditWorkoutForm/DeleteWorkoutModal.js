@@ -1,5 +1,5 @@
 import React from "react";
-import { useDeleteWorkoutMutation } from "../../../../redux/features/api/workoutsApi";
+import { useDeleteWorkoutMutation } from "../../../../redux/features/api/workoutTrackerApi";
 
 const DeleteWorkoutModal = ({
     setShowDeleteWorkout,
