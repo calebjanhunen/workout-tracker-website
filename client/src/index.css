@@ -8,5 +8,12 @@
     box-sizing: border-box;
     margin: 0px;
     padding: 0px;
-    font-family: "Karla";
+    font-family: "Inter";
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }

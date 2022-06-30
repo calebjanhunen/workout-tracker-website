@@ -40,7 +40,11 @@ const SingleExercise = ({ exercise, setExerciseForm }) => {
                     onClick={() =>
                         setExerciseForm(prev => [
                             ...prev,
-                            { name: exercise.name, _id: exercise._id },
+                            {
+                                name: exercise.name,
+                                _id: exercise._id,
+                                numSets: 1,
+                            },
                         ])
                     }
                     className="add-btn"

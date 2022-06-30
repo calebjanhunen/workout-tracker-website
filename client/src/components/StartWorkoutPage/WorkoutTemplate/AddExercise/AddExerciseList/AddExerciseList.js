@@ -59,6 +59,7 @@ const AddExerciseList = ({ showModal, setShowModal, setExerciseForm }) => {
                 className={`add-exercise-container ${
                     showModal ? "blurred" : ""
                 }`}
+                style={{ maxHeight: `${167.6 + resultsPerPage * 50}px` }}
             >
                 <div className="add-exercise-content">
                     <h1 className="add-exercise-title">Exercises</h1>
