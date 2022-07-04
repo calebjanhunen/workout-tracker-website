@@ -4,7 +4,7 @@ import "./CreateExerciseModalStyles.css";
 import {
     useCreateExerciseMutation,
     useGetExercisesQuery,
-} from "../../../../../redux/features/api/workoutTrackerApi.js";
+} from "../../../../redux/features/api/workoutTrackerApi.js";
 
 const CreateExerciseModal = ({ setShowModal }) => {
     const [exerciseName, setExerciseName] = React.useState("");

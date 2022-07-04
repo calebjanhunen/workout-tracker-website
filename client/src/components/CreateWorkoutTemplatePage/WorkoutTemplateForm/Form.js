@@ -9,11 +9,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Menu, MenuItem } from "@material-ui/core";
 
-import { useCreateWorkoutTemplateMutation } from "../../../../redux/features/api/workoutTrackerApi";
+import { useCreateWorkoutTemplateMutation } from "../../../redux/features/api/workoutTrackerApi";
 
 import "./FormStyles.css";
 import SingleExercise from "./SingleExercise.js";
-import LoadingSpinner from "../../../LoadingSpinner.js";
 
 let Form = ({ showModal, exerciseForm, setExerciseForm }) => {
     const formClasses = `workout-template-form ${showModal ? "blurred" : ""}`;
@@ -154,6 +153,11 @@ let Form = ({ showModal, exerciseForm, setExerciseForm }) => {
                         <button
                             onClick={handleSubmitTemplate}
                             className="finish-template-btn"
+                            disabled={
+                                exerciseForm.length === 0 || workoutName === ""
+                                    ? true
+                                    : false
+                            }
                         >
                             Finish Template
                         </button>

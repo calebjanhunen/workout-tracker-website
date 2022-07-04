@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import StartWorkoutPage from "./components/StartWorkoutPage/StartWorkoutPage.js";
 import Home from "./components/HomePage/Home.js";
 import WorkoutHistory from "./components/ViewWorkoutsPage/WorkoutHistoryPage.js";
-import WorkoutTemplatePage from "./components/StartWorkoutPage/WorkoutTemplate/WorkoutTemplatePage.js";
+import WorkoutTemplatePage from "./components/CreateWorkoutTemplatePage/WorkoutTemplatePage.js";
 
 const Main = () => {
     return (

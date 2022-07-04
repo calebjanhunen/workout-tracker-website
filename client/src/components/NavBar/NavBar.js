@@ -15,6 +15,11 @@ const NavBar = () => {
                     <NavLink to="/startWorkout">Start Workout</NavLink>
                 </li>
                 <li>
+                    <NavLink to="/create-workout-template">
+                        Create Workout Template
+                    </NavLink>
+                </li>
+                <li>
                     <NavLink to="/WorkoutHistory">Workout History</NavLink>
                 </li>
             </ul>
