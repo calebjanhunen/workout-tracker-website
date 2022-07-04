@@ -11,11 +11,14 @@ export async function createExercise(req, res) {
 }
 
 export async function getExercises(req, res) {
+    let filter =
+        req.query.filter !== "All body parts"
+            ? { bodyPart: req.query.filter }
+            : {};
     try {
-        const data = await Exercise.find()
+        const data = await Exercise.find(filter)
             .limit(parseInt(req.query.limit))
             .skip(parseInt(req.query.limit) * (parseInt(req.query.page) - 1));
-        Exercise.aggregate();
         res.json(data);
     } catch (err) {
         res.status(400).json({ message: err });

@@ -5,6 +5,10 @@ const exerciseSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    bodyPart: {
+        type: String,
+        required: true,
+    },
 });
 
 const Exercise = mongoose.model("Exercise", exerciseSchema);

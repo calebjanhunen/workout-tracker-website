@@ -49,7 +49,7 @@ const SingleExercise = ({ exercise, setExerciseForm }) => {
                     }
                     className="add-btn"
                 >
-                    Add
+                    Add to Template
                 </button>
                 <button
                     onClick={e => setAnchorEl(e.target)}

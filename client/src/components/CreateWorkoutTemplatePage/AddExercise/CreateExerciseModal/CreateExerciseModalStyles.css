@@ -22,6 +22,19 @@
     padding: 20px;
 }
 
+.create-exercise-modal__body {
+    display: flex;
+    flex-direction: column;
+}
+
+.create-exercise-modal__body label {
+    margin-top: 10px;
+}
+
+.create-exercise-modal__body select {
+    width: 150px;
+}
+
 .create-exercise-modal__close-btn {
     display: flex;
 }

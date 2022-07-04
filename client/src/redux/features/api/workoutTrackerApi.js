@@ -59,9 +59,9 @@ export const workoutTrackerApi = createApi({
             query: () => "/exercises",
             providesTags: ["Exercises"],
         }),
-        getExercisesByPage: builder.query({
-            query: ({ pageNum, resultsPerPage }) =>
-                `/exercises?limit=${resultsPerPage}&page=${pageNum}`,
+        getExercisesByQuery: builder.query({
+            query: ({ pageNum, resultsPerPage, bodyPartFilter }) =>
+                `/exercises?limit=${resultsPerPage}&page=${pageNum}&filter=${bodyPartFilter}`,
             providesTags: ["Exercises"],
         }),
         createExercise: builder.mutation({
@@ -95,7 +95,7 @@ export const {
     useDeleteWorkoutTemplateMutation,
     /***********************FOr exercises*************** */
     useGetExercisesQuery,
-    useGetExercisesByPageQuery,
+    useGetExercisesByQueryQuery,
     useCreateExerciseMutation,
     useDeleteExerciseMutation,
 } = workoutTrackerApi;

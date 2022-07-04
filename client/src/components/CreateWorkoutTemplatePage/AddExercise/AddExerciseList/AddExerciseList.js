@@ -5,7 +5,7 @@ import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import "./AddExerciseStyles.css";
 import {
     useGetExercisesQuery,
-    useGetExercisesByPageQuery,
+    useGetExercisesByQueryQuery,
 } from "../../../../redux/features/api/workoutTrackerApi";
 import SingleExercise from "./SingleExercise";
 
@@ -13,13 +13,19 @@ const AddExerciseList = ({ showModal, setShowModal, setExerciseForm }) => {
     const [pageNum, setPageNum] = React.useState(1);
     const [resultsPerPage, setResutsPerPage] = React.useState(5);
     const [searchTerm, setSearchTerm] = React.useState("");
+    const [bodyPartFilter, setBodyPartFilter] =
+        React.useState("All body parts");
     const { data: allExercises } = useGetExercisesQuery();
     const {
         data: exercisesByPage,
         isLoading,
         isFetching,
         isSuccess,
-    } = useGetExercisesByPageQuery({ pageNum, resultsPerPage });
+    } = useGetExercisesByQueryQuery({
+        pageNum,
+        resultsPerPage,
+        bodyPartFilter,
+    });
 
     let exercisesDisplay;
     if (isLoading || isFetching) {
@@ -63,12 +69,36 @@ const AddExerciseList = ({ showModal, setShowModal, setExerciseForm }) => {
             >
                 <div className="add-exercise-content">
                     <h1 className="add-exercise-title">Exercises</h1>
-                    <input
-                        name="search-exercise"
-                        placeholder="Search For Exercise"
-                        onChange={e => setSearchTerm(e.target.value)}
-                        autoComplete="off"
-                    />
+                    <div className="search-queries">
+                        <input
+                            name="search-exercise"
+                            placeholder="Search For Exercise"
+                            //TODO: make it so you can search while filtering (rn shows nothing)
+                            onChange={e => setSearchTerm(e.target.value)}
+                            autoComplete="off"
+                        />
+                        <div className="body-part-search-filter">
+                            <label htmlFor="body-part">Filter body part:</label>
+                            <select
+                                name="body part"
+                                id="body-part"
+                                onChange={e => {
+                                    setBodyPartFilter(e.target.value);
+                                }}
+                                defaultValue="All body parts"
+                            >
+                                <option value="All body parts">
+                                    All body parts
+                                </option>
+                                <option>Arms</option>
+                                <option>Shoulders</option>
+                                <option>Chest</option>
+                                <option>Back</option>
+                                <option>Core</option>
+                                <option>Legs</option>
+                            </select>
+                        </div>
+                    </div>
                     <button
                         className="create-exercise-btn"
                         onClick={() => setShowModal(true)}

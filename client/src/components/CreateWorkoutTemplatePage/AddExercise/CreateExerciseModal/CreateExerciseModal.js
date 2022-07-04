@@ -8,6 +8,7 @@ import {
 
 const CreateExerciseModal = ({ setShowModal }) => {
     const [exerciseName, setExerciseName] = React.useState("");
+    const [bodyPart, selectBodyPart] = React.useState("");
     const [isLoading, setIsLoading] = React.useState(false);
     const [showInvalidInput, setShowInvalidInput] = React.useState(false);
     const [invalidInputReason, setInvalidInputReason] = React.useState("");
@@ -26,15 +27,13 @@ const CreateExerciseModal = ({ setShowModal }) => {
                 exercise.name.toLowerCase() === exerciseName.toLowerCase()
         );
 
-        console.log(exerciseAlreadyExists);
-
         if (exerciseAlreadyExists.length > 0) {
             setInvalidInputReason("Exercise Already Exists");
             return setShowInvalidInput(true);
         }
 
         setIsLoading(true);
-        await createWorkout({ name: exerciseName });
+        await createWorkout({ name: exerciseName, bodyPart });
         setIsLoading(false);
 
         setShowModal(false);
@@ -52,8 +51,10 @@ const CreateExerciseModal = ({ setShowModal }) => {
                                 X
                             </button>
                         </div>
-                        <div className="create-exercise-modal__content">
+                        <div className="create-exercise-modal__header">
                             <h1>Create Exercise</h1>
+                        </div>
+                        <div className="create-exercise-modal__body">
                             <input
                                 id="exercise-name"
                                 className={
@@ -70,6 +71,27 @@ const CreateExerciseModal = ({ setShowModal }) => {
                             >
                                 {invalidInputReason}
                             </p>
+                            <label htmlFor="body-part">Body Part:</label>
+                            <select
+                                name="body part"
+                                id="body-part"
+                                onChange={e => selectBodyPart(e.target.value)}
+                                defaultValue="Choose a body part"
+                            >
+                                <option
+                                    hidden
+                                    disabled
+                                    value="Choose a body part"
+                                >
+                                    Choose a body part
+                                </option>
+                                <option>Arms</option>
+                                <option>Shoulders</option>
+                                <option>Chest</option>
+                                <option>Back</option>
+                                <option>Core</option>
+                                <option>Legs</option>
+                            </select>
                             <div className="create-exercise-modal__footer">
                                 <button onClick={handleAddExercise}>
                                     Add to Workout
