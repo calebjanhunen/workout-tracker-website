@@ -1,0 +1,23 @@
+.start-from-template-page {
+    display: flex;
+    justify-content: center;
+}
+
+.template-page__content {
+    display: flex;
+    flex-direction: column;
+}
+
+.template-page__content h1 {
+    margin-top: 20px;
+}
+
+.back-btn {
+    font-size: 20px;
+    border: 1px solid;
+    width: 80px;
+    height: 30px;
+    margin-right: auto;
+    margin-left: 20px;
+    margin-top: 20px;
+}

@@ -10,6 +10,13 @@ export async function createWorkoutTemplate(req, res) {
     }
 }
 
-export async function getWorkoutTemplates(req, res) {}
+export async function getWorkoutTemplates(req, res) {
+    try {
+        const data = await WorkoutTemplate.find();
+        res.json(data);
+    } catch (err) {
+        res.status(400).json({ message: "no" });
+    }
+}
 
 export async function deleteWorkoutTemplate(req, res) {}

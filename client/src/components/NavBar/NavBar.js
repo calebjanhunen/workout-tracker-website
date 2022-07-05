@@ -12,7 +12,7 @@ const NavBar = () => {
                     <NavLink to="/">Home</NavLink>
                 </li>
                 <li>
-                    <NavLink to="/startWorkout">Start Workout</NavLink>
+                    <NavLink to="/start-workout">Start Workout</NavLink>
                 </li>
                 <li>
                     <NavLink to="/create-workout-template">

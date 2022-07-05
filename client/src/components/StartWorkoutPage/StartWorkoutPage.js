@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 // import { useGetWorkoutTemplatesQuery } from "../../redux/features/api/workoutTemplatesApi";
 
 import "./StartWorkoutPageStyles.css";
-import WorkoutForm from "./WorkoutForm/WorkoutForm";
+import WorkoutForm from "./StartEmptyWorkoutPage/WorkoutForm/WorkoutForm";
 import LoadingSpinner from "../LoadingSpinner.js";
 
 const StartWorkoutPage = () => {
@@ -45,30 +45,11 @@ const StartWorkoutPage = () => {
                         </button>
                         <button
                             className="start-workout-btn"
-                            onClick={() => {
-                                setShowTemplates(true);
-                            }}
+                            onClick={() => navigate("/start-from-template")}
                         >
                             Start From Template
                         </button>
                     </div>
-                    {showTemplates && (
-                        <div className="template-dropdown">
-                            <label>Select a template: </label>
-                            <select>
-                                <option>Create a template</option>
-                                <option>Legs</option>
-                            </select>
-                            <button
-                                className="start-template-btn"
-                                onClick={() =>
-                                    navigate("/create-workout-template")
-                                }
-                            >
-                                GO
-                            </button>
-                        </div>
-                    )}
                 </div>
             );
         }

@@ -9,6 +9,12 @@ const exerciseSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    previousSets: [
+        {
+            weight: Number,
+            reps: Number,
+        },
+    ],
 });
 
 const Exercise = mongoose.model("Exercise", exerciseSchema);
