@@ -64,7 +64,7 @@ const StartFromTemplatePage = () => {
         </div>
     ) : (
         <p style={{ textAlign: "center" }}>
-            Click an exercise to <br></br> view more info
+            Click a template to <br></br> view more info
         </p>
     );
 

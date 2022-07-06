@@ -1,10 +1,18 @@
 import React from "react";
-import { useSelector } from "react-redux";
+
+import "./CreateWorkoutFormStyles.css";
+
+import Form from "./Form/Form";
+import AddExerciseList from "./AddExercise/AddExerciseList/AddExerciseList";
+import CreateExerciseModal from "./AddExercise/CreateExerciseModal/CreateExerciseModal";
 
 const CreateWorkoutForm = () => {
-    const workoutTemplate = useSelector(state => state.workoutTemplate.value);
-    console.log(workoutTemplate);
-    return <div>CreateWorkoutForm</div>;
+    return (
+        <div className="create-workout-form-container">
+            <Form />
+            <AddExerciseList />
+        </div>
+    );
 };
 
 export default CreateWorkoutForm;
