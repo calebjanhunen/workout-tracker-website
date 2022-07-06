@@ -45,7 +45,9 @@ const StartWorkoutPage = () => {
                         </button>
                         <button
                             className="start-workout-btn"
-                            onClick={() => navigate("/start-from-template")}
+                            onClick={() =>
+                                navigate("/start-workout/start-from-template")
+                            }
                         >
                             Start From Template
                         </button>
