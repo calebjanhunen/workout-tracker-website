@@ -3,8 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faBars } from "@fortawesome/free-solid-svg-icons";
 
 const SingleExercise = ({ exercise, setExerciseForm, reorder }) => {
-    const [setArr, setSetArr] = React.useState([1]);
-    const [numSets, setNumSets] = React.useState(1);
+    // console.log(exercise);
 
     function handleDeleteExercise() {
         setExerciseForm(prev =>
@@ -12,25 +11,51 @@ const SingleExercise = ({ exercise, setExerciseForm, reorder }) => {
         );
     }
 
-    function handleDeleteSet(set) {
-        setNumSets(prev => prev - 1);
-        setSetArr(prev => prev.slice(0, prev.length - 1));
+    function handleDeleteSet(index) {
         setExerciseForm(prev =>
             prev.map(prevExercise =>
                 prevExercise._id === exercise._id
-                    ? { ...prevExercise, numSets: numSets - 1 }
+                    ? {
+                          ...prevExercise,
+                          sets: prevExercise.sets.filter(
+                              (_, setIndex) => setIndex !== index
+                          ),
+                      }
                     : prevExercise
             )
         );
     }
 
     function handleAddSet() {
-        setNumSets(prev => prev + 1);
-        setSetArr(prev => [...prev, numSets + 1]);
         setExerciseForm(prev =>
             prev.map(prevExercise =>
                 prevExercise._id === exercise._id
-                    ? { ...prevExercise, numSets: numSets + 1 }
+                    ? {
+                          ...prevExercise,
+                          sets: [
+                              ...prevExercise.sets,
+                              { weight: null, reps: null },
+                          ],
+                      }
+                    : prevExercise
+            )
+        );
+    }
+
+    function handleChangeSet(e, type, index) {
+        setExerciseForm(prev =>
+            prev.map(prevExercise =>
+                prevExercise._id === exercise._id
+                    ? {
+                          ...prevExercise,
+                          sets: prevExercise.sets.map((set, setIndex) =>
+                              setIndex === index
+                                  ? type === "WEIGHT"
+                                      ? { ...set, weight: e.target.value }
+                                      : { ...set, reps: e.target.value }
+                                  : set
+                          ),
+                      }
                     : prevExercise
             )
         );
@@ -68,26 +93,32 @@ const SingleExercise = ({ exercise, setExerciseForm, reorder }) => {
                             <th className="set-table-header__weight">lbs</th>
                             <th className="set-table-header__reps">Reps</th>
                         </tr>
-                        {setArr.map(set => (
-                            <tr key={set} className="single-set-row">
-                                <td className="set-table__set">{set}</td>
+                        {exercise.sets.map((set, index) => (
+                            <tr key={index} className="single-set-row">
+                                <td className="set-table__set">{index + 1}</td>
                                 <td className="set-table__weight">
                                     <input
                                         maxLength={7}
                                         type="number"
-                                        disabled
+                                        value={set.weight || ""}
+                                        onChange={e =>
+                                            handleChangeSet(e, "WEIGHT", index)
+                                        }
                                     />
                                 </td>
                                 <td className="set-table__reps">
                                     <input
                                         maxLength={7}
                                         type="number"
-                                        disabled
+                                        value={set.reps || ""}
+                                        onChange={e =>
+                                            handleChangeSet(e, "REPS", index)
+                                        }
                                     />
                                 </td>
                                 <td className="set-table__delete-set">
                                     <button
-                                        onClick={() => handleDeleteSet(set)}
+                                        onClick={() => handleDeleteSet(index)}
                                     >
                                         <FontAwesomeIcon icon={faTrashAlt} />
                                     </button>

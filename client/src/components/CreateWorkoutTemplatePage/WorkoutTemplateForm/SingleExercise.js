@@ -5,8 +5,7 @@ import { faTrashAlt, faBars } from "@fortawesome/free-solid-svg-icons";
 import "./FormStyles.css";
 
 const SingleExercise = ({ exercise, setExerciseForm, reorder }) => {
-    const [setArr, setSetArr] = React.useState([1]);
-    const [numSets, setNumSets] = React.useState(1);
+    const [setArr, setSetArr] = React.useState([{ weight: null, reps: null }]);
 
     function handleDeleteExercise() {
         setExerciseForm(prev =>
@@ -14,25 +13,35 @@ const SingleExercise = ({ exercise, setExerciseForm, reorder }) => {
         );
     }
 
-    function handleDeleteSet(set) {
-        setNumSets(prev => prev - 1);
+    function handleDeleteSet() {
         setSetArr(prev => prev.slice(0, prev.length - 1));
         setExerciseForm(prev =>
             prev.map(prevExercise =>
                 prevExercise._id === exercise._id
-                    ? { ...prevExercise, numSets: numSets - 1 }
+                    ? {
+                          ...prevExercise,
+                          sets: prevExercise.sets.slice(
+                              0,
+                              prevExercise.sets.length - 1
+                          ),
+                      }
                     : prevExercise
             )
         );
     }
 
     function handleAddSet() {
-        setNumSets(prev => prev + 1);
-        setSetArr(prev => [...prev, numSets + 1]);
+        setSetArr(prev => [...prev, { weight: null, reps: null }]);
         setExerciseForm(prev =>
             prev.map(prevExercise =>
                 prevExercise._id === exercise._id
-                    ? { ...prevExercise, numSets: numSets + 1 }
+                    ? {
+                          ...prevExercise,
+                          sets: [
+                              ...prevExercise.sets,
+                              { weight: null, reps: null },
+                          ],
+                      }
                     : prevExercise
             )
         );
@@ -70,9 +79,9 @@ const SingleExercise = ({ exercise, setExerciseForm, reorder }) => {
                             <th className="set-table-header__weight">lbs</th>
                             <th className="set-table-header__reps">Reps</th>
                         </tr>
-                        {setArr.map(set => (
-                            <tr key={set} className="single-set-row">
-                                <td className="set-table__set">{set}</td>
+                        {setArr.map((set, index) => (
+                            <tr key={index} className="single-set-row">
+                                <td className="set-table__set">{index + 1}</td>
                                 <td className="set-table__weight">
                                     <input
                                         maxLength={7}
@@ -88,9 +97,7 @@ const SingleExercise = ({ exercise, setExerciseForm, reorder }) => {
                                     />
                                 </td>
                                 <td className="set-table__delete-set">
-                                    <button
-                                        onClick={() => handleDeleteSet(set)}
-                                    >
+                                    <button onClick={() => handleDeleteSet()}>
                                         <FontAwesomeIcon icon={faTrashAlt} />
                                     </button>
                                 </td>

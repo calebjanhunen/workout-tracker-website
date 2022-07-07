@@ -9,7 +9,6 @@ export const workoutTemplateSlice = createSlice({
     initialState,
     reducers: {
         setWorkoutTemplate: (state, action) => {
-            console.log("set");
             state.value = action.payload;
         },
     },

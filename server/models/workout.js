@@ -7,8 +7,9 @@ const workoutSchema = mongoose.Schema({
     },
     exercises: [
         {
-            exerciseName: String,
-            exerciseInfo: [
+            name: String,
+            _id: mongoose.Schema.Types.ObjectId,
+            sets: [
                 {
                     reps: Number,
                     weight: Number,

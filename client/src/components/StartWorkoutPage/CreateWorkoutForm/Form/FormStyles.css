@@ -1,5 +1,5 @@
 /*Form*/
-.workout-template-form {
+.create-workout-form {
     margin: 20px;
     width: 340px;
     max-height: 80vh;
@@ -7,11 +7,9 @@
     border-style: solid;
     border-radius: 10px;
     border-width: 2px;
-
-    overflow-y: auto;
 }
 
-.workout-template-form::-webkit-scrollbar {
+.create-workout-form-form::-webkit-scrollbar {
     width: 10px;
     background-color: lightgrey;
     /* border-top-right-radius: 10px;
@@ -19,19 +17,19 @@
     border-radius: 10px;
 }
 
-.workout-template-form::-webkit-scrollbar-thumb {
+.create-workout-form-form::-webkit-scrollbar-thumb {
     background: grey;
     -webkit-border-radius: 10px;
     border-radius: 10px;
 }
 
-.workout-template__header {
+.create-workout-form__header {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
 }
 
-.workout-template__header button {
+.create-workout-form__header button {
     margin-left: auto;
     margin-right: 20px;
     background-color: white;
@@ -41,13 +39,13 @@
     margin-right: 20px;
 }
 
-.workout-template__edit-icon,
-.workout-template__check-icon {
+.create-workout-form__edit-icon,
+.create-workout-form__check-icon {
     height: 20px;
     width: 20px;
 }
 
-input[name="workout-template__workout-name"] {
+input[name="create-workout-form__workout-name"] {
     border: none;
     margin-left: 10px;
     width: 280px;
@@ -56,8 +54,14 @@ input[name="workout-template__workout-name"] {
     font-weight: 700;
 }
 
-input[name="workout-template__workout-name"]:focus {
+input[name="create-workout-form__workout-name"]:focus {
     outline: none;
+}
+
+.workout-form_exercises-list {
+    max-height: 60vh;
+    overflow-y: auto;
+    /* background-color: black; */
 }
 
 /*Single Exercise*/
@@ -150,17 +154,17 @@ input[name="workout-template__workout-name"]:focus {
 }
 
 /******************workout template footer************/
-.workout-template__footer {
+.create-workout-form__footer {
     display: flex;
     justify-content: center;
 }
 
-.workout-template__footer button {
+.create-workout-form__footer button {
     background-color: lightgreen;
     margin-bottom: 10px;
 }
 
-.workout-template__footer button:hover {
+.create-workout-form__footer button:hover {
     filter: brightness(85%);
 }
 

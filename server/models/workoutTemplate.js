@@ -8,8 +8,13 @@ const workoutTemplateSchema = mongoose.Schema({
     exercises: [
         {
             name: String,
-            numSets: Number,
             _id: mongoose.Schema.Types.ObjectId,
+            sets: [
+                {
+                    weight: Number,
+                    reps: Number,
+                },
+            ],
         },
     ],
 });

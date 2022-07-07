@@ -1,5 +1,4 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -10,21 +9,26 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Menu, MenuItem } from "@material-ui/core";
 
+import { useCreateWorkoutMutation } from "../../../../redux/features/api/workoutTrackerApi";
+
+import "./FormStyles.css";
+
 import SingleExercise from "./SingleExercise";
 
-const CreateWorkoutForm = () => {
-    const workoutTemplate = useSelector(state => state.workoutTemplate.value);
-    const [exerciseForm, setExerciseForm] = React.useState(
-        workoutTemplate.exercises
-    );
+const CreateWorkoutForm = ({
+    exerciseForm,
+    setExerciseForm,
+    workoutTemplate,
+}) => {
     const showModal = false;
-    const formClasses = `workout-template-form ${showModal ? "blurred" : ""}`;
+    const formClasses = `create-workout-form ${showModal ? "blurred" : ""}`;
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [workoutName, setWorkoutName] = React.useState(
         workoutTemplate.workoutName
     );
     const [reorder, setReorder] = React.useState(false);
     const [isSubmitting, setIsSubmitting] = React.useState(false);
+    const [createWorkout] = useCreateWorkoutMutation();
 
     const menuItemStyles = {
         fontSize: "12px",
@@ -94,15 +98,16 @@ const CreateWorkoutForm = () => {
         handleClose();
     }
 
-    // async function handleSubmitTemplate() {
-    //     setIsSubmitting(true);
-    //     await createWorkoutTemplate({
-    //         workoutName,
-    //         exercises: exerciseForm,
-    //     });
-    //     setIsSubmitting(false);
-    //     handleClearTemplate();
-    // }
+    async function handleSubmitWorkout() {
+        setIsSubmitting(true);
+        setIsSubmitting(false);
+        await createWorkout({
+            name: workoutName,
+            createdAt: new Date(),
+            exercises: exerciseForm,
+        });
+        handleClearTemplate();
+    }
 
     return (
         <div className={formClasses}>
@@ -110,9 +115,9 @@ const CreateWorkoutForm = () => {
                 <p>Loading</p>
             ) : (
                 <>
-                    <div className="workout-template__header">
+                    <div className="create-workout-form__header">
                         <input
-                            name="workout-template__workout-name"
+                            name="create-workout-form__workout-name"
                             placeholder="Enter Workout Name..."
                             onChange={e => setWorkoutName(e.target.value)}
                             value={workoutName}
@@ -121,41 +126,42 @@ const CreateWorkoutForm = () => {
                         {reorder ? (
                             <button onClick={() => setReorder(false)}>
                                 <FontAwesomeIcon
-                                    className="workout-template__check-icon"
+                                    className="create-workout-form__check-icon"
                                     icon={faCheck}
                                 />
                             </button>
                         ) : (
                             <button onClick={e => setAnchorEl(e.target)}>
                                 <FontAwesomeIcon
-                                    className="workout-template__edit-icon"
+                                    className="create-workout-form__edit-icon"
                                     icon={faEllipsisH}
                                 />
                             </button>
                         )}
                     </div>
 
-                    <DragDropContext
-                        onDragEnd={param => {
-                            handleDragEnd(param);
-                        }}
-                    >
-                        <Droppable droppableId="droppable-1">
-                            {provided => (
-                                <div
-                                    ref={provided.innerRef}
-                                    {...provided.droppableProps}
-                                    className="exercises-list"
-                                >
-                                    {exercisesDisplay}
-                                    {provided.placeholder}
-                                </div>
-                            )}
-                        </Droppable>
-                    </DragDropContext>
-                    <div className="workout-template__footer">
+                    <div className="workout-form_exercises-list">
+                        <DragDropContext
+                            onDragEnd={param => {
+                                handleDragEnd(param);
+                            }}
+                        >
+                            <Droppable droppableId="droppable-1">
+                                {provided => (
+                                    <div
+                                        ref={provided.innerRef}
+                                        {...provided.droppableProps}
+                                    >
+                                        {exercisesDisplay}
+                                        {provided.placeholder}
+                                    </div>
+                                )}
+                            </Droppable>
+                        </DragDropContext>
+                    </div>
+                    <div className="create-workout-form__footer">
                         <button
-                            // onClick={handleSubmitTemplate}
+                            onClick={handleSubmitWorkout}
                             className="finish-template-btn"
                             disabled={
                                 exerciseForm.length === 0 || workoutName === ""
@@ -163,7 +169,7 @@ const CreateWorkoutForm = () => {
                                     : false
                             }
                         >
-                            Finish Template
+                            Finish Workout
                         </button>
                     </div>
 

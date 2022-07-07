@@ -55,7 +55,7 @@ const StartFromTemplatePage = () => {
                 <ul className="exercise-list">
                     {moreInfoTemplate.exercises.map(exercise => (
                         <li key={exercise._id}>
-                            {exercise.name} ({exercise.numSets}{" "}
+                            {exercise.name} ({exercise.sets.length}{" "}
                             {exercise.numSets > 1 ? "sets" : "set"})
                         </li>
                     ))}

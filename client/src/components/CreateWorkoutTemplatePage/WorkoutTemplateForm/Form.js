@@ -21,7 +21,6 @@ let Form = ({ showModal, exerciseForm, setExerciseForm }) => {
     const [reorder, setReorder] = React.useState(false);
     const [createWorkoutTemplate] = useCreateWorkoutTemplateMutation();
     const [isSubmitting, setIsSubmitting] = React.useState(false);
-
     const menuItemStyles = {
         fontSize: "12px",
     };

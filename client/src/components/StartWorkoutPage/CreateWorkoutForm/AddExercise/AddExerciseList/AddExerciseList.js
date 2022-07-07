@@ -9,7 +9,7 @@ import {
 } from "../../../../../redux/features/api/workoutTrackerApi";
 import SingleExercise from "./SingleExercise";
 
-const AddExerciseList = ({ showModal, setShowModal, setExerciseForm }) => {
+const AddExerciseList = ({ setExerciseForm, showModal, setShowModal }) => {
     const [pageNum, setPageNum] = React.useState(1);
     const [resultsPerPage, setResutsPerPage] = React.useState(5);
     const [searchTerm, setSearchTerm] = React.useState("");

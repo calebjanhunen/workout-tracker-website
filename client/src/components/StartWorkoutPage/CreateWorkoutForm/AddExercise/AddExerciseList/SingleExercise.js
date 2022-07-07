@@ -43,13 +43,18 @@ const SingleExercise = ({ exercise, setExerciseForm }) => {
                             {
                                 name: exercise.name,
                                 _id: exercise._id,
-                                numSets: 1,
+                                sets: [
+                                    {
+                                        weight: undefined,
+                                        reps: undefined,
+                                    },
+                                ],
                             },
                         ])
                     }
                     className="add-btn"
                 >
-                    Add to Template
+                    Add to Workout
                 </button>
                 <button
                     onClick={e => setAnchorEl(e.target)}

@@ -30,25 +30,29 @@ const SingleExercise = ({ exercise, setExerciseForm }) => {
         handleClose();
     }
 
+    function handleAddToTemplate() {
+        setExerciseForm(prev => [
+            ...prev,
+            {
+                name: exercise.name,
+                _id: exercise._id,
+                sets: [
+                    {
+                        weight: null,
+                        reps: null,
+                    },
+                ],
+            },
+        ]);
+    }
+
     return isDeleting ? (
         <p>Loading...</p>
     ) : (
         <li className="exercise-list-item">
             <p>{exercise.name}</p>
             <div style={{ marginLeft: "auto" }}>
-                <button
-                    onClick={() =>
-                        setExerciseForm(prev => [
-                            ...prev,
-                            {
-                                name: exercise.name,
-                                _id: exercise._id,
-                                numSets: 1,
-                            },
-                        ])
-                    }
-                    className="add-btn"
-                >
+                <button onClick={handleAddToTemplate} className="add-btn">
                     Add to Template
                 </button>
                 <button
