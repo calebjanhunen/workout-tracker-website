@@ -12,9 +12,7 @@ const CreateWorkoutForm = () => {
     const [exerciseForm, setExerciseForm] = React.useState(
         workoutTemplate.exercises
     );
-    console.log(exerciseForm);
     const [showModal, setShowModal] = React.useState(false);
-
     return (
         <div className="create-workout-form-container">
             <Form
@@ -23,6 +21,7 @@ const CreateWorkoutForm = () => {
                 workoutTemplate={workoutTemplate}
             />
             <AddExerciseList
+                exerciseForm={exerciseForm}
                 setExerciseForm={setExerciseForm}
                 showModal={showModal}
                 setShowModal={setShowModal}

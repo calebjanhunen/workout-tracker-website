@@ -1,7 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-// import { useGetWorkoutTemplatesQuery } from "../../redux/features/api/workoutTemplatesApi";
+import { setWorkoutTemplate } from "../../redux/reducer/workoutTemplateSlice";
 
 import "./StartWorkoutPageStyles.css";
 import WorkoutForm from "./StartEmptyWorkoutPage/WorkoutForm/WorkoutForm";
@@ -9,6 +10,7 @@ import LoadingSpinner from "../LoadingSpinner.js";
 
 const StartWorkoutPage = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [showWorkoutForm, setShowWorkoutForm] = React.useState(false);
     const [isSubmitted, setIsSubmitted] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(false);
@@ -39,7 +41,10 @@ const StartWorkoutPage = () => {
                     <div>
                         <button
                             className="start-workout-btn"
-                            onClick={() => setShowWorkoutForm(prev => !prev)}
+                            onClick={() => {
+                                dispatch(setWorkoutTemplate({}));
+                                navigate("/start-workout/create-workout-form");
+                            }}
                         >
                             Start Empty Workout
                         </button>

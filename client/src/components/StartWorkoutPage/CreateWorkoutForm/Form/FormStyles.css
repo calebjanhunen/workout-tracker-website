@@ -61,10 +61,14 @@ input[name="create-workout-form__workout-name"]:focus {
 .workout-form_exercises-list {
     max-height: 60vh;
     overflow-y: auto;
-    /* background-color: black; */
+    text-align: center;
 }
 
-/*Single Exercise*/
+.no-exercises-text {
+    text-align: center;
+}
+
+/*********************************Single Exercise************************************/
 .single-exercise {
     border-top: 1px solid;
     margin-bottom: 10px;
@@ -168,7 +172,7 @@ input[name="create-workout-form__workout-name"]:focus {
     filter: brightness(85%);
 }
 
-.workout-template__footer button:disabled {
+.create-workout-form__footer button:disabled {
     background-color: grey;
     filter: brightness(85%);
     cursor: default;

@@ -20,9 +20,9 @@ const WorkoutCardInfo = ({
                             className="exercise-name"
                             style={{ marginTop: "10px" }}
                         >
-                            {exercise.exerciseName}
+                            {exercise.name}
                         </h3>
-                        {exercise.exerciseInfo.map((info, index) => (
+                        {exercise.sets.map((info, index) => (
                             <div key={index} className="exercise-info">
                                 <p
                                     className="exercise-info__set"

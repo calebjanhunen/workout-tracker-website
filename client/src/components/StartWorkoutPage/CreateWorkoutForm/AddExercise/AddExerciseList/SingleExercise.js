@@ -10,7 +10,7 @@ import { useDeleteExerciseMutation } from "../../../../../redux/features/api/wor
 
 import "./AddExerciseStyles.css";
 
-const SingleExercise = ({ exercise, setExerciseForm }) => {
+const SingleExercise = ({ exercise, exerciseForm, setExerciseForm }) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [deleteExercise] = useDeleteExerciseMutation();
     const [isDeleting, setIsDeleting] = React.useState(false);
@@ -21,6 +21,23 @@ const SingleExercise = ({ exercise, setExerciseForm }) => {
 
     function handleClose() {
         setAnchorEl(null);
+    }
+
+    function handleAddExerciseToWorkout() {
+        const exerciseObj = {
+            name: exercise.name,
+            _id: exercise._id,
+            sets: [
+                {
+                    weight: undefined,
+                    reps: undefined,
+                },
+            ],
+        };
+
+        exerciseForm
+            ? setExerciseForm(prev => [...prev, exerciseObj])
+            : setExerciseForm([exerciseObj]);
     }
 
     async function handleDelete() {
@@ -37,21 +54,7 @@ const SingleExercise = ({ exercise, setExerciseForm }) => {
             <p>{exercise.name}</p>
             <div style={{ marginLeft: "auto" }}>
                 <button
-                    onClick={() =>
-                        setExerciseForm(prev => [
-                            ...prev,
-                            {
-                                name: exercise.name,
-                                _id: exercise._id,
-                                sets: [
-                                    {
-                                        weight: undefined,
-                                        reps: undefined,
-                                    },
-                                ],
-                            },
-                        ])
-                    }
+                    onClick={handleAddExerciseToWorkout}
                     className="add-btn"
                 >
                     Add to Workout

@@ -24,7 +24,7 @@ const CreateWorkoutForm = ({
     const formClasses = `create-workout-form ${showModal ? "blurred" : ""}`;
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [workoutName, setWorkoutName] = React.useState(
-        workoutTemplate.workoutName
+        workoutTemplate.workoutName ? workoutTemplate.workoutName : ""
     );
     const [reorder, setReorder] = React.useState(false);
     const [isSubmitting, setIsSubmitting] = React.useState(false);
@@ -39,42 +39,48 @@ const CreateWorkoutForm = ({
         setAnchorEl(null);
     }
 
-    const exercisesDisplay = exerciseForm.map((exercise, index) => {
-        return reorder ? (
-            <Draggable
-                key={exercise._id}
-                draggableId={`draggable-${exercise._id}`}
-                index={index}
-            >
-                {(provided, snapshot) => (
-                    <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        style={{
-                            ...provided.draggableProps.style,
-                            boxShadow: snapshot.isDragging
-                                ? "0 0 0.4rem #666"
-                                : "none",
-                        }}
-                    >
-                        <SingleExercise
-                            exercise={exercise}
-                            setExerciseForm={setExerciseForm}
-                            reorder={reorder}
-                        />
-                    </div>
-                )}
-            </Draggable>
-        ) : (
-            <SingleExercise
-                key={exercise._id}
-                exercise={exercise}
-                setExerciseForm={setExerciseForm}
-                reorder={reorder}
-            />
-        );
-    });
+    const exercisesDisplay = exerciseForm ? (
+        exerciseForm.map((exercise, index) => {
+            return reorder ? (
+                <Draggable
+                    key={exercise._id}
+                    draggableId={`draggable-${exercise._id}`}
+                    index={index}
+                >
+                    {(provided, snapshot) => (
+                        <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            style={{
+                                ...provided.draggableProps.style,
+                                boxShadow: snapshot.isDragging
+                                    ? "0 0 0.4rem #666"
+                                    : "none",
+                            }}
+                        >
+                            <SingleExercise
+                                exercise={exercise}
+                                setExerciseForm={setExerciseForm}
+                                reorder={reorder}
+                            />
+                        </div>
+                    )}
+                </Draggable>
+            ) : (
+                <SingleExercise
+                    key={exercise._id}
+                    exercise={exercise}
+                    setExerciseForm={setExerciseForm}
+                    reorder={reorder}
+                />
+            );
+        })
+    ) : (
+        <p className="no-exercices-text">
+            Add an exercise <br></br> from the Exercises list
+        </p>
+    );
 
     function handleDragEnd(param) {
         const destIndex = param.destination.index;
@@ -164,7 +170,7 @@ const CreateWorkoutForm = ({
                             onClick={handleSubmitWorkout}
                             className="finish-template-btn"
                             disabled={
-                                exerciseForm.length === 0 || workoutName === ""
+                                !exerciseForm || workoutName === ""
                                     ? true
                                     : false
                             }
