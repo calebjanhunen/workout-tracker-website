@@ -7,6 +7,7 @@ import WorkoutHistory from "./components/ViewWorkoutsPage/WorkoutHistoryPage.js"
 import WorkoutTemplatePage from "./components/CreateWorkoutTemplatePage/WorkoutTemplatePage.js";
 import StartFromTemplatePage from "./components/StartWorkoutPage/StartFromTemplatePage/StartFromTemplatePage.js";
 import CreateWorkoutForm from "./components/StartWorkoutPage/CreateWorkoutForm/CreateWorkoutForm.js";
+import LoginPage from "./components/LoginPage/LoginPage.js";
 
 const Main = () => {
     return (
@@ -29,6 +30,7 @@ const Main = () => {
                 element={<WorkoutTemplatePage />}
             />
             <Route exact path="/WorkoutHistory" element={<WorkoutHistory />} />
+            <Route exact path="/user-register" element={<LoginPage />} />
         </Routes>
     );
 };

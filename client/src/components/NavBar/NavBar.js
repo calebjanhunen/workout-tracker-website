@@ -1,9 +1,11 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import "./NavBarStyles.css";
 
 const NavBar = () => {
+    const navigate = useNavigate();
+
     return (
         <nav>
             <h1 className="title">Workout Tracker</h1>
@@ -23,7 +25,12 @@ const NavBar = () => {
                     <NavLink to="/WorkoutHistory">Workout History</NavLink>
                 </li>
             </ul>
-            <button className="login-btn">Login</button>
+            <button
+                className="login-btn"
+                onClick={() => navigate("/user-register")}
+            >
+                Login
+            </button>
         </nav>
     );
 };
