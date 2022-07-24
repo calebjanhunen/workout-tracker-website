@@ -1,9 +1,9 @@
 import React from "react";
 import moment from "moment";
 
-import TrashBinImage from "../../../../images/trash-bin.png";
+import TrashBinImage from "assets/images/trash-bin.png";
 import "./EditWorkoutFormStyles.css";
-import { useUpdateWorkoutMutation } from "../../../../redux/features/api/workoutTrackerApi";
+import { useUpdateWorkoutMutation } from "redux/features/api/workoutTrackerApi";
 import DeleteWorkoutModal from "./DeleteWorkoutModal";
 
 const EditWorkoutForm = ({

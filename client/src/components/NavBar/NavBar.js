@@ -22,7 +22,7 @@ const NavBar = () => {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/WorkoutHistory">Workout History</NavLink>
+                    <NavLink to="workout-history">Workout History</NavLink>
                 </li>
             </ul>
             <button

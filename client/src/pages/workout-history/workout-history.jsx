@@ -5,8 +5,7 @@ import "react-calendar/dist/Calendar.css";
 import "./WorkoutHistoryStyles.css";
 
 import { useGetWorkoutsQuery } from "../../redux/features/api/workoutTrackerApi";
-import WorkoutCard from "./WorkoutCard/WorkoutCard";
-import LoadingSpinner from "../LoadingSpinner";
+import WorkoutCard from "./components/WorkoutCard/WorkoutCard";
 
 //TODO: display loading spinner when submiting an edit
 const ViewWorkoutsPage = () => {

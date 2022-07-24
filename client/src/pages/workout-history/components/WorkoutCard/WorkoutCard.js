@@ -2,7 +2,7 @@ import React from "react";
 
 import EditWorkoutForm from "./EditWorkoutForm/EditWorkoutForm";
 import WorkoutCardInfo from "./WorkoutCardInfo/WorkoutCardInfo";
-import { useGetWorkoutsQuery } from "../../../redux/features/api/workoutTrackerApi";
+import { useGetWorkoutsQuery } from "redux/features/api/workoutTrackerApi";
 import "./WorkoutCardInfo/WorkoutCardStyles.css";
 
 const WorkoutCard = ({ workoutInfo }) => {

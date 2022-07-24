@@ -1,6 +1,6 @@
 import React from "react";
 import moment from "moment";
-import EditIcon from "../../../../images/edit-btn-icon.png";
+import EditIcon from "assets/images/edit-btn-icon.png";
 
 import "./WorkoutCardStyles.css";
 

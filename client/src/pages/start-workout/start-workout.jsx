@@ -6,7 +6,6 @@ import { setWorkoutTemplate } from "../../redux/reducer/workoutTemplateSlice";
 
 import "./StartWorkoutPageStyles.css";
 import WorkoutForm from "./StartEmptyWorkoutPage/WorkoutForm/WorkoutForm";
-import LoadingSpinner from "../LoadingSpinner.js";
 
 const StartWorkoutPage = () => {
     const navigate = useNavigate();
