@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 import { generateAccessToken } from "../utils/generateTokens.js";
 import User from "../models/users.js";
@@ -91,5 +92,37 @@ export async function logoutUser(req, res) {
         res.json("Logged out successfully");
     } catch (err) {
         res.status(400).json({ message: "Could not logout user" });
+    }
+}
+
+export async function handleRefreshToken(req, res) {
+    const { refreshToken } = req.cookies;
+
+    if (!refreshToken) res.status(401).json({ message: "Not logged in" });
+
+    try {
+        const foundUser = await User.findOne({ refreshTokens: refreshToken });
+        if (!foundUser)
+            res.status(403).json({ message: "Invalid refresh token" });
+        // console.log(foundUser);
+
+        //verify refresh token is not expired
+        jwt.verify(
+            refreshToken,
+            `${process.env.REFRES_TOKEN_SECRET}`,
+            (err, decoded) => {
+                if (err)
+                    return res
+                        .status(401)
+                        .json({ message: "Refresh token expired." });
+
+                const accessToken = generateAccessToken(decoded._id);
+
+                res.json({ username: foundUser.username, accessToken });
+            }
+        );
+    } catch (err) {
+        console.log(err);
+        res.status(400).json({ message: "Could not refresh access token" });
     }
 }
