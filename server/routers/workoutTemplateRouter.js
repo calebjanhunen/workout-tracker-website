@@ -1,16 +1,16 @@
 import express from "express";
-import bodyParser from "body-parser";
 
 import {
     createWorkoutTemplate,
     getWorkoutTemplates,
     deleteWorkoutTemplate,
 } from "../controllers/workoutTemplateController.js";
+import { verifyJWT } from "../middleware/verifyJWT.js";
 
 const router = express.Router();
 
-router.post("/", bodyParser.json(), createWorkoutTemplate);
-router.get("/", getWorkoutTemplates);
-router.delete("/", deleteWorkoutTemplate);
+router.post("/", verifyJWT, createWorkoutTemplate);
+router.get("/", verifyJWT, getWorkoutTemplates);
+router.delete("/", verifyJWT, deleteWorkoutTemplate);
 
 export default router;

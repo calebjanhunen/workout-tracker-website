@@ -1,10 +1,15 @@
 import Workout from "../models/workout.js";
 
 export async function createWorkout(req, res) {
-    const newWorkout = new Workout(req.body);
+    const { name, exercises } = req.body;
 
     try {
-        await newWorkout.save();
+        const newWorkout = await Workout.create({
+            name,
+            owner: req.user._id,
+            exercises,
+        });
+
         res.status(201).json(newWorkout);
     } catch (err) {
         res.status(400).json({ message: "Could not create workout" });
@@ -13,7 +18,7 @@ export async function createWorkout(req, res) {
 
 export async function getWorkouts(req, res) {
     try {
-        const data = await Workout.find();
+        const data = await Workout.find({ owner: req.user._id });
         res.json(data);
     } catch (err) {
         res.status(400).json({ message: "Could not get workouts" });

@@ -9,12 +9,17 @@ const exerciseSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    owner: mongoose.Schema.Types.ObjectId,
     previousSets: [
         {
             weight: Number,
             reps: Number,
         },
     ],
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
 });
 
 const Exercise = mongoose.model("Exercise", exerciseSchema);

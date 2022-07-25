@@ -5,6 +5,7 @@ const workoutTemplateSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    owner: mongoose.Schema.Types.ObjectId,
     exercises: [
         {
             name: String,
@@ -17,6 +18,10 @@ const workoutTemplateSchema = mongoose.Schema({
             ],
         },
     ],
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
 });
 
 const WorkoutTemplate = mongoose.model(
