@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 
 import { generateAccessToken } from "../utils/generateTokens.js";
 import User from "../models/users.js";
+import { REFRESH_TOKEN_COOKIE_EXPIRE_LENGTH } from "../config/constants.js";
 
 export async function registerUser(req, res) {
     const { username, password } = req.body;
@@ -53,5 +54,42 @@ export async function loginUser(req, res) {
         res.json({ accessToken });
     } catch (err) {
         res.status(400).json({ message: "Could not login user" });
+    }
+}
+
+export async function logoutUser(req, res) {
+    const { refreshToken } = req.cookies;
+
+    //cookie not found -> user not logged in
+    if (!refreshToken)
+        return res.status(401).json({ message: "Not logged in" });
+
+    try {
+        const foundUser = await User.findOne({ refreshTokens: refreshToken });
+
+        //cookie is found, user not found -> old cookie
+        if (!foundUser) {
+            res.clearCookie("refreshToken", {
+                httpOnly: true,
+                maxAge: REFRESH_TOKEN_COOKIE_EXPIRE_LENGTH,
+            });
+            return res.sendStatus(204);
+        }
+
+        //delete cookie from db
+        const newRefreshTokenArr = foundUser.refreshTokens.filter(
+            token => token != refreshToken
+        );
+        foundUser.refreshTokens = [...newRefreshTokenArr];
+        await foundUser.save();
+
+        res.clearCookie("refreshToken", {
+            httpOnly: true,
+            maxAge: REFRESH_TOKEN_COOKIE_EXPIRE_LENGTH,
+        });
+
+        res.json("Logged out successfully");
+    } catch (err) {
+        res.status(400).json({ message: "Could not logout user" });
     }
 }
