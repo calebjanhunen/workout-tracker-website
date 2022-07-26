@@ -4,8 +4,8 @@ import { useDispatch } from "react-redux";
 
 import "./StartFromTemplateStyles.css";
 import SingleTemplate from "./SingleTemplate";
-import { useGetWorkoutTemplatesQuery } from "../../../redux/features/api/workoutTrackerApi";
-import { setWorkoutTemplate } from "../../../redux/reducer/workoutTemplateSlice";
+import { useGetWorkoutTemplatesQuery } from "redux/api/workoutTrackerApi";
+import { setWorkoutTemplate } from "redux/reducer/workoutTemplateSlice";
 
 const StartFromTemplatePage = () => {
     const navigate = useNavigate();

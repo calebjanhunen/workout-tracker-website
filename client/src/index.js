@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import "./index.css";
 import App from "./App";
 import { store } from "./redux/store";
-import { workoutTrackerApi } from "./redux/features/api/workoutTrackerApi.js";
+import { workoutTrackerApi } from "redux/api/workoutTrackerApi.js";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>

@@ -112,14 +112,14 @@ input[name="edit-form-exercise-info__reps"] {
 }
 
 /*Buttons*/
-button {
+/* button {
     cursor: pointer;
 
     border: none;
     border-radius: 10px;
     height: 20px;
     font-weight: bold;
-}
+} */
 
 .delete-set-btn {
     width: 20px;

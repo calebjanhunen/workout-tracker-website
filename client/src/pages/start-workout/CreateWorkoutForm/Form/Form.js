@@ -9,7 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Menu, MenuItem } from "@material-ui/core";
 
-import { useCreateWorkoutMutation } from "../../../../redux/features/api/workoutTrackerApi";
+import { useCreateWorkoutMutation } from "redux/api/workoutTrackerApi";
 
 import "./FormStyles.css";
 

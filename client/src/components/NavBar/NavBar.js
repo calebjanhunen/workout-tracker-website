@@ -25,10 +25,7 @@ const NavBar = () => {
                     <NavLink to="workout-history">Workout History</NavLink>
                 </li>
             </ul>
-            <button
-                className="login-btn"
-                onClick={() => navigate("/user-register")}
-            >
+            <button className="login-btn" onClick={() => navigate("/login")}>
                 Login
             </button>
         </nav>

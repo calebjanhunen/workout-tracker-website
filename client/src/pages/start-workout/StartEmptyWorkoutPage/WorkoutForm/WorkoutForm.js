@@ -4,7 +4,7 @@ import { nanoid } from "nanoid";
 import "./WorkoutFormStyles.css";
 import ExerciseModal from "../ExerciseModal/ExerciseModal";
 import SetForm from "../SetForm/SetForm";
-import { useCreateWorkoutMutation } from "../../../../redux/features/api/workoutTrackerApi";
+import { useCreateWorkoutMutation } from "redux/api/workoutTrackerApi";
 
 const WorkoutForm = ({ setShowWorkoutForm, setIsSubmitted, setIsLoading }) => {
     const [workoutName, setWorkoutName] = React.useState("");
