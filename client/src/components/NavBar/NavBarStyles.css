@@ -31,8 +31,13 @@ nav ul li a {
     border-bottom: 1px solid white;
 }
 
-.login-btn {
+.navbar-username {
     margin-left: auto;
+    margin-right: 10px;
+}
+
+.navbar-btn {
+    /* margin-left: auto; */
     margin-right: 20px;
     background-color: white;
     border-radius: 10px;
@@ -42,4 +47,8 @@ nav ul li a {
 
     /*text*/
     font-weight: bolder;
+}
+
+.login-btn {
+    margin-left: auto;
 }

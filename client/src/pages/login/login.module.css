@@ -1,3 +1,6 @@
-@import "bootstrap/dist/css/bootstrap.min.css";
 .container {
+}
+
+.card {
+    margin-top: 20px;
 }

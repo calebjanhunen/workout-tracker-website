@@ -1,23 +1,25 @@
 import { apiSlice } from "redux/api/apiSlice";
+import { createApi } from "@reduxjs/toolkit/dist/query";
 
 export const authApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
-        register: builder.mutation({}),
         login: builder.mutation({
-            query: credentials => ({
-                url: "/login",
+            query: credentials => {
+                console.log(credentials);
+                return {
+                    url: "/users/login",
+                    method: "POST",
+                    body: { ...credentials },
+                };
+            },
+        }),
+        logout: builder.mutation({
+            query: () => ({
+                url: "/users/logout",
                 method: "POST",
-                body: { ...credentials },
             }),
         }),
-        logout: builder.mutation({}),
-        refreshAccessToken: builder.query({}),
     }),
 });
 
-export const {
-    useRegisterMutation,
-    useLoginMutation,
-    useLogoutMutation,
-    useLazyRefreshAccessTokenQuery,
-} = authApiSlice;
+export const { useLoginMutation } = authApiSlice;

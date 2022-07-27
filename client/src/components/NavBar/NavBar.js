@@ -1,9 +1,12 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import "./NavBarStyles.css";
 
 const NavBar = () => {
+    const accessToken = useSelector(state => state.auth.accessToken);
+    const username = useSelector(state => state.auth.user);
     const navigate = useNavigate();
 
     return (
@@ -25,9 +28,19 @@ const NavBar = () => {
                     <NavLink to="workout-history">Workout History</NavLink>
                 </li>
             </ul>
-            <button className="login-btn" onClick={() => navigate("/login")}>
-                Login
-            </button>
+            {accessToken ? (
+                <>
+                    <h3 className="navbar-username">{username}</h3>
+                    <button className="logout-btn navbar-btn">Logout</button>
+                </>
+            ) : (
+                <button
+                    className="login-btn navbar-btn"
+                    onClick={() => navigate("/login")}
+                >
+                    Login
+                </button>
+            )}
         </nav>
     );
 };
