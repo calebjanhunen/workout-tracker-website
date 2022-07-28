@@ -8,8 +8,8 @@ import {
 } from "@material-ui/core";
 import { useState } from "react";
 import styles from "./login.module.css";
-import { useDispatch } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useLocation, Navigate } from "react-router-dom";
 
 import { setCredentials } from "redux/reducer/authSlice";
 import { useLoginMutation } from "redux/features/authApiSlice";
@@ -22,6 +22,7 @@ const LoginPage = () => {
     const [pwd, setPwd] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [login] = useLoginMutation();
+    const accessToken = useSelector(state => state.auth.accessToken);
 
     async function handleSubmitLogin(e) {
         e.preventDefault();
@@ -52,7 +53,9 @@ const LoginPage = () => {
         }
     }
     // console.log(user, pwd);
-    return (
+    return accessToken ? (
+        <Navigate to="/" />
+    ) : (
         <Container className={styles.container} maxWidth="xs">
             <Card className={styles.card}>
                 <Typography variant="h4" color="primary" align="center">

@@ -98,12 +98,13 @@ export async function logoutUser(req, res) {
 export async function handleRefreshToken(req, res) {
     const { refreshToken } = req.cookies;
 
-    if (!refreshToken) res.status(401).json({ message: "Not logged in" });
+    if (!refreshToken)
+        return res.status(401).json({ message: "Not logged in" });
 
     try {
         const foundUser = await User.findOne({ refreshTokens: refreshToken });
         if (!foundUser)
-            res.status(403).json({ message: "Invalid refresh token" });
+            return res.status(403).json({ message: "Invalid refresh token" });
         // console.log(foundUser);
 
         //verify refresh token is not expired

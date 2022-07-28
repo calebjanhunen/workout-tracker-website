@@ -28,7 +28,7 @@ const ViewWorkoutsPage = () => {
     // } else if (isError) {
     //     displayContent = <p>{error}</p>;
     // }
-    console.log(workouts);
+    if (isSuccess) console.log(workouts);
 
     return <div>WOrkout History</div>;
     // return (
