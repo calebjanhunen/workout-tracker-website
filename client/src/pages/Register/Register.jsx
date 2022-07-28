@@ -7,64 +7,54 @@ import {
     Button,
 } from "@material-ui/core";
 import { useState } from "react";
-import styles from "./login.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useLocation, Navigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 
+import { useRegisterMutation } from "redux/features/authApiSlice";
 import { setCredentials } from "redux/reducer/authSlice";
-import { useLoginMutation } from "redux/features/authApiSlice";
 
-const LoginPage = () => {
+const Register = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const location = useLocation();
     const [user, setUser] = useState("");
     const [pwd, setPwd] = useState("");
+    const [matchPwd, setMatchPwd] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const [login] = useLoginMutation();
+    const [register] = useRegisterMutation();
     const accessToken = useSelector(state => state.auth.accessToken);
 
-    async function handleSubmitLogin(e) {
+    async function handleRegister(e) {
         e.preventDefault();
-        if (user.length < 4) {
-            return console.log("username must be at least 4 characters long");
-        }
-        if (pwd.length < 8) {
-            return console.log("Password must be at least 8 characters long");
-        }
+
+        if (pwd !== matchPwd) return console.log("Passwords do not match");
+
         try {
-            setIsLoading(true);
-            const userData = await login({
+            const data = await register({
                 username: user,
                 password: pwd,
             }).unwrap();
-            console.log(userData);
-            dispatch(
-                setCredentials({ user, accessToken: userData.accessToken })
-            );
+            console.log(data);
+            dispatch(setCredentials({ user, accessToken: user.accessToken }));
 
             setUser("");
             setPwd("");
+            setMatchPwd("");
 
-            location.state
-                ? navigate(location.state.from.pathname)
-                : navigate("home");
+            navigate("/");
         } catch (err) {
             console.log(err);
-        } finally {
-            setIsLoading(false);
         }
     }
 
     return accessToken ? (
         <Navigate to="/" />
     ) : (
-        <Container className={styles.container} maxWidth="xs">
-            <Card className={styles.card}>
+        <Container maxWidth="xs">
+            <Card>
                 <Typography variant="h4" color="primary" align="center">
-                    Sign in
+                    Register
                 </Typography>
-                <Box component="form" onSubmit={handleSubmitLogin}>
+                <Box component="form" onSubmit={handleRegister}>
                     <TextField
                         variant="outlined"
                         size="small"
@@ -82,20 +72,28 @@ const LoginPage = () => {
                         fullWidth
                         onChange={e => setPwd(e.target.value)}
                     />
+                    <TextField
+                        variant="outlined"
+                        size="small"
+                        required
+                        placeholder="Confirm Password"
+                        fullWidth
+                        onChange={e => setMatchPwd(e.target.value)}
+                    />
                     <Button
                         type="submit"
                         fullWidth
                         disabled={isLoading ? true : false}
                     >
-                        Sign in
+                        Register
                     </Button>
                 </Box>
                 <Typography>
-                    Don't have an account? <a href="/register">Register</a>
+                    Already have an account? <a href="/login">Sign in</a>
                 </Typography>
             </Card>
         </Container>
     );
 };
 
-export default LoginPage;
+export default Register;

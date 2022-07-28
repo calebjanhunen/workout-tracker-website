@@ -12,21 +12,22 @@ import {
     Login,
 } from "pages";
 import Layout from "./components/Layout";
-import RequireAuth from "components/RequireAuth";
-import PersistLogin from "components/PersistLogin";
-import NavBar from "components/NavBar/NavBar";
+import RequireAuth from "utils/auth/RequireAuth";
+import PersistLogin from "utils/auth/PersistLogin";
+import Register from "pages/Register/Register";
 
 //TODO: reroute login to homepage if logged in
 const App = () => {
     return (
         <Routes>
             {/*Public routes */}
-            <Route path="/" element={<Login />} />
-            <Route element={<Layout />}>
-                <Route element={<PersistLogin />}>
-                    {/*Protected Routes */}
-                    <Route element={<RequireAuth />}>
-                        <Route index path="home" element={<Home />} />
+            <Route element={<PersistLogin />}>
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                {/*Protected Routes */}
+                <Route element={<RequireAuth />}>
+                    <Route element={<Layout />}>
+                        <Route path="/" element={<Home />} />
                         <Route
                             path="start-workout"
                             element={<StartWorkout />}

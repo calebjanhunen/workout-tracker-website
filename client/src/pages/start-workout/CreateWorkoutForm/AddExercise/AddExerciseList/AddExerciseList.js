@@ -3,10 +3,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 import "./AddExerciseStyles.css";
+// import {
+//     useGetExercisesQuery,
+//     useGetExercisesByQueryQuery,
+// } from "redux/api/workoutTrackerApi";
 import {
     useGetExercisesQuery,
     useGetExercisesByQueryQuery,
-} from "redux/api/workoutTrackerApi";
+} from "redux/features/exercisesApiSlice";
+
 import SingleExercise from "./SingleExercise";
 
 const AddExerciseList = ({

@@ -3,7 +3,7 @@ import React from "react";
 import "./WorkoutTemplateStyles.css";
 import Form from "./WorkoutTemplateForm/Form";
 import AddExerciseList from "./AddExercise/AddExerciseList/AddExerciseList";
-import CreateExerciseModal from "./AddExercise/CreateExerciseModal/CreateExerciseModal.js";
+import CreateExerciseModal from "./AddExercise/CreateExerciseModal/CreateExerciseModal";
 
 const WorkoutTemplate = () => {
     const [showModal, setShowModal] = React.useState(false);

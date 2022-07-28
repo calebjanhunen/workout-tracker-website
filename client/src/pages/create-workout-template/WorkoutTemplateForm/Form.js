@@ -9,7 +9,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Menu, MenuItem } from "@material-ui/core";
 
-import { useCreateWorkoutTemplateMutation } from "redux/api/workoutTrackerApi";
+// import { useCreateWorkoutTemplateMutation } from "redux/api/workoutTrackerApi";
+import { useCreateWorkoutTemplateMutation } from "redux/features/workoutTemplatesApiSlice";
 
 import "./FormStyles.css";
 import SingleExercise from "./SingleExercise.js";

@@ -10,19 +10,23 @@ const PersistLogin = () => {
     const accessToken = useSelector(state => state.auth.accessToken);
     const [refreshAccessToken] = useLazyRefreshAccessTokenQuery();
     const [isLoading, setIsLoading] = useState(true);
-    console.log("persist");
+
     useEffect(() => {
         async function verifyRefreshToken() {
             try {
                 const data = await refreshAccessToken();
-                dispatch(
-                    setCredentials({
-                        user: data.data.username,
-                        accessToken: data.data.accessToken,
-                    })
-                );
+                if (data?.data?.accessToken) {
+                    dispatch(
+                        setCredentials({
+                            user: data.data.username,
+                            accessToken: data.data.accessToken,
+                        })
+                    );
+                }
             } catch (err) {
                 console.log(err);
+            } finally {
+                setIsLoading(false);
             }
         }
 

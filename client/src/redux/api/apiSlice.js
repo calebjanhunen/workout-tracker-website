@@ -16,28 +16,25 @@ const baseQuery = fetchBaseQuery({
 });
 
 async function baseQueryWithReAuth(args, api) {
-    try {
-        let result = await baseQuery(args, api);
+    let result = await baseQuery(args, api);
 
-        if (result.error?.status === 403) {
-            const refreshResult = await baseQuery("/users/refresh", api);
+    if (result.error?.status === 403) {
+        const refreshResult = await baseQuery("/users/refresh", api);
 
-            api.dispatch(
-                setCredentials({
-                    user: refreshResult.data.username,
-                    accessToken: refreshResult.data.accessToken,
-                })
-            );
+        api.dispatch(
+            setCredentials({
+                user: refreshResult.data.username,
+                accessToken: refreshResult.data.accessToken,
+            })
+        );
 
-            result = await baseQuery(args, api);
-        }
-        return result;
-    } catch (err) {
-        console.log(err);
+        result = await baseQuery(args, api);
     }
+    return result;
 }
 
 export const apiSlice = createApi({
     baseQuery: baseQueryWithReAuth,
+    tagTypes: ["workouts", "exercises", "workoutTemplates"],
     endpoints: builder => ({}),
 });

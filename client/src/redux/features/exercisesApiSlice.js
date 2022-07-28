@@ -8,13 +8,16 @@ export const exercisesApiSlice = apiSlice.injectEndpoints({
                 method: "POST",
                 body: exercise,
             }),
+            invalidatesTags: ["exercises"],
         }),
         getExercises: builder.query({
             query: () => "/exercises",
+            providesTags: ["exercises"],
         }),
         getExercisesByQuery: builder.query({
             query: ({ pageNum, resultsPerPage, bodyPartFilter }) =>
                 `/exercises?limit=${resultsPerPage}&page=${pageNum}&filter=${bodyPartFilter}`,
+            providesTags: ["exercises"],
         }),
         deleteExercise: builder.mutation({
             query: id => ({
@@ -22,7 +25,7 @@ export const exercisesApiSlice = apiSlice.injectEndpoints({
                 method: "DELETE",
                 body: id,
             }),
-            invalidatesTags: ["Exercises"],
+            invalidatesTags: ["exercises"],
         }),
     }),
 });
@@ -31,5 +34,6 @@ export const {
     useCreateExerciseMutation,
     useGetExercisesQuery,
     useLazyGetExercisesByQueryQuery,
+    useGetExercisesByQueryQuery,
     useDeleteExerciseMutation,
 } = exercisesApiSlice;

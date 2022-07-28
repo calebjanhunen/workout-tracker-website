@@ -2,15 +2,19 @@ import { apiSlice } from "redux/api/apiSlice";
 
 export const authApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
+        register: builder.mutation({
+            query: credentials => ({
+                url: "/users/register",
+                method: "POST",
+                body: { ...credentials },
+            }),
+        }),
         login: builder.mutation({
-            query: credentials => {
-                console.log(credentials);
-                return {
-                    url: "/users/login",
-                    method: "POST",
-                    body: { ...credentials },
-                };
-            },
+            query: credentials => ({
+                url: "/users/login",
+                method: "POST",
+                body: { ...credentials },
+            }),
         }),
         logout: builder.mutation({
             query: () => ({
@@ -25,6 +29,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+    useRegisterMutation,
     useLoginMutation,
     useLogoutMutation,
     useLazyRefreshAccessTokenQuery,

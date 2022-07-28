@@ -17,7 +17,7 @@ const NavBar = () => {
     async function handleLogout() {
         await logout();
         dispatch(clearState());
-        navigate("/");
+        navigate("/login");
     }
 
     return (
@@ -25,7 +25,12 @@ const NavBar = () => {
             <h1 className="title">Workout Tracker</h1>
             <ul>
                 <li>
-                    <NavLink to="/home">Home</NavLink>
+                    <NavLink
+                        to="/
+                    "
+                    >
+                        Home
+                    </NavLink>
                 </li>
                 <li>
                     <NavLink to="/start-workout">Start Workout</NavLink>

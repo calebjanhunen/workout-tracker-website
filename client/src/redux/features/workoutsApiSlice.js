@@ -5,6 +5,7 @@ export const workoutApiSlice = apiSlice.injectEndpoints({
         getWorkouts: builder.query({
             query: () => "/workouts",
             keepUnusedDataFor: 5,
+            providesTags: ["workouts"],
         }),
         createWorkout: builder.mutation({
             query: workout => ({
@@ -18,6 +19,7 @@ export const workoutApiSlice = apiSlice.injectEndpoints({
                 url: `/workouts/${id}`,
                 method: "DELETE",
             }),
+            invalidatesTags: ["workouts"],
         }),
         updateWorkout: builder.mutation({
             query: workout => ({
@@ -25,6 +27,7 @@ export const workoutApiSlice = apiSlice.injectEndpoints({
                 method: "PATCH",
                 body: workout,
             }),
+            invalidatesTags: ["workouts"],
         }),
     }),
 });
