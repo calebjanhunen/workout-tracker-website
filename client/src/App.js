@@ -13,7 +13,7 @@ import {
 } from "pages";
 import Layout from "./components/Layout";
 import RequireAuth from "utils/auth/RequireAuth";
-import PersistLogin from "utils/auth/PersistLogin";
+import PersistLogin from "utils/auth/PersistLogin/PersistLogin";
 import Register from "pages/Register/Register";
 
 //TODO: reroute login to homepage if logged in

@@ -6,6 +6,7 @@ import "./WorkoutHistoryStyles.css";
 
 import { useGetWorkoutsQuery } from "redux/features/workoutsApiSlice";
 import WorkoutCard from "./components/WorkoutCard/WorkoutCard";
+import { Box, CircularProgress, Container, Card } from "@material-ui/core";
 
 //TODO: display loading spinner when submiting an edit
 const ViewWorkoutsPage = () => {
@@ -17,19 +18,22 @@ const ViewWorkoutsPage = () => {
         error,
     } = useGetWorkoutsQuery();
 
-    // let displayContent;
-    // if (isLoading) {
-    //     displayContent = <p>Loading...</p>;
-    // } else if (isSuccess) {
-    //     displayContent = workouts.map(workout => (
-    //         <WorkoutCard key={workout._id} workoutInfo={workout} />
-    //     ));
-    // } else if (isError) {
-    //     displayContent = <p>{error}</p>;
-    // }
-    if (isSuccess) console.log(workouts);
+    let displayContent;
+    if (isLoading) {
+        displayContent = <p>Loading...</p>;
+    } else if (isSuccess) {
+        displayContent = workouts.map(workout => (
+            <WorkoutCard key={workout._id} workoutInfo={workout} />
+        ));
+    } else if (isError) {
+        displayContent = <p>{error}</p>;
+    }
 
-    return <div>WOrkout History</div>;
+    return (
+        <Container maxWidth="xl">
+            <Box component="div">{displayContent}</Box>
+        </Container>
+    );
     // return (
     //     <div className="workout-history-page">
     //         <h1 className="workout-history-page__title">Workout History</h1>

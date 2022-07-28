@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
+import styles from "./PersistLogin.module.css";
+
 import { setCredentials } from "redux/reducer/authSlice";
 import { useLazyRefreshAccessTokenQuery } from "redux/features/authApiSlice";
 import { Outlet } from "react-router-dom";
+import { Box, CircularProgress, Container } from "@material-ui/core";
 
 const PersistLogin = () => {
     const dispatch = useDispatch();
@@ -15,7 +18,8 @@ const PersistLogin = () => {
         async function verifyRefreshToken() {
             try {
                 const data = await refreshAccessToken();
-                if (data?.data?.accessToken) {
+
+                if (data?.data?.accessToken && data?.error?.status !== 401) {
                     dispatch(
                         setCredentials({
                             user: data.data.username,
@@ -33,7 +37,15 @@ const PersistLogin = () => {
         accessToken ? setIsLoading(false) : verifyRefreshToken();
     }, [refreshAccessToken, accessToken, dispatch]);
 
-    return isLoading ? <p>Loading...</p> : <Outlet />;
+    return isLoading ? (
+        <Container fixed className={styles.loadingContainer}>
+            <Box component="div" className={styles.loadingDiv}>
+                <CircularProgress />
+            </Box>
+        </Container>
+    ) : (
+        <Outlet />
+    );
 };
 
 export default PersistLogin;
