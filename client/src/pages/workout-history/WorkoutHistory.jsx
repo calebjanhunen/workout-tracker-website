@@ -2,7 +2,7 @@ import React from "react";
 import Calendar from "react-calendar";
 
 import "react-calendar/dist/Calendar.css";
-import "./WorkoutHistoryStyles.css";
+import styles from "./WorkoutHistory.module.css";
 
 import { useGetWorkoutsQuery } from "redux/features/workoutsApiSlice";
 import WorkoutCard from "./components/WorkoutCard/WorkoutCard";
@@ -20,7 +20,11 @@ const ViewWorkoutsPage = () => {
 
     let displayContent;
     if (isLoading) {
-        displayContent = <p>Loading...</p>;
+        displayContent = (
+            <Box className={styles.loadingContainer}>
+                <CircularProgress />
+            </Box>
+        );
     } else if (isSuccess) {
         displayContent = workouts.map(workout => (
             <WorkoutCard key={workout._id} workoutInfo={workout} />
@@ -31,7 +35,9 @@ const ViewWorkoutsPage = () => {
 
     return (
         <Container maxWidth="xl">
-            <Box component="div">{displayContent}</Box>
+            <Box component="div" className={styles.workoutCards}>
+                {displayContent}
+            </Box>
         </Container>
     );
     // return (
