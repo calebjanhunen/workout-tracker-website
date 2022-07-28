@@ -7,7 +7,7 @@ const baseQuery = fetchBaseQuery({
     credentials: "include",
     prepareHeaders: (headers, { getState }) => {
         //attach access token to header on each request
-        const accessToken = getState().auth.token;
+        const accessToken = getState().auth.accessToken;
         if (accessToken) {
             headers.set("authorization", `Bearer ${accessToken}`);
         }
@@ -15,9 +15,29 @@ const baseQuery = fetchBaseQuery({
     },
 });
 
-async function baseQueryWithReAuth(args, api, extraOptions) {}
+async function baseQueryWithReAuth(args, api) {
+    try {
+        let result = await baseQuery(args, api);
+        console.log(result);
+        if (result.error?.status === 403) {
+            const refreshResult = await baseQuery("/users/refresh", api);
+
+            api.dispatch(
+                setCredentials({
+                    user: refreshResult.data.username,
+                    accessToken: refreshResult.data.accessToken,
+                })
+            );
+
+            result = await baseQuery(args, api);
+        }
+        return result;
+    } catch (err) {
+        console.log(err);
+    }
+}
 
 export const apiSlice = createApi({
-    baseQuery,
+    baseQuery: baseQueryWithReAuth,
     endpoints: builder => ({}),
 });

@@ -3,7 +3,7 @@ import User from "../models/users.js";
 
 export async function verifyJWT(req, res, next) {
     const authHeader = req.headers["authorization"];
-    if (!authHeader) return res.sendStatus(401); //unauthorized
+    if (!authHeader) return res.status(401).json("No access token"); //unauthorized
     const token = authHeader.replace("Bearer", "").trim(); //token
 
     try {

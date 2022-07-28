@@ -9,7 +9,7 @@ import {
 import { useState } from "react";
 import styles from "./login.module.css";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { setCredentials } from "redux/reducer/authSlice";
 import { useLoginMutation } from "redux/features/authApiSlice";
@@ -17,6 +17,7 @@ import { useLoginMutation } from "redux/features/authApiSlice";
 const LoginPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
     const [user, setUser] = useState("");
     const [pwd, setPwd] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +42,9 @@ const LoginPage = () => {
                 setCredentials({ user, accessToken: userData.accessToken })
             );
 
-            navigate("/home");
+            location.state
+                ? navigate(location.state.from.pathname)
+                : navigate("/home");
         } catch (err) {
             console.log(err);
         } finally {

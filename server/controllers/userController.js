@@ -109,7 +109,7 @@ export async function handleRefreshToken(req, res) {
         //verify refresh token is not expired
         jwt.verify(
             refreshToken,
-            `${process.env.REFRES_TOKEN_SECRET}`,
+            `${process.env.REFRESH_TOKEN_SECRET}`,
             (err, decoded) => {
                 if (err)
                     return res
