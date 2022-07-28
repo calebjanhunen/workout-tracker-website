@@ -5,10 +5,6 @@ import {
     useCreateExerciseMutation,
     useGetExercisesQuery,
 } from "redux/features/exercisesApiSlice";
-// import {
-//     useCreateExerciseMutation,
-//     useGetExercisesQuery,
-// } from "redux/api/workoutTrackerApi.js";
 
 const CreateExerciseModal = ({ setShowModal }) => {
     const [exerciseName, setExerciseName] = React.useState("");

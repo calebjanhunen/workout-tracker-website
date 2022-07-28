@@ -1,10 +1,7 @@
 import React from "react";
 
 import "./CreateExerciseModalStyles.css";
-// import {
-//     useCreateExerciseMutation,
-//     useGetExercisesQuery,
-// } from "redux/api/workoutTrackerApi";
+
 import {
     useCreateExerciseMutation,
     useGetExercisesQuery,

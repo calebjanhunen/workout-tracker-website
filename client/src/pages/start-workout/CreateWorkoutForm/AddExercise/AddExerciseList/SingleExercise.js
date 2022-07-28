@@ -6,7 +6,8 @@ import {
     faTrashAlt,
     faEdit,
 } from "@fortawesome/free-solid-svg-icons";
-import { useDeleteExerciseMutation } from "redux/api/workoutTrackerApi";
+
+import { useDeleteExerciseMutation } from "redux/features/exercisesApiSlice";
 
 import "./AddExerciseStyles.css";
 

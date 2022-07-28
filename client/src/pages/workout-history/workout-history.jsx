@@ -4,7 +4,6 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./WorkoutHistoryStyles.css";
 
-// import { useGetWorkoutsQuery } from "redux/api/workoutTrackerApi";
 import { useGetWorkoutsQuery } from "redux/features/workoutsApiSlice";
 import WorkoutCard from "./components/WorkoutCard/WorkoutCard";
 

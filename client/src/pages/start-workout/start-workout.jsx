@@ -5,61 +5,42 @@ import { useDispatch } from "react-redux";
 import { setWorkoutTemplate } from "../../redux/reducer/workoutTemplateSlice";
 
 import "./StartWorkoutPageStyles.css";
-import WorkoutForm from "./StartEmptyWorkoutPage/WorkoutForm/WorkoutForm";
 
 const StartWorkoutPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [showWorkoutForm, setShowWorkoutForm] = React.useState(false);
     const [isSubmitted, setIsSubmitted] = React.useState(false);
-    const [isLoading, setIsLoading] = React.useState(false);
-    const [showTemplates, setShowTemplates] = React.useState(false);
     // const { data: workoutTemplates } = useGetWorkoutTemplatesQuery();
 
     let displayContent;
-    if (isLoading) {
-        displayContent = <p>Loading...</p>;
-    } else {
-        if (showWorkoutForm) {
-            displayContent = (
-                <WorkoutForm
-                    setShowWorkoutForm={setShowWorkoutForm}
-                    setIsSubmitted={setIsSubmitted}
-                    setIsLoading={setIsLoading}
-                />
-            );
-        } else {
-            displayContent = (
-                <div className="start-workout-content">
-                    {isSubmitted && (
-                        <h1>
-                            Workout Submitted, Click the button to start a new
-                            workout
-                        </h1>
-                    )}
-                    <div>
-                        <button
-                            className="start-workout-btn"
-                            onClick={() => {
-                                dispatch(setWorkoutTemplate({}));
-                                navigate("/start-workout/create-workout-form");
-                            }}
-                        >
-                            Start Empty Workout
-                        </button>
-                        <button
-                            className="start-workout-btn"
-                            onClick={() =>
-                                navigate("/start-workout/start-from-template")
-                            }
-                        >
-                            Start From Template
-                        </button>
-                    </div>
-                </div>
-            );
-        }
-    }
+    displayContent = (
+        <div className="start-workout-content">
+            {isSubmitted && (
+                <h1>
+                    Workout Submitted, Click the button to start a new workout
+                </h1>
+            )}
+            <div>
+                <button
+                    className="start-workout-btn"
+                    onClick={() => {
+                        dispatch(setWorkoutTemplate({}));
+                        navigate("/start-workout/create-workout-form");
+                    }}
+                >
+                    Start Empty Workout
+                </button>
+                <button
+                    className="start-workout-btn"
+                    onClick={() =>
+                        navigate("/start-workout/start-from-template")
+                    }
+                >
+                    Start From Template
+                </button>
+            </div>
+        </div>
+    );
 
     return <div className="start-workout-page">{displayContent}</div>;
 };

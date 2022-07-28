@@ -3,7 +3,7 @@ import moment from "moment";
 
 import TrashBinImage from "assets/images/trash-bin.png";
 import "./EditWorkoutFormStyles.css";
-import { useUpdateWorkoutMutation } from "redux/api/workoutTrackerApi";
+import { useUpdateWorkoutMutation } from "redux/features/workoutsApiSlice";
 import DeleteWorkoutModal from "./DeleteWorkoutModal";
 
 const EditWorkoutForm = ({

@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 
 import "./StartFromTemplateStyles.css";
 import SingleTemplate from "./SingleTemplate";
-// import { useGetWorkoutTemplatesQuery } from "redux/api/workoutTrackerApi";
+
 import { useGetWorkoutTemplatesQuery } from "redux/features/workoutTemplatesApiSlice";
 import { setWorkoutTemplate } from "redux/reducer/workoutTemplateSlice";
 
