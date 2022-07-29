@@ -6,7 +6,13 @@ import styles from "./WorkoutHistory.module.css";
 
 import { useGetWorkoutsQuery } from "redux/features/workoutsApiSlice";
 import WorkoutCard from "./components/WorkoutCard/WorkoutCard";
-import { Box, CircularProgress, Container, Card } from "@material-ui/core";
+import {
+    Box,
+    CircularProgress,
+    Container,
+    Card,
+    Typography,
+} from "@material-ui/core";
 
 //TODO: display loading spinner when submiting an edit
 const ViewWorkoutsPage = () => {
@@ -36,6 +42,7 @@ const ViewWorkoutsPage = () => {
     return (
         <Container maxWidth="xl">
             <Box component="div" className={styles.workoutCards}>
+                <Typography variant="h4">Workout History</Typography>
                 {displayContent}
             </Box>
         </Container>
