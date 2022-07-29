@@ -1,7 +1,7 @@
 import React from "react";
 
 import EditWorkoutForm from "./EditWorkoutDisplay/EditWorkoutDisplay";
-import WorkoutCardInfo from "./WorkoutInfoDisplay";
+import WorkoutCardInfo from "./WorkoutInfoDisplay/WorkoutInfoDisplay";
 
 const WorkoutCard = ({ workoutInfo }) => {
     const [showEditForm, setShowEditForm] = React.useState(false);

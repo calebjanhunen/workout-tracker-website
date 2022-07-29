@@ -20,22 +20,22 @@ const EditWorkoutForm = ({
 
     const [updateWorkout] = useUpdateWorkoutMutation();
 
-    function getExercise(exerciseId) {
-        return exerciseForm.filter(exercise => exercise._id === exerciseId);
+    function getExercise(exerciseIndex) {
+        return exerciseForm.filter((_, index) => index === exerciseIndex);
     }
 
-    function changeExerciseForm(exerciseId, updatedExercise) {
+    function changeExerciseForm(exerciseIndex, updatedExercise) {
         setExerciseForm(prev =>
-            prev.map(exercise =>
-                exercise._id === exerciseId ? updatedExercise : exercise
+            prev.map((exercise, index) =>
+                index === exerciseIndex ? updatedExercise : exercise
             )
         );
     }
 
-    function handleEditSetValue(e, exerciseId, setIndex, type) {
-        const exercise = getExercise(exerciseId);
+    function handleEditSetValue(e, exerciseIndex, setIndex, type) {
+        const exercise = getExercise(exerciseIndex);
 
-        const setToEdit = exercise[0].exerciseInfo.filter(
+        const setToEdit = exercise[0].sets.filter(
             (_, index) => index === setIndex
         );
 
@@ -46,47 +46,42 @@ const EditWorkoutForm = ({
 
         const updatedExercise = {
             ...exercise[0],
-            exerciseInfo: exercise[0].exerciseInfo.map((set, index) =>
+            sets: exercise[0].sets.map((set, index) =>
                 index === setIndex ? updatedSet : set
             ),
         };
 
-        changeExerciseForm(updatedExercise._id, updatedExercise);
+        changeExerciseForm(exerciseIndex, updatedExercise);
     }
 
-    function handleAddSet(exerciseId) {
-        const exercise = getExercise(exerciseId);
+    function handleAddSet(exerciseIndex) {
+        const exercise = getExercise(exerciseIndex);
 
         const updatedExercise = {
-            exerciseName: exercise[0].exerciseName,
-            exerciseInfo: [
-                ...exercise[0].exerciseInfo,
-                { reps: "", weight: "" },
-            ],
+            name: exercise[0].name,
+            sets: [...exercise[0].sets, { reps: "", weight: "" }],
             _id: exercise[0]._id,
         };
 
         setExerciseForm(prev =>
-            prev.map(exercise =>
-                exercise._id === exerciseId ? updatedExercise : exercise
+            prev.map((exercise, index) =>
+                index === exerciseIndex ? updatedExercise : exercise
             )
         );
     }
 
-    function handleDeleteSet(e, exerciseId, setIndex) {
+    function handleDeleteSet(e, exerciseIndex, setIndex) {
         e.target.parentElement.classList.add("fade-out-effect");
         setTimeout(() => {
-            const exercise = getExercise(exerciseId);
+            const exercise = getExercise(exerciseIndex);
 
             const updatedExercise = {
-                exerciseName: exercise[0].exerciseName,
-                exerciseInfo: exercise[0].exerciseInfo.filter(
-                    (_, index) => index !== setIndex
-                ),
+                name: exercise[0].name,
+                sets: exercise[0].sets.filter((_, index) => index !== setIndex),
                 _id: exercise[0]._id,
             };
 
-            changeExerciseForm(exerciseId, updatedExercise);
+            changeExerciseForm(exerciseIndex, updatedExercise);
             e.target.parentElement.classList.remove("fade-out-effect");
         }, 300);
     }
@@ -94,7 +89,7 @@ const EditWorkoutForm = ({
     function handleAddExercise() {
         setExerciseForm(prev => [
             ...prev,
-            { exerciseName: "", exerciseInfo: [{ reps: "", weight: "" }] },
+            { name: "", sets: [{ reps: "", weight: "" }] },
         ]);
     }
 
@@ -112,7 +107,7 @@ const EditWorkoutForm = ({
         setExerciseForm(prev =>
             prev.map((exercise, index) =>
                 index === exerciseIndex
-                    ? { ...exercise, exerciseName: e.target.value }
+                    ? { ...exercise, name: e.target.value }
                     : exercise
             )
         );
@@ -122,8 +117,8 @@ const EditWorkoutForm = ({
         let isInvalidSetInput = false;
         let isInvalidExerciseName = false;
         exerciseForm.forEach(exercise => {
-            if (exercise.exerciseName === "") isInvalidExerciseName = true;
-            exercise.exerciseInfo.forEach(set => {
+            if (exercise.name === "") isInvalidExerciseName = true;
+            exercise.sets.forEach(set => {
                 if (set.reps === "" || set.weight === "") {
                     isInvalidSetInput = true;
                 }
@@ -133,7 +128,7 @@ const EditWorkoutForm = ({
         if (isInvalidSetInput) return console.log("Enter set or weight value");
         if (isInvalidExerciseName) return console.log("Enter exercise name");
 
-        setIsUpdating(true);
+        // setIsUpdating(true);
 
         await updateWorkout({
             name: workoutName,
@@ -141,9 +136,7 @@ const EditWorkoutForm = ({
             _id: workoutInfo._id,
             createdAt: workoutInfo.createdAt,
         });
-        setIsUpdating(false);
 
-        setChangedWorkoutId(workoutInfo._id);
         setShowEditForm(false);
     }
 
@@ -155,12 +148,12 @@ const EditWorkoutForm = ({
                         <input
                             name="edit-form__exercise-name"
                             placeholder="Enter Exercise Name..."
-                            value={exercise.exerciseName}
+                            value={exercise.name}
                             onChange={e =>
                                 handleEditExerciseName(e, exerciseIndex)
                             }
                         />
-                        {exercise.exerciseInfo.map((info, setIndex) => (
+                        {exercise.sets.map((info, setIndex) => (
                             <div
                                 key={setIndex}
                                 className="edit-form-exercise-info visible"
@@ -176,7 +169,7 @@ const EditWorkoutForm = ({
                                     onChange={e =>
                                         handleEditSetValue(
                                             e,
-                                            exercise._id,
+                                            exerciseIndex,
                                             setIndex,
                                             "weight"
                                         )
@@ -191,7 +184,7 @@ const EditWorkoutForm = ({
                                     onChange={e =>
                                         handleEditSetValue(
                                             e,
-                                            exercise._id,
+                                            exerciseIndex,
                                             setIndex,
                                             "reps"
                                         )
@@ -203,7 +196,7 @@ const EditWorkoutForm = ({
                                     onClick={e => {
                                         handleDeleteSet(
                                             e,
-                                            exercise._id,
+                                            exerciseIndex,
                                             setIndex
                                         );
                                     }}
@@ -214,7 +207,7 @@ const EditWorkoutForm = ({
                         ))}
                         <button
                             className="add-set-btn"
-                            onClick={() => handleAddSet(exercise._id)}
+                            onClick={() => handleAddSet(exerciseIndex)}
                         >
                             Add Set
                         </button>

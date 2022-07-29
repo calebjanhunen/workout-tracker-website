@@ -23,7 +23,7 @@ export const workoutApiSlice = apiSlice.injectEndpoints({
         }),
         updateWorkout: builder.mutation({
             query: workout => ({
-                url: `/workout/${workout._id}`,
+                url: `/workouts/${workout._id}`,
                 method: "PATCH",
                 body: workout,
             }),
