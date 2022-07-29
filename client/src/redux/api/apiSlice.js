@@ -2,6 +2,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 
 import { setCredentials, clearState } from "redux/reducer/authSlice";
 
+//production: https://janhunen-workout-tracker-api.herokuapp.com
+//dev: http://localhost:5000
+
 const baseQuery = fetchBaseQuery({
     baseUrl: "https://janhunen-workout-tracker-api.herokuapp.com",
     credentials: "include",

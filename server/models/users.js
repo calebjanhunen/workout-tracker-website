@@ -34,6 +34,7 @@ userSchema.methods.generateRefreshToken = async function (req, res) {
     //clear refresh token cookie if it exists
     if (refreshToken)
         res.clearCookie("refreshToken", {
+            secure: process.env.NODE_ENV !== "development",
             httpOnly: true,
             maxAge: REFRESH_TOKEN_COOKIE_EXPIRE_LENGTH,
         });
@@ -53,6 +54,7 @@ userSchema.methods.generateRefreshToken = async function (req, res) {
 
     //create new refresh token cookie
     res.cookie("refreshToken", newRefreshToken, {
+        secure: process.env.NODE_ENV !== "development",
         httpOnly: true,
         maxAge: REFRESH_TOKEN_COOKIE_EXPIRE_LENGTH,
     });

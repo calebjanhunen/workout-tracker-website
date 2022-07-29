@@ -7,18 +7,20 @@ import workoutRouter from "./routers/workoutRouter.js";
 import exerciseRouter from "./routers/exerciseRouter.js";
 import workoutTemplateRouter from "./routers/workoutTemplateRouter.js";
 import userRouter from "./routers/userRouter.js";
+import { corsOptions } from "./utils/corsOptions.js";
 
 const app = express();
 
 //built-in middlewares
-app.use(
-    cors({
-        credentials: true,
-        origin: "http://localhost:3000",
-    })
-); //Cross Origin Resource Sharing
+// app.use(cors(corsOptions)); //Cross Origin Resource Sharing
 app.use(express.json()); //For reading json
 app.use(cookieParser()); //For reading cookies (refresh token)
+
+app.use((req, res, next) => {
+    console.log(req);
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+    next();
+});
 
 app.use("/workouts", workoutRouter);
 app.use("/workoutTemplates", workoutTemplateRouter);
