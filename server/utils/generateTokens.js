@@ -1,5 +1,8 @@
 import jwt from "jsonwebtoken";
-import { ACCESS_TOKEN_EXPIRE_LENGTH } from "../config/constants.js";
+import dotenv from "dotenv";
+import { ACCESS_TOKEN_EXPIRE_LENGTH } from "../utils/constants.js";
+
+dotenv.config();
 
 export function generateAccessToken(_id) {
     return jwt.sign(

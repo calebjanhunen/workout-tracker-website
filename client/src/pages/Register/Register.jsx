@@ -76,6 +76,7 @@ const Register = () => {
                         variant="outlined"
                         size="small"
                         required
+                        type="password"
                         placeholder="Confirm Password"
                         fullWidth
                         onChange={e => setMatchPwd(e.target.value)}

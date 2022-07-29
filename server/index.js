@@ -26,11 +26,11 @@ app.use("/exercises", exerciseRouter);
 app.use("/users", userRouter);
 
 app.get("/", (req, res) => {
-    res.send("Welcome to workout tracker api");
+    res.send("Welcome to Workout Tracker Api");
 });
 
 mongoose
-    .connect(process.env.CONNECTION_URL, {
+    .connect(process.env.MONGODB_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     })

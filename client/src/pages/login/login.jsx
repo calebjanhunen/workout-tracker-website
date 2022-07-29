@@ -79,6 +79,7 @@ const LoginPage = () => {
                         size="small"
                         required
                         placeholder="Password"
+                        type="password"
                         fullWidth
                         onChange={e => setPwd(e.target.value)}
                     />

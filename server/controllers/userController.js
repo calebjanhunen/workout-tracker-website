@@ -1,9 +1,12 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
 import { generateAccessToken } from "../utils/generateTokens.js";
 import User from "../models/users.js";
-import { REFRESH_TOKEN_COOKIE_EXPIRE_LENGTH } from "../config/constants.js";
+import { REFRESH_TOKEN_COOKIE_EXPIRE_LENGTH } from "../utils/constants.js";
+
+dotenv.config();
 
 export async function registerUser(req, res) {
     const { username, password } = req.body;

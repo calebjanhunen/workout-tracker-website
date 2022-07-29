@@ -1,10 +1,13 @@
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
 import {
     REFRESH_TOKEN_COOKIE_EXPIRE_LENGTH,
     REFRESH_TOKEN_EXPIRE_LENGTH,
-} from "../config/constants.js";
+} from "../utils/constants.js";
+
+dotenv.config();
 
 const userSchema = mongoose.Schema({
     username: {
