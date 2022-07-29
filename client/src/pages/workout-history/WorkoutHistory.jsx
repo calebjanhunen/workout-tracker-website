@@ -24,6 +24,13 @@ const ViewWorkoutsPage = () => {
         error,
     } = useGetWorkoutsQuery();
 
+    //TODO: - Create modal for editing workouts
+    //      - Create workout cards
+    //      - Use material UI components for styling
+    //      - Add other things on workout history page? (in the future)
+    //          - Calendar (Click on dates to show workout from that date)
+    //          - Workout history analityics (Personal bests for diff exercises, trends on exercise improvements...)
+
     let displayContent;
     if (isLoading) {
         displayContent = (
@@ -47,17 +54,6 @@ const ViewWorkoutsPage = () => {
             </Box>
         </Container>
     );
-    // return (
-    //     <div className="workout-history-page">
-    //         <h1 className="workout-history-page__title">Workout History</h1>
-    //         <div className="workout-history-page__info">
-    //             <div className="workout-history-page__cards">
-    //                 {displayContent}
-    //             </div>
-    //             {/* <Calendar className="react-calendar" /> */}
-    //         </div>
-    //     </div>
-    // );
 };
 
 export default ViewWorkoutsPage;

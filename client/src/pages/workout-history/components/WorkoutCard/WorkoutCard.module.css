@@ -1,2 +1,21 @@
 .workoutCard {
+    width: 400px;
+    margin: 10px;
+    border-radius: 10px;
+    /* background-color: rgb(226, 223, 223); */
+}
+
+/*Workout date and length*/
+.cardContent div {
+    display: flex;
+    color: grey;
+}
+
+.workoutDate {
+    padding-right: 60px;
+    font-weight: bold;
+}
+
+.workoutLength {
+    font-weight: bold;
 }
