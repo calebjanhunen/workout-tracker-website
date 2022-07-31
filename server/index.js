@@ -12,15 +12,15 @@ import { corsOptions } from "./utils/corsOptions.js";
 const app = express();
 
 //built-in middlewares
-// app.use(cors(corsOptions)); //Cross Origin Resource Sharing
+app.use(cors(corsOptions)); //Cross Origin Resource Sharing
 app.use(express.json()); //For reading json
 app.use(cookieParser()); //For reading cookies (refresh token)
 
-app.use((req, res, next) => {
-    console.log(req);
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-    next();
-});
+// app.use((req, res, next) => {
+//     console.log(req);
+//     res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+//     next();
+// });
 
 app.use("/workouts", workoutRouter);
 app.use("/workoutTemplates", workoutTemplateRouter);
@@ -30,6 +30,8 @@ app.use("/users", userRouter);
 app.get("/", (req, res) => {
     res.send("Welcome to Workout Tracker Api");
 });
+
+console.log(process.env.MONGODB_URI);
 
 mongoose
     .connect(process.env.MONGODB_URI, {
