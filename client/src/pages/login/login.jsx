@@ -38,7 +38,7 @@ const LoginPage = () => {
                 username: user,
                 password: pwd,
             }).unwrap();
-            console.log(userData);
+
             dispatch(
                 setCredentials({ user, accessToken: userData.accessToken })
             );

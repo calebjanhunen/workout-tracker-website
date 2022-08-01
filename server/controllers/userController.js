@@ -74,7 +74,8 @@ export async function logoutUser(req, res) {
         //cookie is found, user not found -> old cookie
         if (!foundUser) {
             res.clearCookie("refreshToken", {
-                secure: process.env.NODE_ENV !== "development",
+                secure: true,
+                sameSite: "None",
                 httpOnly: true,
                 maxAge: REFRESH_TOKEN_COOKIE_EXPIRE_LENGTH,
             });
@@ -89,7 +90,8 @@ export async function logoutUser(req, res) {
         await foundUser.save();
 
         res.clearCookie("refreshToken", {
-            secure: process.env.NODE_ENV !== "development",
+            secure: true,
+            sameSite: "None",
             httpOnly: true,
             maxAge: REFRESH_TOKEN_COOKIE_EXPIRE_LENGTH,
         });

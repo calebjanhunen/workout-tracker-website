@@ -12,13 +12,34 @@ import { corsOptions } from "./utils/corsOptions.js";
 const app = express();
 
 //built-in middlewares
+const allowedDomains = [
+    "https://janhunen-workout-tracker.netlify.app",
+    "http://localhost:3000",
+];
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Credentials", true);
+    next();
+});
 app.use(cors(corsOptions)); //Cross Origin Resource Sharing
+// app.use(
+//     cors({
+//         credentials: true,
+//         // origin: "http://localhost:3000",
+//     })
+// );
 app.use(express.json()); //For reading json
 app.use(cookieParser()); //For reading cookies (refresh token)
 
 // app.use((req, res, next) => {
-//     console.log(req);
-//     res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+//     const foundDomain = allowedDomains.filter(
+//         domain => domain === req.headers.origin
+//     );
+//     res.header("Access-Control-Allow-Origin", foundDomain[0]);
+//     next();
+// });
+
+// app.use((req, res, next) => {
+//     console.log(req.headers);
 //     next();
 // });
 
@@ -30,8 +51,6 @@ app.use("/users", userRouter);
 app.get("/", (req, res) => {
     res.send("Welcome to Workout Tracker Api");
 });
-
-console.log(process.env.MONGODB_URI);
 
 mongoose
     .connect(process.env.MONGODB_URI, {
