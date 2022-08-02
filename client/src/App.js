@@ -1,29 +1,30 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
-// import "bootstrap/dist/css/bootstrap.min.css";
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 
 import {
-    StartWorkout,
-    StartFromTemplate,
     CreateWorkoutForm,
     Home,
+    Login,
+    PageNotFound,
+    StartFromTemplate,
+    StartWorkout,
     WorkoutHistory,
     WorkoutTemplate,
-    Login,
-} from "pages";
-import Layout from "./components/Layout";
-import RequireAuth from "utils/auth/RequireAuth";
-import PersistLogin from "utils/auth/PersistLogin/PersistLogin";
-import Register from "pages/Register/Register";
+} from 'pages';
+import Register from 'pages/Register/Register';
+import PersistLogin from 'utils/auth/PersistLogin/PersistLogin';
+import RequireAuth from 'utils/auth/RequireAuth';
+import Layout from './components/Layout';
 
 //TODO: reroute login to homepage if logged in
 const App = () => {
     return (
         <Routes>
-            {/*Public routes */}
             <Route element={<PersistLogin />}>
+                {/*Public routes */}
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+
                 {/*Protected Routes */}
                 <Route element={<RequireAuth />}>
                     <Route element={<Layout />}>
@@ -50,6 +51,8 @@ const App = () => {
                         />
                     </Route>
                 </Route>
+
+                <Route path="/*" element={<PageNotFound />} />
             </Route>
         </Routes>
     );

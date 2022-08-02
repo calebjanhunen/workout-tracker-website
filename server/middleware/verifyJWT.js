@@ -1,13 +1,13 @@
-import jwt from "jsonwebtoken";
-import User from "../models/users.js";
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
+import User from '../models/users.js';
 
 dotenv.config();
 
 export async function verifyJWT(req, res, next) {
-    const authHeader = req.headers["authorization"];
-    if (!authHeader) return res.status(401).json("No access token"); //unauthorized
-    const token = authHeader.replace("Bearer", "").trim(); //token
+    const authHeader = req.headers['authorization'];
+    if (!authHeader) return res.status(401).json('No access token'); //unauthorized
+    const token = authHeader.replace('Bearer', '').trim(); //token
 
     try {
         const decodedData = jwt.verify(
@@ -22,6 +22,7 @@ export async function verifyJWT(req, res, next) {
         req.user = user;
         next();
     } catch (err) {
-        res.status(403).json({ error: "Please authenticate" });
+        console.log(err);
+        res.status(403).json({ error: err });
     }
 }

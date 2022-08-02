@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
-import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 
 import {
     REFRESH_TOKEN_COOKIE_EXPIRE_LENGTH,
-    REFRESH_TOKEN_EXPIRE_LENGTH,
+    REFRESH_TOKEN_EXPIRE_LENGTH
 } from "../utils/constants.js";
 
 dotenv.config();

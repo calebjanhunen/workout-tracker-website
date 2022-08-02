@@ -1,14 +1,14 @@
-import mongoose from "mongoose";
-import express from "express";
-import cors from "cors";
 import cookieParser from "cookie-parser";
+import cors from "cors";
+import express from "express";
+import mongoose from "mongoose";
 
-import workoutRouter from "./routers/workoutRouter.js";
-import exerciseRouter from "./routers/exerciseRouter.js";
-import workoutTemplateRouter from "./routers/workoutTemplateRouter.js";
-import userRouter from "./routers/userRouter.js";
-import { corsOptions } from "./utils/corsOptions.js";
 import { credentials } from "./middleware/credentials.js";
+import exerciseRouter from "./routers/exerciseRouter.js";
+import userRouter from "./routers/userRouter.js";
+import workoutRouter from "./routers/workoutRouter.js";
+import workoutTemplateRouter from "./routers/workoutTemplateRouter.js";
+import { corsOptions } from "./utils/corsOptions.js";
 
 const app = express();
 
