@@ -22,7 +22,6 @@ export async function verifyJWT(req, res, next) {
         req.user = user;
         next();
     } catch (err) {
-        console.log(err);
         res.status(403).json({ error: err });
     }
 }

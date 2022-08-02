@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
+import ExerciseList from 'components/ExerciseList/ExerciseList';
 import {
     CreateWorkoutForm,
     Home,
@@ -50,6 +51,8 @@ const App = () => {
                             element={<WorkoutHistory />}
                         />
                     </Route>
+
+                    <Route path="/exercise-list" element={<ExerciseList />} />
                 </Route>
 
                 <Route path="/*" element={<PageNotFound />} />

@@ -1,10 +1,10 @@
-import Exercise from "../models/exercises.js";
+import Exercise from '../models/exercises.js';
 
 export async function createExercise(req, res) {
     const { name, bodyPart } = req.body;
     try {
         const newExercise = await Exercise.create({
-            name,
+            name: name.toLowerCase(),
             bodyPart,
             owner: req.user._id,
         });
@@ -16,15 +16,20 @@ export async function createExercise(req, res) {
 }
 
 export async function getExercises(req, res) {
-    let filter =
-        req.query.filter !== "All body parts"
-            ? { owner: req.user._id, bodyPart: req.query.filter }
-            : { owner: req.user._id };
+    let filter = { owner: req.user._id };
+    if (req.query.bodyPart !== 'all-body-parts')
+        filter.bodyPart = req.query.bodyPart;
+
+    if (req.query.searchQuery)
+        filter.name = { $regex: req.query.searchQuery.toLowerCase() };
+
     try {
-        const data = await Exercise.find(filter)
-            .limit(parseInt(req.query.limit))
-            .skip(parseInt(req.query.limit) * (parseInt(req.query.page) - 1));
-        res.json(data);
+        const exercises = await Exercise.find(filter)
+            .limit(20) //limit to 20 items per page
+            .skip(20 * (parseInt(req.query.page) - 1)) //skip the limit number * page currently on
+            .sort({ name: 1 }); //sort by name (alphabetical order));
+
+        res.json({ num_found: exercises.length, exercises });
     } catch (err) {
         res.status(400).json({ message: err });
     }
