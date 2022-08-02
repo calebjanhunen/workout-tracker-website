@@ -1,0 +1,10 @@
+.singleExerciseContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border-top: 1px solid;
+}
+
+.singleExerciseContainer button {
+    margin-left: auto;
+}

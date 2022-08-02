@@ -3,24 +3,47 @@ import React, { useState } from 'react';
 import { Typography } from '@material-ui/core';
 import styles from './ExerciseList.module.css';
 
-import { useFetchExercises } from 'hooks/useFetchExercises';
-import { useEffect } from 'react';
-import { useLazyGetExercisesByQueryQuery } from 'redux/features/exercisesApiSlice';
+import { useGetExercisesByQueryQuery } from 'redux/features/exercisesApiSlice';
+import SingleExercise from './components/SingleExercise/SingleExercise';
 
-const ExerciseList = () => {
+const ExerciseList = ({ exerciseForm, setExerciseForm }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [pageNum, setPageNum] = useState(1);
     const [bodyPart, setBodyPart] = useState('all-body-parts');
+    const {
+        data: exercises,
+        isLoading,
+        isError,
+        isSuccess,
+    } = useGetExercisesByQueryQuery({ bodyPart });
 
-    const { exercises, isLoading, isError, hasMore } = useFetchExercises(
-        pageNum,
-        bodyPart,
-        searchQuery
-    );
-    console.log(exercises);
+    let exerciseDisplay;
+    if (isLoading) {
+        exerciseDisplay = <p>Loading...</p>;
+    } else if (isSuccess) {
+        let matchingExercises = [...exercises];
+        if (searchQuery) {
+            matchingExercises = exercises.filter(exercise =>
+                exercise.name.includes(searchQuery.toLowerCase())
+            );
+        }
+        exerciseDisplay = matchingExercises.map(exercise => (
+            <SingleExercise
+                key={exercise._id}
+                exercise={exercise}
+                exerciseForm={exerciseForm}
+                setExerciseForm={setExerciseForm}
+            />
+        ));
+    } else if (isError) {
+        exerciseDisplay = <p>Error</p>;
+    }
+
     return (
         <div className={styles.exerciseListContainer}>
-            <Typography variant="h4">Exercises</Typography>
+            <Typography component="h4" variant="h4">
+                Exercises
+            </Typography>
 
             {/*Header*/}
             <div className={styles.exerciseListHeader}>
@@ -49,11 +72,7 @@ const ExerciseList = () => {
             </div>
 
             {/*Exercises*/}
-            {/* <div className={styles.exerciseListBody}>
-                {exercises.map(exercise => (
-                    <p key={exercise._id}>{exercise.name}</p>
-                ))}
-            </div> */}
+            <div className={styles.exerciseListBody}>{exerciseDisplay}</div>
         </div>
     );
 };

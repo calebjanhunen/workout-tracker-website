@@ -1,9 +1,10 @@
-import React from "react";
+import React from 'react';
 
-import "./WorkoutTemplateStyles.css";
-import Form from "./WorkoutTemplateForm/Form";
-import AddExerciseList from "./AddExercise/AddExerciseList/AddExerciseList";
-import CreateExerciseModal from "./AddExercise/CreateExerciseModal/CreateExerciseModal";
+import ExerciseList from 'components/ExerciseList/ExerciseList';
+import AddExerciseList from './AddExercise/AddExerciseList/AddExerciseList';
+import CreateExerciseModal from './AddExercise/CreateExerciseModal/CreateExerciseModal';
+import Form from './WorkoutTemplateForm/Form';
+import './WorkoutTemplateStyles.css';
 
 const WorkoutTemplate = () => {
     const [showModal, setShowModal] = React.useState(false);
@@ -14,15 +15,15 @@ const WorkoutTemplate = () => {
         function closeModal(e) {
             if (
                 !e.target.parentElement?.className.includes(
-                    "create-exercise-modal"
+                    'create-exercise-modal'
                 )
             )
                 setShowModal(false);
         }
         if (showModal === true) {
-            document.addEventListener("mousedown", closeModal);
+            document.addEventListener('mousedown', closeModal);
         }
-        return () => document.removeEventListener("mousedown", closeModal);
+        return () => document.removeEventListener('mousedown', closeModal);
     });
 
     return (
@@ -32,9 +33,8 @@ const WorkoutTemplate = () => {
                 exerciseForm={exerciseForm}
                 setExerciseForm={setExerciseForm}
             />
-            <AddExerciseList
-                showModal={showModal}
-                setShowModal={setShowModal}
+            <ExerciseList
+                exerciseForm={exerciseForm}
                 setExerciseForm={setExerciseForm}
             />
             {showModal && <CreateExerciseModal setShowModal={setShowModal} />}

@@ -1,15 +1,22 @@
 .exerciseListContainer {
     background-color: white;
+    margin-top: 20px;
     width: 400px;
-    height: 90vh;
+    max-height: 80vh;
     border: 2px solid;
     border-radius: 10px;
+
     overflow-y: auto;
+}
+
+.exerciseListContainer h4 {
+    margin-left: 10px;
 }
 
 .exerciseListHeader {
     display: flex;
     align-items: center;
+    margin-left: 10px;
 }
 
 .exerciseListContainer input {
@@ -29,4 +36,9 @@
 
 .bodyPartFilterContainer select {
     width: 130px;
+}
+
+.exerciseListBody {
+    margin-top: 20px;
+    margin-left: 10px;
 }

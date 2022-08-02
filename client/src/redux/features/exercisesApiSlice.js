@@ -15,8 +15,7 @@ export const exercisesApiSlice = apiSlice.injectEndpoints({
             providesTags: ['exercises'],
         }),
         getExercisesByQuery: builder.query({
-            query: ({ pageNum, bodyPart, searchQuery }) =>
-                `/exercises?page=${pageNum}&bodyPart=${bodyPart}&searchQuery=${searchQuery}`,
+            query: ({ bodyPart }) => `/exercises?bodyPart=${bodyPart}`,
             providesTags: ['exercises'],
         }),
         deleteExercise: builder.mutation({
