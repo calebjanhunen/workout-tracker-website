@@ -6,7 +6,7 @@ import { setCredentials, clearState } from "redux/reducer/authSlice";
 //dev: http://localhost:5000
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: "https://janhunen-workout-tracker-api.herokuapp.com",
+    baseUrl: "http://localhost:5000",
     credentials: "include",
     prepareHeaders: (headers, { getState }) => {
         //attach access token to header on each request

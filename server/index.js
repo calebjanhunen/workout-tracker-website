@@ -8,40 +8,23 @@ import exerciseRouter from "./routers/exerciseRouter.js";
 import workoutTemplateRouter from "./routers/workoutTemplateRouter.js";
 import userRouter from "./routers/userRouter.js";
 import { corsOptions } from "./utils/corsOptions.js";
+import { credentials } from "./middleware/credentials.js";
 
 const app = express();
 
-//built-in middlewares
-const allowedDomains = [
-    "https://janhunen-workout-tracker.netlify.app",
-    "http://localhost:3000",
-];
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Credentials", true);
-    next();
-});
-app.use(cors(corsOptions)); //Cross Origin Resource Sharing
-// app.use(
-//     cors({
-//         credentials: true,
-//         // origin: "http://localhost:3000",
-//     })
-// );
-app.use(express.json()); //For reading json
-app.use(cookieParser()); //For reading cookies (refresh token)
+//CUSTOM MIDDLEWARE
+//sets credentials to true if origin is included in allowedOrigins
+app.use(credentials);
 
-// app.use((req, res, next) => {
-//     const foundDomain = allowedDomains.filter(
-//         domain => domain === req.headers.origin
-//     );
-//     res.header("Access-Control-Allow-Origin", foundDomain[0]);
-//     next();
-// });
+//BUILT IN MIDDLEWARE
+//Cross Origin Resource Sharing: sets origin to front-end domain (localhost or netlify)
+app.use(cors(corsOptions));
 
-// app.use((req, res, next) => {
-//     console.log(req.headers);
-//     next();
-// });
+//For reading json
+app.use(express.json());
+
+//For reading cookies (refresh token)
+app.use(cookieParser());
 
 app.use("/workouts", workoutRouter);
 app.use("/workoutTemplates", workoutTemplateRouter);
