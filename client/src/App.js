@@ -1,15 +1,15 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
+import WorkoutForm from 'components/WorkoutForm/WorkoutForm';
 import {
     CreateWorkoutForm,
+    CreateWorkoutTemplate,
     Home,
     Login,
     PageNotFound,
-    StartFromTemplate,
-    StartWorkout,
+    SelectWorkoutTemplate,
     WorkoutHistory,
-    WorkoutTemplate,
 } from 'pages';
 import Register from 'pages/Register/Register';
 import PersistLogin from 'utils/auth/PersistLogin/PersistLogin';
@@ -30,26 +30,24 @@ const App = () => {
                     <Route element={<Layout />}>
                         <Route path="/" element={<Home />} />
                         <Route
-                            path="start-workout"
-                            element={<StartWorkout />}
+                            path="select-workout-template"
+                            element={<SelectWorkoutTemplate />}
                         />
                         <Route
-                            path="start-workout/start-from-template"
-                            element={<StartFromTemplate />}
-                        />
-                        <Route
-                            path="start-workout/create-workout-form"
+                            path="select-workout-template/create-workout-form"
                             element={<CreateWorkoutForm />}
                         />
                         <Route
                             path="create-workout-template"
-                            element={<WorkoutTemplate />}
+                            element={<CreateWorkoutTemplate />}
                         />
                         <Route
                             path="workout-history"
                             element={<WorkoutHistory />}
                         />
                     </Route>
+
+                    <Route path="/WorkoutForm" element={<WorkoutForm />} />
                 </Route>
 
                 <Route path="/*" element={<PageNotFound />} />

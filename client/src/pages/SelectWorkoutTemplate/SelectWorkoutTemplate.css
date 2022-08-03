@@ -1,4 +1,4 @@
-.start-from-template-page {
+.templates-container {
     display: flex;
     /* justify-content: center; */
     align-items: flex-start;
@@ -84,4 +84,18 @@
 .exercise-list {
     margin-top: 5px;
     list-style: none;
+}
+
+/******************************Buttons****************************/
+.start-workout-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 20px;
+}
+
+.start-workout-buttons button {
+    margin-left: 10px;
+    margin-right: 10px;
 }

@@ -1,43 +1,22 @@
-import React from "react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faEllipsisH,
-    faStream,
-    faTimes,
-    faCheck,
-} from "@fortawesome/free-solid-svg-icons";
-import { Menu, MenuItem } from "@material-ui/core";
+import { Menu, MenuItem } from '@material-ui/core';
+import { Check, Clear, MoreVert, Reorder } from '@mui/icons-material';
+import React from 'react';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
-import { useCreateWorkoutMutation } from "redux/features/workoutsApiSlice";
+import SingleExercise from './components/SingleExercise/SingleExercise';
+import './WorkoutForm.css';
 
-import "./FormStyles.css";
-
-import SingleExercise from "./SingleExercise";
-
-const CreateWorkoutForm = ({
-    exerciseForm,
-    setExerciseForm,
-    workoutTemplate,
-}) => {
-    const showModal = false;
-    const formClasses = `create-workout-form ${showModal ? "blurred" : ""}`;
-    const [anchorEl, setAnchorEl] = React.useState(null);
+const WorkoutForm = ({ workoutTemplate, exerciseForm, setExerciseForm }) => {
     const [workoutName, setWorkoutName] = React.useState(
-        workoutTemplate.workoutName ? workoutTemplate.workoutName : ""
+        workoutTemplate ? workoutTemplate.workoutName : ''
     );
-    const [reorder, setReorder] = React.useState(false);
     const [isSubmitting, setIsSubmitting] = React.useState(false);
-    const [createWorkout] = useCreateWorkoutMutation();
 
-    const menuItemStyles = {
-        fontSize: "12px",
-    };
+    //For Edit Menu
+    const [anchorEl, setAnchorEl] = React.useState(null);
 
-    //Closes more options menu
-    function handleClose() {
-        setAnchorEl(null);
-    }
+    //For Drag and Drop
+    const [reorder, setReorder] = React.useState(false);
 
     const exercisesDisplay = exerciseForm ? (
         exerciseForm.map((exercise, index) => {
@@ -55,8 +34,8 @@ const CreateWorkoutForm = ({
                             style={{
                                 ...provided.draggableProps.style,
                                 boxShadow: snapshot.isDragging
-                                    ? "0 0 0.4rem #666"
-                                    : "none",
+                                    ? '0 0 0.4rem #666'
+                                    : 'none',
                             }}
                         >
                             <SingleExercise
@@ -82,6 +61,29 @@ const CreateWorkoutForm = ({
         </p>
     );
 
+    async function handleSubmitWorkout() {
+        setIsSubmitting(true);
+        setIsSubmitting(false);
+        // await createWorkout({
+        //     name: workoutName,
+        //     createdAt: new Date(),
+        //     exercises: exerciseForm,
+        // });
+        handleClearTemplate();
+    }
+
+    function handleClearTemplate() {
+        // exerciseForm.exercises = [];
+        setWorkoutName('');
+        handleClose();
+    }
+
+    //Closes more options menu
+    function handleClose() {
+        setAnchorEl(null);
+    }
+
+    /******************Drag and Drop Functions**************** */
     function handleDragEnd(param) {
         const destIndex = param.destination.index;
         const sourceIndex = param.source.index;
@@ -98,25 +100,8 @@ const CreateWorkoutForm = ({
         handleClose();
     }
 
-    function handleClearTemplate() {
-        // exerciseForm.exercises = [];
-        setWorkoutName("");
-        handleClose();
-    }
-
-    async function handleSubmitWorkout() {
-        setIsSubmitting(true);
-        setIsSubmitting(false);
-        await createWorkout({
-            name: workoutName,
-            createdAt: new Date(),
-            exercises: exerciseForm,
-        });
-        handleClearTemplate();
-    }
-
     return (
-        <div className={formClasses}>
+        <div className="create-workout-form">
             {isSubmitting ? (
                 <p>Loading</p>
             ) : (
@@ -131,17 +116,11 @@ const CreateWorkoutForm = ({
                         />
                         {reorder ? (
                             <button onClick={() => setReorder(false)}>
-                                <FontAwesomeIcon
-                                    className="create-workout-form__check-icon"
-                                    icon={faCheck}
-                                />
+                                <Check />
                             </button>
                         ) : (
                             <button onClick={e => setAnchorEl(e.target)}>
-                                <FontAwesomeIcon
-                                    className="create-workout-form__edit-icon"
-                                    icon={faEllipsisH}
-                                />
+                                <MoreVert />
                             </button>
                         )}
                     </div>
@@ -170,7 +149,7 @@ const CreateWorkoutForm = ({
                             onClick={handleSubmitWorkout}
                             className="finish-template-btn"
                             disabled={
-                                !exerciseForm || workoutName === ""
+                                !exerciseForm || workoutName === ''
                                     ? true
                                     : false
                             }
@@ -185,25 +164,17 @@ const CreateWorkoutForm = ({
                         onClose={handleClose}
                     >
                         <MenuItem
-                            style={menuItemStyles}
                             className="menu-option"
                             onClick={handleReorderExercises}
                         >
-                            <FontAwesomeIcon
-                                icon={faStream}
-                                style={{ marginRight: "10px" }}
-                            />
+                            <Reorder />
                             Reorder Exercises
                         </MenuItem>
                         <MenuItem
-                            style={menuItemStyles}
                             className="menu-option"
                             onClick={handleClearTemplate}
                         >
-                            <FontAwesomeIcon
-                                icon={faTimes}
-                                style={{ marginRight: "12px", height: "15px" }}
-                            />
+                            <Clear />
                             Clear Template
                         </MenuItem>
                     </Menu>
@@ -213,4 +184,4 @@ const CreateWorkoutForm = ({
     );
 };
 
-export default CreateWorkoutForm;
+export default WorkoutForm;

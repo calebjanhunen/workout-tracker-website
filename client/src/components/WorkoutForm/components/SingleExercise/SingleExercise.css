@@ -1,0 +1,88 @@
+/*********************************Single Exercise************************************/
+.single-exercise {
+    border-top: 1px solid;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: white;
+}
+
+.single-exercise__header {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.single-exercise__header p {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.delete-exercise__btn {
+    margin-left: 20px;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.delete-exercise-icon {
+    height: 17px;
+    width: 17px;
+}
+
+.delete-exercise-icon:hover {
+    color: red;
+}
+
+.single-exercise__add-set,
+.finish-template-btn {
+    margin-top: 20px;
+    width: 300px;
+}
+
+.single-exercise__add-set:hover {
+    filter: brightness(85%);
+}
+
+/*********************Set Table*****************/
+.set-table {
+    margin-top: 1 0px;
+    display: flex;
+    justify-content: center;
+    margin-right: 40px;
+}
+
+.set-table-header__set,
+.set-table__set {
+    width: 30px;
+    text-align: center;
+}
+
+.set-table-header__weight,
+.set-table-header__reps,
+.set-table__weight,
+.set-table__reps {
+    width: 70px;
+    text-align: center;
+}
+
+.set-table tr {
+    height: 25px;
+}
+
+.set-table__weight input,
+.set-table__reps input {
+    width: 60px;
+    border-radius: 10px;
+    border: none;
+    background-color: lightgrey;
+    padding-left: 5px;
+    /* margin-left: 20px; */
+}
+
+.set-table__delete-set button {
+    margin-left: 20px;
+}
+
+.set-table__delete-set button:hover {
+    color: red;
+}

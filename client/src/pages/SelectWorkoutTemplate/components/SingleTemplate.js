@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import "./StartFromTemplateStyles.css";
+import '../SelectWorkoutTemplate.css';
 
 const SingleTemplate = ({
     templateInfo,
@@ -8,7 +8,7 @@ const SingleTemplate = ({
     isActiveTemplate,
 }) => {
     const templateClasses = `single-template-container ${
-        isActiveTemplate ? "active-template" : ""
+        isActiveTemplate ? 'active-template' : ''
     }`;
 
     return (

@@ -1,11 +1,11 @@
-import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink, useNavigate } from 'react-router-dom';
 
-import { useLogoutMutation } from "redux/features/authApiSlice";
-import { clearState } from "redux/reducer/authSlice";
+import { useLogoutMutation } from 'redux/features/authApiSlice';
+import { clearState } from 'redux/reducer/authSlice';
 
-import "./NavBarStyles.css";
+import './NavBarStyles.css';
 
 const NavBar = () => {
     const accessToken = useSelector(state => state.auth.accessToken);
@@ -17,7 +17,7 @@ const NavBar = () => {
     async function handleLogout() {
         await logout();
         dispatch(clearState());
-        navigate("/login");
+        navigate('/login');
     }
 
     return (
@@ -33,7 +33,9 @@ const NavBar = () => {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/start-workout">Start Workout</NavLink>
+                    <NavLink to="/select-workout-template">
+                        Start Workout
+                    </NavLink>
                 </li>
                 <li>
                     <NavLink to="/create-workout-template">

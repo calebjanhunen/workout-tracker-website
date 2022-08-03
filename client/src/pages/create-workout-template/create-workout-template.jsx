@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ExerciseList from 'components/ExerciseList/ExerciseList';
-import Form from './components/WorkoutTemplateForm/Form';
+import WorkoutForm from 'components/WorkoutForm/WorkoutForm';
 import './WorkoutTemplateStyles.css';
 
 const WorkoutTemplate = () => {
@@ -26,8 +26,7 @@ const WorkoutTemplate = () => {
 
     return (
         <div className="workout-template-page">
-            <Form
-                showModal={showModal}
+            <WorkoutForm
                 exerciseForm={exerciseForm}
                 setExerciseForm={setExerciseForm}
             />

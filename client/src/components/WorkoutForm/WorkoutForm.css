@@ -1,0 +1,90 @@
+/*Form*/
+.create-workout-form {
+    margin: 20px;
+    width: 340px;
+    max-height: 80vh;
+
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 2px;
+}
+
+.create-workout-form-form::-webkit-scrollbar {
+    width: 10px;
+    background-color: lightgrey;
+    /* border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px; */
+    border-radius: 10px;
+}
+
+.create-workout-form-form::-webkit-scrollbar-thumb {
+    background: grey;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.create-workout-form__header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.create-workout-form__header button {
+    margin-left: auto;
+    margin-right: 20px;
+    background-color: white;
+}
+
+.reorder-icon {
+    margin-right: 20px;
+}
+
+.create-workout-form__edit-icon,
+.create-workout-form__check-icon {
+    height: 20px;
+    width: 20px;
+}
+
+input[name='create-workout-form__workout-name'] {
+    border: none;
+    margin-left: 10px;
+    width: 280px;
+    height: 40px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+input[name='create-workout-form__workout-name']:focus {
+    outline: none;
+}
+
+.workout-form_exercises-list {
+    max-height: 60vh;
+    overflow-y: auto;
+    text-align: center;
+}
+
+.no-exercises-text {
+    text-align: center;
+}
+
+/******************workout template footer************/
+.create-workout-form__footer {
+    display: flex;
+    justify-content: center;
+}
+
+.create-workout-form__footer button {
+    background-color: lightgreen;
+    margin-bottom: 10px;
+}
+
+.create-workout-form__footer button:hover {
+    filter: brightness(85%);
+}
+
+.create-workout-form__footer button:disabled {
+    background-color: grey;
+    filter: brightness(85%);
+    cursor: default;
+}
