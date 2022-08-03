@@ -6,24 +6,41 @@ import styles from './SingleExercise.module.css';
 
 const SingleExercise = ({ exercise, exerciseForm, setExerciseForm }) => {
     function handleAddExercise() {
-        const alreadyExistingExercise = exerciseForm.filter(
-            exerciseInForm => exerciseInForm._id === exercise._id
-        );
+        let alreadyExistingExercise = [];
+        if (exerciseForm)
+            alreadyExistingExercise = exerciseForm.filter(
+                exerciseInForm => exerciseInForm._id === exercise._id
+            );
 
         if (alreadyExistingExercise.length === 0)
-            setExerciseForm(prev => [
-                ...prev,
-                {
-                    name: exercise.name,
-                    _id: exercise._id,
-                    sets: [
-                        {
-                            weight: null,
-                            reps: null,
-                        },
-                    ],
-                },
-            ]);
+            if (exerciseForm) {
+                setExerciseForm(prev => [
+                    ...prev,
+                    {
+                        name: exercise.name,
+                        _id: exercise._id,
+                        sets: [
+                            {
+                                weight: null,
+                                reps: null,
+                            },
+                        ],
+                    },
+                ]);
+            } else {
+                setExerciseForm([
+                    {
+                        name: exercise.name,
+                        _id: exercise._id,
+                        sets: [
+                            {
+                                weight: null,
+                                reps: null,
+                            },
+                        ],
+                    },
+                ]);
+            }
     }
 
     return (

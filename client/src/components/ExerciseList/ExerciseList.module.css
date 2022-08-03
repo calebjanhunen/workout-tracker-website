@@ -38,6 +38,10 @@
     width: 130px;
 }
 
+.showModalBtn {
+    width: 360px;
+}
+
 .exerciseListBody {
     margin-top: 20px;
     margin-left: 10px;

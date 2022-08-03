@@ -1,11 +1,10 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React from 'react';
+import { useSelector } from 'react-redux';
 
-import "./CreateWorkoutFormStyles.css";
+import './CreateWorkoutFormStyles.css';
 
-import Form from "./Form/Form";
-import AddExerciseList from "./AddExercise/AddExerciseList/AddExerciseList";
-import CreateExerciseModal from "./AddExercise/CreateExerciseModal/CreateExerciseModal";
+import ExerciseList from 'components/ExerciseList/ExerciseList';
+import Form from './Form/Form';
 
 const CreateWorkoutForm = () => {
     const workoutTemplate = useSelector(state => state.workoutTemplate.value);
@@ -20,13 +19,13 @@ const CreateWorkoutForm = () => {
                 setExerciseForm={setExerciseForm}
                 workoutTemplate={workoutTemplate}
             />
-            <AddExerciseList
+            <ExerciseList
                 exerciseForm={exerciseForm}
                 setExerciseForm={setExerciseForm}
                 showModal={showModal}
                 setShowModal={setShowModal}
             />
-            {showModal && <CreateExerciseModal setShowModal={setShowModal} />}
+            {/* {showModal && <CreateExerciseModal setShowModal={setShowModal} />} */}
         </div>
     );
 };

@@ -1,9 +1,7 @@
 import React from 'react';
 
 import ExerciseList from 'components/ExerciseList/ExerciseList';
-import AddExerciseList from './AddExercise/AddExerciseList/AddExerciseList';
-import CreateExerciseModal from './AddExercise/CreateExerciseModal/CreateExerciseModal';
-import Form from './WorkoutTemplateForm/Form';
+import Form from './components/WorkoutTemplateForm/Form';
 import './WorkoutTemplateStyles.css';
 
 const WorkoutTemplate = () => {
@@ -37,7 +35,7 @@ const WorkoutTemplate = () => {
                 exerciseForm={exerciseForm}
                 setExerciseForm={setExerciseForm}
             />
-            {showModal && <CreateExerciseModal setShowModal={setShowModal} />}
+            {/* {showModal && <CreateExerciseModal setShowModal={setShowModal} />} */}
         </div>
     );
 };

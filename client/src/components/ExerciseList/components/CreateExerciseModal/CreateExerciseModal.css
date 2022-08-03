@@ -1,5 +1,4 @@
-/*Create Exercise Modal*/
-.blurred {
+*Create Exercise Modal*/ .blurred {
     filter: blur(2px);
     -webkit-filter: blur(2px);
     pointer-events: none;
@@ -45,7 +44,7 @@
     font-size: 20px;
 }
 
-input[name="create-exercise__exercise-name"] {
+input[name='create-exercise__exercise-name'] {
     margin-top: 10px;
     width: 200px;
     height: 30px;

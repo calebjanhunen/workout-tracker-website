@@ -32,6 +32,7 @@ export const exercisesApiSlice = apiSlice.injectEndpoints({
 export const {
     useCreateExerciseMutation,
     useGetExercisesQuery,
+    useLazyGetExercisesQuery,
     useLazyGetExercisesByQueryQuery,
     useGetExercisesByQueryQuery,
     useDeleteExerciseMutation,

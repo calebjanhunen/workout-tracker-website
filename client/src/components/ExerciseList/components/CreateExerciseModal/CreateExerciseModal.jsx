@@ -1,39 +1,51 @@
-import React from "react";
+import React from 'react';
 
-import "./CreateExerciseModalStyles.css";
+import './CreateExerciseModal.css';
+
 import {
     useCreateExerciseMutation,
     useGetExercisesQuery,
-} from "redux/features/exercisesApiSlice";
+    useLazyGetExercisesQuery,
+} from 'redux/features/exercisesApiSlice';
 
 const CreateExerciseModal = ({ setShowModal }) => {
-    const [exerciseName, setExerciseName] = React.useState("");
-    const [bodyPart, selectBodyPart] = React.useState("");
+    const [exerciseName, setExerciseName] = React.useState('');
+    const [bodyPart, selectBodyPart] = React.useState('');
     const [isLoading, setIsLoading] = React.useState(false);
     const [showInvalidInput, setShowInvalidInput] = React.useState(false);
-    const [invalidInputReason, setInvalidInputReason] = React.useState("");
-    const [createWorkout] = useCreateExerciseMutation();
-    const { data: exercises } = useGetExercisesQuery();
+    const [invalidInputReason, setInvalidInputReason] = React.useState('');
+    const [createExercise] = useCreateExerciseMutation();
+    // const { data: exercises, isLoading: loadingExercises } =
+    const [getExercises] = useLazyGetExercisesQuery();
+    useGetExercisesQuery({
+        bodyPart: 'all-body-parts',
+    });
 
     async function handleAddExercise() {
         if (!exerciseName) {
-            setInvalidInputReason("Enter Exercise Name");
+            setInvalidInputReason('Enter Exercise Name');
+            return setShowInvalidInput(true);
+        }
+
+        if (!bodyPart) {
+            setInvalidInputReason('Body part required.');
             return setShowInvalidInput(true);
         }
 
         //Checks if exercise already exists in database
+        const { data: exercises } = await getExercises();
         const exerciseAlreadyExists = exercises.filter(
             exercise =>
                 exercise.name.toLowerCase() === exerciseName.toLowerCase()
         );
 
         if (exerciseAlreadyExists.length > 0) {
-            setInvalidInputReason("Exercise Already Exists");
+            setInvalidInputReason('Exercise Already Exists');
             return setShowInvalidInput(true);
         }
 
         setIsLoading(true);
-        await createWorkout({ name: exerciseName, bodyPart });
+        await createExercise({ name: exerciseName, bodyPart });
         setIsLoading(false);
 
         setShowModal(false);
@@ -58,7 +70,7 @@ const CreateExerciseModal = ({ setShowModal }) => {
                             <input
                                 id="exercise-name"
                                 className={
-                                    showInvalidInput ? "text-input-error" : ""
+                                    showInvalidInput ? 'text-input-error' : ''
                                 }
                                 name="create-exercise__exercise-name"
                                 placeholder="Exercise name"
@@ -66,7 +78,7 @@ const CreateExerciseModal = ({ setShowModal }) => {
                             />
                             <p
                                 className={`invalid-input ${
-                                    !showInvalidInput ? "hidden" : ""
+                                    !showInvalidInput ? 'hidden' : ''
                                 }`}
                             >
                                 {invalidInputReason}

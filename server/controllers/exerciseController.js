@@ -17,15 +17,15 @@ export async function createExercise(req, res) {
 
 export async function getExercises(req, res) {
     let filter = { owner: req.user._id };
-
-    if (req.query.bodyPart !== 'all-body-parts')
+    if (req.query.bodyPart !== 'all-body-parts' && req.query.bodyPart)
         filter.bodyPart = req.query.bodyPart;
 
+    console.log(filter);
     try {
         const exercises = await Exercise.find(filter).sort({
             name: 1,
         }); //sort by name (alphabetical order));
-
+        console.log(exercises);
         res.json(exercises);
     } catch (err) {
         res.status(400).json({ message: err });
