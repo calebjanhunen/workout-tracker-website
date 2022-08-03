@@ -29,14 +29,23 @@ const ExerciseList = ({ exerciseForm, setExerciseForm }) => {
                 exercise.name.includes(searchQuery.toLowerCase())
             );
         }
-        exerciseDisplay = matchingExercises.map(exercise => (
-            <SingleExercise
-                key={exercise._id}
-                exercise={exercise}
-                exerciseForm={exerciseForm}
-                setExerciseForm={setExerciseForm}
-            />
-        ));
+        exerciseDisplay = matchingExercises.map((exercise, index) => {
+            return (
+                <div key={exercise._id}>
+                    {index === 0 && <p>{exercise.name[0].toUpperCase()}</p>}
+                    {index - 1 > -1 &&
+                        exercise.name[0] !== exercises[index - 1].name[0] && (
+                            <p>{exercise.name[0].toUpperCase()}</p>
+                        )}
+                    <SingleExercise
+                        key={exercise._id}
+                        exercise={exercise}
+                        exerciseForm={exerciseForm}
+                        setExerciseForm={setExerciseForm}
+                    />
+                </div>
+            );
+        });
     } else if (isError) {
         exerciseDisplay = <p>Error</p>;
     }
@@ -86,10 +95,7 @@ const ExerciseList = ({ exerciseForm, setExerciseForm }) => {
                 </div>
 
                 {/*Exercises*/}
-                <div className={styles.exerciseListBody}>
-                    <p>B</p>
-                    {exerciseDisplay}
-                </div>
+                <div className={styles.exerciseListBody}>{exerciseDisplay}</div>
             </div>
         </>
     );
