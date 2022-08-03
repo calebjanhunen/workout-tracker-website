@@ -1,8 +1,13 @@
 .singleExerciseContainer {
+    height: 20px;
     display: flex;
     align-items: center;
     margin-bottom: 20px;
     border-top: 1px solid;
+}
+
+.singleExerciseContainer h3 {
+    font-size: 15px;
 }
 
 .singleExerciseContainer button {
