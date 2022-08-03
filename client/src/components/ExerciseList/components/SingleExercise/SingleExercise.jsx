@@ -43,9 +43,17 @@ const SingleExercise = ({ exercise, exerciseForm, setExerciseForm }) => {
             }
     }
 
+    function capatalizeFirstLetter(exerciseName) {
+        const stringArr = exerciseName.split(' ');
+
+        return stringArr
+            .map(word => word[0].toUpperCase() + word.substr(1))
+            .join(' ');
+    }
+
     return (
         <div className={styles.singleExerciseContainer}>
-            <h3>{exercise.name}</h3>
+            <h3>{capatalizeFirstLetter(exercise.name)}</h3>
             <IconButton component="button" onClick={handleAddExercise}>
                 <Add />
             </IconButton>

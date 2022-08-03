@@ -5,8 +5,6 @@
     max-height: 80vh;
     border: 2px solid;
     border-radius: 10px;
-
-    overflow-y: auto;
 }
 
 .exerciseListContainer h4 {
@@ -45,4 +43,6 @@
 .exerciseListBody {
     margin-top: 20px;
     margin-left: 10px;
+    max-height: 50vh;
+    overflow-y: auto;
 }

@@ -19,8 +19,6 @@ const ExerciseList = ({ exerciseForm, setExerciseForm }) => {
         isSuccess,
     } = useGetExercisesByQueryQuery({ bodyPart });
 
-    console.log(exerciseForm);
-
     let exerciseDisplay;
     if (isLoading) {
         exerciseDisplay = <p>Loading...</p>;
@@ -88,7 +86,10 @@ const ExerciseList = ({ exerciseForm, setExerciseForm }) => {
                 </div>
 
                 {/*Exercises*/}
-                <div className={styles.exerciseListBody}>{exerciseDisplay}</div>
+                <div className={styles.exerciseListBody}>
+                    <p>B</p>
+                    {exerciseDisplay}
+                </div>
             </div>
         </>
     );
