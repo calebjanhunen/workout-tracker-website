@@ -26,6 +26,7 @@ const SetInput = ({
             )
         );
     }
+    // console.log(exercise?.previousSets[index][inputType]);
 
     return (
         <input
@@ -35,8 +36,9 @@ const SetInput = ({
             onChange={e => handleChangeSet(e, inputType, index)}
             disabled={templateOrWorkout === 'template' ? true : false}
             placeholder={
-                templateOrWorkout === 'workout'
-                    ? exercise.previousSets[index]?.weight
+                templateOrWorkout === 'workout' &&
+                exercise?.previousSets.length > index
+                    ? exercise?.previousSets[index][inputType]
                     : ''
             }
         />

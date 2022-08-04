@@ -39,7 +39,6 @@ const WorkoutForm = ({
     async function handleSubmitWorkout() {
         setIsSubmitting(true);
         if (templateOrWorkout === 'workout') {
-            console.log(exerciseForm);
             exerciseForm.forEach(async exercise => {
                 await updateExercise({ sets: exercise.sets, id: exercise._id });
             });
