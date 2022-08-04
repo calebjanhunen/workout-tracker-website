@@ -1,5 +1,5 @@
 import { Check, MoreVert } from '@mui/icons-material';
-import React, { createRef } from 'react';
+import React, { createRef, useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
 import './WorkoutForm.css';
@@ -17,60 +17,24 @@ const WorkoutForm = ({
     templateOrWorkout,
 }) => {
     const [workoutName, setWorkoutName] = React.useState(
-        workoutTemplate ? workoutTemplate.workoutName : ' '
+        workoutTemplate ? workoutTemplate.workoutName : ''
     );
-    const [isSubmitting, setIsSubmitting] = React.useState(false);
-    const [anchorEl, setAnchorEl] = React.useState(null); //For Edit Menu
-    const [reorder, setReorder] = React.useState(false); //For Drag and Drop
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [anchorEl, setAnchorEl] = useState(null); //For Edit Menu
+    const [reorder, setReorder] = useState(false); //For Drag and Drop
     const [updateExercise] = useUpdateExerciseMutation();
     const [createWorkout] = useCreateWorkoutMutation();
     const [createWorkoutTemplate] = useCreateWorkoutTemplateMutation();
     const bottomRef = createRef();
+    const [exerciseIdChanged, setExerciseIdChanged] = useState('');
 
-    const exercisesDisplay =
-        exerciseForm?.length > 0 ? (
-            exerciseForm.map((exercise, index) => {
-                return reorder ? (
-                    <Draggable
-                        key={exercise._id}
-                        draggableId={`draggable-${exercise._id}`}
-                        index={index}
-                    >
-                        {(provided, snapshot) => (
-                            <div
-                                ref={provided.innerRef}
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                                style={{
-                                    ...provided.draggableProps.style,
-                                    boxShadow: snapshot.isDragging
-                                        ? '0 0 0.4rem #666'
-                                        : 'none',
-                                }}
-                            >
-                                <SingleExercise
-                                    exercise={exercise}
-                                    setExerciseForm={setExerciseForm}
-                                    reorder={reorder}
-                                    templateOrWorkout={templateOrWorkout}
-                                />
-                            </div>
-                        )}
-                    </Draggable>
-                ) : (
-                    <SingleExercise
-                        key={exercise._id}
-                        exercise={exercise}
-                        setExerciseForm={setExerciseForm}
-                        reorder={reorder}
-                    />
-                );
-            })
-        ) : (
-            <p className="no-exercices-text">
-                Add an exercise <br></br> from the Exercises list
-            </p>
-        );
+    //Scroll to bottom if new exercise is added or set is added to last exercise
+    useEffect(() => {
+        if (exerciseForm[exerciseForm.length - 1]?._id === exerciseIdChanged)
+            bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+
+        setExerciseIdChanged('');
+    }, [exerciseForm, exerciseIdChanged, bottomRef]);
 
     async function handleSubmitWorkout() {
         setIsSubmitting(true);
@@ -110,12 +74,60 @@ const WorkoutForm = ({
         setExerciseForm(tempArr);
     }
 
+    const exercisesDisplay =
+        exerciseForm?.length > 0 ? (
+            exerciseForm.map((exercise, index) => {
+                return reorder ? (
+                    <Draggable
+                        key={exercise._id}
+                        draggableId={`draggable-${exercise._id}`}
+                        index={index}
+                    >
+                        {(provided, snapshot) => (
+                            <div
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                style={{
+                                    ...provided.draggableProps.style,
+                                    boxShadow: snapshot.isDragging
+                                        ? '0 0 0.4rem #666'
+                                        : 'none',
+                                }}
+                            >
+                                <SingleExercise
+                                    exercise={exercise}
+                                    setExerciseForm={setExerciseForm}
+                                    reorder={reorder}
+                                    templateOrWorkout={templateOrWorkout}
+                                />
+                            </div>
+                        )}
+                    </Draggable>
+                ) : (
+                    <SingleExercise
+                        key={exercise._id}
+                        exercise={exercise}
+                        setExerciseForm={setExerciseForm}
+                        reorder={reorder}
+                        templateOrWorkout={templateOrWorkout}
+                        setExerciseIdChanged={setExerciseIdChanged}
+                    />
+                );
+            })
+        ) : (
+            <p className="no-exercices-text">
+                Add an exercise <br></br> from the Exercises list
+            </p>
+        );
+
     return (
         <div className="create-workout-form">
             {isSubmitting ? (
                 <p>Loading</p>
             ) : (
                 <>
+                    {/*Workout Form Header*/}
                     <div className="create-workout-form__header">
                         <input
                             name="create-workout-form__workout-name"
@@ -135,6 +147,7 @@ const WorkoutForm = ({
                         )}
                     </div>
 
+                    {/*Exercise List*/}
                     <div className="workout-form_exercises-list">
                         <DragDropContext
                             onDragEnd={param => {
@@ -153,7 +166,10 @@ const WorkoutForm = ({
                                 )}
                             </Droppable>
                         </DragDropContext>
+                        <div ref={bottomRef} />
                     </div>
+
+                    {/*Workout Form Footer*/}
                     <div className="create-workout-form__footer">
                         <button
                             onClick={handleSubmitWorkout}
@@ -164,10 +180,10 @@ const WorkoutForm = ({
                                     : false
                             }
                         >
-                            Finish{' '}
+                            Finish
                             {templateOrWorkout === 'workout'
-                                ? 'Workout'
-                                : 'Template'}
+                                ? ' Workout'
+                                : ' Template'}
                         </button>
                     </div>
                     <EditMenu

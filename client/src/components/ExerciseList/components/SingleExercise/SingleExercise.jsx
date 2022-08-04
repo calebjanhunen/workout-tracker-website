@@ -1,6 +1,7 @@
 import { Button, IconButton } from '@material-ui/core';
 import { Add } from '@mui/icons-material';
 import React from 'react';
+import { capatalizeFirstLetter } from 'utils/functions/capatalizeFirstLetter';
 
 import styles from './SingleExercise.module.css';
 
@@ -41,14 +42,6 @@ const SingleExercise = ({ exercise, exerciseForm, setExerciseForm }) => {
                     },
                 ]);
             }
-    }
-
-    function capatalizeFirstLetter(exerciseName) {
-        const stringArr = exerciseName.split(' ');
-
-        return stringArr
-            .map(word => word[0].toUpperCase() + word.substr(1))
-            .join(' ');
     }
 
     return (

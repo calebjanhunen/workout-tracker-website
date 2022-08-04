@@ -4,12 +4,15 @@ import React from 'react';
 import './SingleExercise.css';
 
 import { useGetExerciseByIdQuery } from 'redux/features/exercisesApiSlice';
+import { capatalizeFirstLetter } from 'utils/functions/capatalizeFirstLetter';
+import SetInput from '../SetInput/SetInput';
 
 const SingleExercise = ({
     exercise,
     setExerciseForm,
     reorder,
     templateOrWorkout,
+    setExerciseIdChanged,
 }) => {
     const { data: exerciseDB } = useGetExerciseByIdQuery(exercise._id);
 
@@ -35,6 +38,7 @@ const SingleExercise = ({
     }
 
     function handleAddSet() {
+        setExerciseIdChanged(exercise._id);
         setExerciseForm(prev =>
             prev.map(prevExercise =>
                 prevExercise._id === exercise._id
@@ -50,32 +54,13 @@ const SingleExercise = ({
         );
     }
 
-    function handleChangeSet(e, type, index) {
-        setExerciseForm(prev =>
-            prev.map(prevExercise =>
-                prevExercise._id === exercise._id
-                    ? {
-                          ...prevExercise,
-                          sets: prevExercise.sets.map((set, setIndex) =>
-                              setIndex === index
-                                  ? type === 'WEIGHT'
-                                      ? { ...set, weight: e.target.value }
-                                      : { ...set, reps: e.target.value }
-                                  : set
-                          ),
-                      }
-                    : prevExercise
-            )
-        );
-    }
-
     let exerciseDisplay;
     if (reorder) {
         exerciseDisplay = (
             <>
                 <div className="single-exercise__header">
                     <Reorder />
-                    <p>{exercise.name}</p>
+                    <p>{capatalizeFirstLetter(exercise.name)}</p>
                 </div>
             </>
         );
@@ -83,7 +68,7 @@ const SingleExercise = ({
         exerciseDisplay = (
             <>
                 <div className="single-exercise__header">
-                    <p>{exercise.name}</p>
+                    <p>{capatalizeFirstLetter(exercise.name)}</p>
                     <button
                         onClick={handleDeleteExercise}
                         className="delete-exercise__btn"
@@ -102,35 +87,23 @@ const SingleExercise = ({
                             <tr key={index} className="single-set-row">
                                 <td className="set-table__set">{index + 1}</td>
                                 <td className="set-table__weight">
-                                    <input
-                                        maxLength={7}
-                                        type="number"
-                                        value={set.weight || ''}
-                                        onChange={e =>
-                                            handleChangeSet(e, 'WEIGHT', index)
-                                        }
-                                        placeholder={
-                                            templateOrWorkout === 'workout'
-                                                ? exerciseDB.previousSets[index]
-                                                      ?.weight
-                                                : ''
-                                        }
+                                    <SetInput
+                                        inputType="weight"
+                                        exercise={exerciseDB}
+                                        set={set}
+                                        index={index}
+                                        setExerciseForm={setExerciseForm}
+                                        templateOrWorkout={templateOrWorkout}
                                     />
                                 </td>
                                 <td className="set-table__reps">
-                                    <input
-                                        maxLength={7}
-                                        type="number"
-                                        value={set.reps || ''}
-                                        onChange={e =>
-                                            handleChangeSet(e, 'REPS', index)
-                                        }
-                                        placeholder={
-                                            templateOrWorkout === 'workout'
-                                                ? exerciseDB.previousSets[index]
-                                                      ?.reps
-                                                : ''
-                                        }
+                                    <SetInput
+                                        inputType="reps"
+                                        exercise={exerciseDB}
+                                        set={set}
+                                        index={index}
+                                        setExerciseForm={setExerciseForm}
+                                        templateOrWorkout={templateOrWorkout}
                                     />
                                 </td>
                                 <td className="set-table__delete-set">
