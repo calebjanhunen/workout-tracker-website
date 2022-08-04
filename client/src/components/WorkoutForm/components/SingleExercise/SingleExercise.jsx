@@ -3,8 +3,15 @@ import React from 'react';
 
 import './SingleExercise.css';
 
-const SingleExercise = ({ exercise, setExerciseForm, reorder }) => {
-    // console.log(exercise);
+import { useGetExerciseByIdQuery } from 'redux/features/exercisesApiSlice';
+
+const SingleExercise = ({
+    exercise,
+    setExerciseForm,
+    reorder,
+    templateOrWorkout,
+}) => {
+    const { data: exerciseDB } = useGetExerciseByIdQuery(exercise._id);
 
     function handleDeleteExercise() {
         setExerciseForm(prev =>
@@ -102,6 +109,12 @@ const SingleExercise = ({ exercise, setExerciseForm, reorder }) => {
                                         onChange={e =>
                                             handleChangeSet(e, 'WEIGHT', index)
                                         }
+                                        placeholder={
+                                            templateOrWorkout === 'workout'
+                                                ? exerciseDB.previousSets[index]
+                                                      ?.weight
+                                                : ''
+                                        }
                                     />
                                 </td>
                                 <td className="set-table__reps">
@@ -111,6 +124,12 @@ const SingleExercise = ({ exercise, setExerciseForm, reorder }) => {
                                         value={set.reps || ''}
                                         onChange={e =>
                                             handleChangeSet(e, 'REPS', index)
+                                        }
+                                        placeholder={
+                                            templateOrWorkout === 'workout'
+                                                ? exerciseDB.previousSets[index]
+                                                      ?.reps
+                                                : ''
                                         }
                                     />
                                 </td>

@@ -18,6 +18,16 @@ export const exercisesApiSlice = apiSlice.injectEndpoints({
             query: ({ bodyPart }) => `/exercises?bodyPart=${bodyPart}`,
             providesTags: ['exercises'],
         }),
+        getExerciseById: builder.query({
+            query: id => `/exercises/${id}`,
+        }),
+        updateExercise: builder.mutation({
+            query: ({ sets, id }) => ({
+                url: `/exercises/${id}`,
+                method: 'PATCH',
+                body: sets,
+            }),
+        }),
         deleteExercise: builder.mutation({
             query: id => ({
                 url: `/exercises/${id}`,
@@ -35,5 +45,7 @@ export const {
     useLazyGetExercisesQuery,
     useLazyGetExercisesByQueryQuery,
     useGetExercisesByQueryQuery,
+    useGetExerciseByIdQuery,
+    useUpdateExerciseMutation,
     useDeleteExerciseMutation,
 } = exercisesApiSlice;

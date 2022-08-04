@@ -1,89 +1,104 @@
-import { Menu, MenuItem } from '@material-ui/core';
-import { Check, Clear, MoreVert, Reorder } from '@mui/icons-material';
-import React from 'react';
+import { Check, MoreVert } from '@mui/icons-material';
+import React, { createRef } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
-import SingleExercise from './components/SingleExercise/SingleExercise';
 import './WorkoutForm.css';
 
-const WorkoutForm = ({ workoutTemplate, exerciseForm, setExerciseForm }) => {
+import { useUpdateExerciseMutation } from 'redux/features/exercisesApiSlice';
+import { useCreateWorkoutMutation } from 'redux/features/workoutsApiSlice';
+import { useCreateWorkoutTemplateMutation } from 'redux/features/workoutTemplatesApiSlice';
+import EditMenu from './components/EditMenu/EditMenu';
+import SingleExercise from './components/SingleExercise/SingleExercise';
+
+const WorkoutForm = ({
+    workoutTemplate,
+    exerciseForm,
+    setExerciseForm,
+    templateOrWorkout,
+}) => {
     const [workoutName, setWorkoutName] = React.useState(
-        workoutTemplate ? workoutTemplate.workoutName : ''
+        workoutTemplate ? workoutTemplate.workoutName : ' '
     );
     const [isSubmitting, setIsSubmitting] = React.useState(false);
+    const [anchorEl, setAnchorEl] = React.useState(null); //For Edit Menu
+    const [reorder, setReorder] = React.useState(false); //For Drag and Drop
+    const [updateExercise] = useUpdateExerciseMutation();
+    const [createWorkout] = useCreateWorkoutMutation();
+    const [createWorkoutTemplate] = useCreateWorkoutTemplateMutation();
+    const bottomRef = createRef();
 
-    //For Edit Menu
-    const [anchorEl, setAnchorEl] = React.useState(null);
-
-    //For Drag and Drop
-    const [reorder, setReorder] = React.useState(false);
-
-    const exercisesDisplay = exerciseForm ? (
-        exerciseForm.map((exercise, index) => {
-            return reorder ? (
-                <Draggable
-                    key={exercise._id}
-                    draggableId={`draggable-${exercise._id}`}
-                    index={index}
-                >
-                    {(provided, snapshot) => (
-                        <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            style={{
-                                ...provided.draggableProps.style,
-                                boxShadow: snapshot.isDragging
-                                    ? '0 0 0.4rem #666'
-                                    : 'none',
-                            }}
-                        >
-                            <SingleExercise
-                                exercise={exercise}
-                                setExerciseForm={setExerciseForm}
-                                reorder={reorder}
-                            />
-                        </div>
-                    )}
-                </Draggable>
-            ) : (
-                <SingleExercise
-                    key={exercise._id}
-                    exercise={exercise}
-                    setExerciseForm={setExerciseForm}
-                    reorder={reorder}
-                />
-            );
-        })
-    ) : (
-        <p className="no-exercices-text">
-            Add an exercise <br></br> from the Exercises list
-        </p>
-    );
+    const exercisesDisplay =
+        exerciseForm?.length > 0 ? (
+            exerciseForm.map((exercise, index) => {
+                return reorder ? (
+                    <Draggable
+                        key={exercise._id}
+                        draggableId={`draggable-${exercise._id}`}
+                        index={index}
+                    >
+                        {(provided, snapshot) => (
+                            <div
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                style={{
+                                    ...provided.draggableProps.style,
+                                    boxShadow: snapshot.isDragging
+                                        ? '0 0 0.4rem #666'
+                                        : 'none',
+                                }}
+                            >
+                                <SingleExercise
+                                    exercise={exercise}
+                                    setExerciseForm={setExerciseForm}
+                                    reorder={reorder}
+                                    templateOrWorkout={templateOrWorkout}
+                                />
+                            </div>
+                        )}
+                    </Draggable>
+                ) : (
+                    <SingleExercise
+                        key={exercise._id}
+                        exercise={exercise}
+                        setExerciseForm={setExerciseForm}
+                        reorder={reorder}
+                    />
+                );
+            })
+        ) : (
+            <p className="no-exercices-text">
+                Add an exercise <br></br> from the Exercises list
+            </p>
+        );
 
     async function handleSubmitWorkout() {
         setIsSubmitting(true);
+        if (templateOrWorkout === 'workout') {
+            console.log(exerciseForm);
+            exerciseForm.forEach(async exercise => {
+                await updateExercise({ sets: exercise.sets, id: exercise._id });
+            });
+            await createWorkout({
+                name: workoutName,
+                exercises: exerciseForm,
+            });
+        } else if (templateOrWorkout === 'template') {
+            await createWorkoutTemplate({
+                workoutName,
+                exercises: exerciseForm,
+            });
+        }
         setIsSubmitting(false);
-        // await createWorkout({
-        //     name: workoutName,
-        //     createdAt: new Date(),
-        //     exercises: exerciseForm,
-        // });
         handleClearTemplate();
     }
 
     function handleClearTemplate() {
-        // exerciseForm.exercises = [];
         setWorkoutName('');
-        handleClose();
-    }
-
-    //Closes more options menu
-    function handleClose() {
+        setExerciseForm([]);
         setAnchorEl(null);
     }
 
-    /******************Drag and Drop Functions**************** */
     function handleDragEnd(param) {
         const destIndex = param.destination.index;
         const sourceIndex = param.source.index;
@@ -93,11 +108,6 @@ const WorkoutForm = ({ workoutTemplate, exerciseForm, setExerciseForm }) => {
         tempArr.splice(destIndex, 0, exerciseToMove);
 
         setExerciseForm(tempArr);
-    }
-
-    function handleReorderExercises() {
-        setReorder(true);
-        handleClose();
     }
 
     return (
@@ -111,7 +121,7 @@ const WorkoutForm = ({ workoutTemplate, exerciseForm, setExerciseForm }) => {
                             name="create-workout-form__workout-name"
                             placeholder="Enter Workout Name..."
                             onChange={e => setWorkoutName(e.target.value)}
-                            value={workoutName}
+                            defaultValue={workoutTemplate ? workoutName : ''}
                             autoComplete="off"
                         />
                         {reorder ? (
@@ -149,35 +159,23 @@ const WorkoutForm = ({ workoutTemplate, exerciseForm, setExerciseForm }) => {
                             onClick={handleSubmitWorkout}
                             className="finish-template-btn"
                             disabled={
-                                !exerciseForm || workoutName === ''
+                                exerciseForm?.length === 0 || workoutName === ''
                                     ? true
                                     : false
                             }
                         >
-                            Finish Workout
+                            Finish{' '}
+                            {templateOrWorkout === 'workout'
+                                ? 'Workout'
+                                : 'Template'}
                         </button>
                     </div>
-
-                    <Menu
-                        open={Boolean(anchorEl)}
+                    <EditMenu
                         anchorEl={anchorEl}
-                        onClose={handleClose}
-                    >
-                        <MenuItem
-                            className="menu-option"
-                            onClick={handleReorderExercises}
-                        >
-                            <Reorder />
-                            Reorder Exercises
-                        </MenuItem>
-                        <MenuItem
-                            className="menu-option"
-                            onClick={handleClearTemplate}
-                        >
-                            <Clear />
-                            Clear Template
-                        </MenuItem>
-                    </Menu>
+                        setAnchorEl={setAnchorEl}
+                        setReorder={setReorder}
+                        handleClearTemplate={handleClearTemplate}
+                    />
                 </>
             )}
         </div>

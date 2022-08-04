@@ -59,6 +59,8 @@ input[name='create-workout-form__workout-name']:focus {
 }
 
 .workout-form_exercises-list {
+    display: flex;
+    flex-direction: column-reverse;
     max-height: 60vh;
     overflow-y: auto;
     text-align: center;
