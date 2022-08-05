@@ -1,11 +1,10 @@
-import { Card } from "@material-ui/core";
-import moment from "moment";
-import React from "react";
+import moment from 'moment';
+import React from 'react';
 
-import "./WorkoutInfoDisplay.css";
+import './WorkoutInfoDisplay.css';
 
 const WorkoutCardInfo = ({ workoutInfo, setShowEditForm }) => {
-    const [showWorkoutInfo, setShowWorkoutInfo] = React.useState(true);
+    const [showWorkoutInfo, setShowWorkoutInfo] = React.useState(false);
 
     function displayWorkoutInfo() {
         return (
@@ -14,7 +13,7 @@ const WorkoutCardInfo = ({ workoutInfo, setShowEditForm }) => {
                     <div key={index} className="exercise">
                         <h3
                             className="exercise-name"
-                            style={{ marginTop: "10px" }}
+                            style={{ marginTop: '10px' }}
                         >
                             {exercise.name}
                         </h3>
@@ -22,13 +21,13 @@ const WorkoutCardInfo = ({ workoutInfo, setShowEditForm }) => {
                             <div key={index} className="exercise-info">
                                 <p
                                     className="exercise-info__set"
-                                    style={{ marginRight: "10px" }}
+                                    style={{ marginRight: '10px' }}
                                 >
                                     Set {index + 1}
                                 </p>
                                 <p
                                     className="exercise-info__weight"
-                                    style={{ marginRight: "10px" }}
+                                    style={{ marginRight: '10px' }}
                                 >
                                     {info.weight} lbs
                                 </p>
@@ -47,10 +46,10 @@ const WorkoutCardInfo = ({ workoutInfo, setShowEditForm }) => {
         <div
             onClick={e => {
                 if (
-                    e.target.parentElement.className !== "delete-btn" &&
+                    e.target.parentElement.className !== 'delete-btn' &&
                     e.target.parentElement.className !==
-                        "delete-workout-confirmation" &&
-                    e.target.parentElement.className !== "edit-btn"
+                        'delete-workout-confirmation' &&
+                    e.target.parentElement.className !== 'edit-btn'
                 )
                     setShowWorkoutInfo(prev => !prev);
             }}
@@ -67,7 +66,7 @@ const WorkoutCardInfo = ({ workoutInfo, setShowEditForm }) => {
             </div>
             <div className="workout-card__time-values">
                 <h2 className="time-values__date">
-                    {moment(workoutInfo.date).format("MMM DD")}
+                    {moment(workoutInfo.createdAt).format('MMM DD')}
                 </h2>
                 <h2 className="time-values__workout-length">Workout Length</h2>
             </div>
