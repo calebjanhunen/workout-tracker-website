@@ -26,13 +26,12 @@ const SetInput = ({
             )
         );
     }
-    // console.log(exercise?.previousSets[index][inputType]);
 
     return (
         <input
             maxLength={7}
             type="number"
-            defaultValue={set.inputType || ''}
+            value={set[inputType] || ''}
             onChange={e => handleChangeSet(e, inputType, index)}
             disabled={templateOrWorkout === 'template' ? true : false}
             placeholder={
