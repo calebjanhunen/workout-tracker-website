@@ -45,6 +45,9 @@ const NavBar = () => {
                 <li>
                     <NavLink to="workout-history">Workout History</NavLink>
                 </li>
+                <li>
+                    <NavLink to="explore">Explore</NavLink>
+                </li>
             </ul>
             <h3 className="navbar-username">{username}</h3>
             <button className="logout-btn navbar-btn" onClick={handleLogout}>

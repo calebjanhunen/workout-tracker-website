@@ -1,0 +1,33 @@
+.explorePageContainer {
+    display: flex;
+    justify-content: center;
+    /* width: 100vw; */
+}
+
+.workoutFeedContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    width: 500px;
+    /* height: 87vh; */
+    overflow-y: auto;
+}
+
+.workoutPost {
+    width: 300px;
+    border-radius: 10px;
+    /* max-height: 400px; */
+}
+
+.workoutPost table {
+    margin-left: 30px;
+}
+
+.workoutPost th,
+.workoutPost td {
+    width: 40px;
+    text-align: center;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+}

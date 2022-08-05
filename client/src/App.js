@@ -5,6 +5,7 @@ import WorkoutForm from 'components/WorkoutForm/WorkoutForm';
 import {
     CreateWorkoutForm,
     CreateWorkoutTemplate,
+    Explore,
     Home,
     Login,
     PageNotFound,
@@ -45,6 +46,7 @@ const App = () => {
                             path="workout-history"
                             element={<WorkoutHistory />}
                         />
+                        <Route path="/explore" element={<Explore />} />
                     </Route>
 
                     <Route path="/WorkoutForm" element={<WorkoutForm />} />
