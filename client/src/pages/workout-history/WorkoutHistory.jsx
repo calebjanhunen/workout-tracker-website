@@ -1,18 +1,18 @@
-import React from "react";
-import Calendar from "react-calendar";
+import React from 'react';
+import Calendar from 'react-calendar';
 
-import "react-calendar/dist/Calendar.css";
-import styles from "./WorkoutHistory.module.css";
+import 'react-calendar/dist/Calendar.css';
+import styles from './WorkoutHistory.module.css';
 
-import { useGetWorkoutsQuery } from "redux/features/workoutsApiSlice";
-import WorkoutCard from "./components/WorkoutCard/WorkoutCard";
 import {
     Box,
+    Card,
     CircularProgress,
     Container,
-    Card,
     Typography,
-} from "@material-ui/core";
+} from '@material-ui/core';
+import { useGetWorkoutsQuery } from 'redux/features/workoutsApiSlice';
+import WorkoutCard from './components/WorkoutCard/WorkoutCard';
 
 //TODO: display loading spinner when submiting an edit
 const ViewWorkoutsPage = () => {
@@ -22,7 +22,7 @@ const ViewWorkoutsPage = () => {
         isSuccess,
         isError,
         error,
-    } = useGetWorkoutsQuery();
+    } = useGetWorkoutsQuery(false);
 
     let displayContent;
     if (isLoading) {

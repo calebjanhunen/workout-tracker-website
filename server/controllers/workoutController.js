@@ -17,10 +17,16 @@ export async function createWorkout(req, res) {
 }
 
 export async function getWorkouts(req, res) {
+    let filter =
+        req.query.shared === 'true'
+            ? { public: true }
+            : { owner: req.user._id };
+
     try {
-        const data = await Workout.find({ owner: req.user._id }).sort({
+        const data = await Workout.find(filter).sort({
             createdAt: -1,
         });
+
         res.json(data);
     } catch (err) {
         res.status(400).json({ message: 'Could not get workouts' });

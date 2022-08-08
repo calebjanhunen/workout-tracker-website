@@ -3,8 +3,17 @@ import React from 'react';
 
 import './WorkoutInfoDisplay.css';
 
+import { useUpdateWorkoutMutation } from 'redux/features/workoutsApiSlice';
+
 const WorkoutCardInfo = ({ workoutInfo, setShowEditForm }) => {
     const [showWorkoutInfo, setShowWorkoutInfo] = React.useState(false);
+    const [updateWorkout] = useUpdateWorkoutMutation();
+
+    async function handleToggleShare(isShared) {
+        isShared
+            ? await updateWorkout({ ...workoutInfo, public: false })
+            : await updateWorkout({ ...workoutInfo, public: true });
+    }
 
     function displayWorkoutInfo() {
         return (
@@ -63,6 +72,19 @@ const WorkoutCardInfo = ({ workoutInfo, setShowEditForm }) => {
                 >
                     Edit
                 </button>
+                {workoutInfo.public ? (
+                    <button
+                        onClick={() => handleToggleShare(workoutInfo.public)}
+                    >
+                        Hide
+                    </button>
+                ) : (
+                    <button
+                        onClick={() => handleToggleShare(workoutInfo.public)}
+                    >
+                        Share
+                    </button>
+                )}
             </div>
             <div className="workout-card__time-values">
                 <h2 className="time-values__date">
