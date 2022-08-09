@@ -29,7 +29,7 @@ const WorkoutCard = ({ workoutInfo }) => {
     const [updateWorkout] = useUpdateWorkoutMutation();
     const isLiked = workoutInfo.likedBy.includes(userId);
     const [comment, setComment] = useState('');
-    const [showComments, setShowComments] = useState(false);
+    const [showComments, setShowComments] = useState(true);
 
     async function handleToggleLike() {
         if (!isLiked)
@@ -42,10 +42,8 @@ const WorkoutCard = ({ workoutInfo }) => {
                 ...workoutInfo,
                 likedBy: workoutInfo.likedBy.filter(id => id !== userId),
             });
-
-        setComment('');
     }
-    console.log(workoutInfo.comments);
+
     async function handlePostComment() {
         await updateWorkout({
             ...workoutInfo,
@@ -54,6 +52,7 @@ const WorkoutCard = ({ workoutInfo }) => {
                 ...workoutInfo.comments,
             ],
         });
+        setComment('');
     }
 
     let workoutCardDisplay;
@@ -94,8 +93,14 @@ const WorkoutCard = ({ workoutInfo }) => {
                 <input
                     placeholder="Add a comment..."
                     onChange={e => setComment(e.target.value)}
+                    value={comment}
                 />
-                <button onClick={handlePostComment}>Post</button>
+                <button
+                    onClick={handlePostComment}
+                    disabled={comment === '' ? true : false}
+                >
+                    Post
+                </button>
                 <button onClick={() => setShowComments(prev => !prev)}>
                     {showComments ? 'Hide' : 'Show'} Comments
                 </button>
