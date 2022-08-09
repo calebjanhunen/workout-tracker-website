@@ -8,15 +8,18 @@ import {
 } from '@material-ui/core';
 import { Favorite, MoreVert } from '@mui/icons-material';
 import moment from 'moment';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import styles from './WorkoutCard.module.css';
 
 import { useGetuserByIdQuery } from 'redux/features/authApiSlice';
 import { useUpdateWorkoutMutation } from 'redux/features/workoutsApiSlice';
+import Comments from '../Comments/Comments';
 
 const WorkoutCard = ({ workoutInfo }) => {
     const userId = useSelector(state => state.auth.userId);
+    const loggedInUser = useSelector(state => state.auth.user);
     const {
         data: username,
         isLoading,
@@ -25,8 +28,9 @@ const WorkoutCard = ({ workoutInfo }) => {
     } = useGetuserByIdQuery(workoutInfo.owner);
     const [updateWorkout] = useUpdateWorkoutMutation();
     const isLiked = workoutInfo.likedBy.includes(userId);
-    console.log(workoutInfo.likedBy);
-    console.log(userId);
+    const [comment, setComment] = useState('');
+    const [showComments, setShowComments] = useState(false);
+
     async function handleToggleLike() {
         if (!isLiked)
             await updateWorkout({
@@ -38,6 +42,18 @@ const WorkoutCard = ({ workoutInfo }) => {
                 ...workoutInfo,
                 likedBy: workoutInfo.likedBy.filter(id => id !== userId),
             });
+
+        setComment('');
+    }
+    console.log(workoutInfo.comments);
+    async function handlePostComment() {
+        await updateWorkout({
+            ...workoutInfo,
+            comments: [
+                { user: loggedInUser, userId, comment },
+                ...workoutInfo.comments,
+            ],
+        });
     }
 
     let workoutCardDisplay;
@@ -70,8 +86,31 @@ const WorkoutCard = ({ workoutInfo }) => {
                             }
                         />
                     </IconButton>
-                    <p>{workoutInfo.likedBy.length} Likes</p>
+                    <p>
+                        {workoutInfo.likedBy.length}{' '}
+                        {workoutInfo.likedBy.length === 1 ? 'Like' : 'Likes'}
+                    </p>
                 </CardActions>
+                <input
+                    placeholder="Add a comment..."
+                    onChange={e => setComment(e.target.value)}
+                />
+                <button onClick={handlePostComment}>Post</button>
+                <button onClick={() => setShowComments(prev => !prev)}>
+                    {showComments ? 'Hide' : 'Show'} Comments
+                </button>
+                {showComments && (
+                    <div className={styles.comments}>
+                        {workoutInfo.comments.map(comment => (
+                            <Comments
+                                key={comment._id}
+                                workoutInfo={workoutInfo}
+                                comment={comment}
+                                userId={userId}
+                            />
+                        ))}
+                    </div>
+                )}
             </Card>
         );
     } else if (isError) {

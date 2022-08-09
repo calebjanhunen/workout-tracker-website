@@ -30,6 +30,17 @@ const workoutSchema = mongoose.Schema({
         type: [mongoose.Schema.Types.ObjectId],
         default: [],
     },
+    comments: [
+        {
+            user: String,
+            userId: mongoose.Schema.Types.ObjectId,
+            createdAt: {
+                type: Date,
+                default: Date.now,
+            },
+            comment: String,
+        },
+    ],
 });
 
 const Workout = mongoose.model('Workout', workoutSchema);

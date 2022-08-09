@@ -57,6 +57,7 @@ export async function updateWorkout(req, res) {
             public: req.body.public,
             sharedAt: req.body.sharedAt,
             likedBy: req.body.likedBy,
+            comments: req.body.comments,
         });
         res.json(workoutToUpdate);
     } catch (err) {

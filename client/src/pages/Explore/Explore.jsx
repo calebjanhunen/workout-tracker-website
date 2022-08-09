@@ -3,7 +3,7 @@ import React from 'react';
 import styles from './Explore.module.css';
 
 import { useGetWorkoutsQuery } from 'redux/features/workoutsApiSlice';
-import WorkoutCard from './components/WorkoutCard';
+import WorkoutCard from './components/WorkoutCard/WorkoutCard';
 
 //Explore Page Ideas:
 //  - A feed with shared workouts from other users

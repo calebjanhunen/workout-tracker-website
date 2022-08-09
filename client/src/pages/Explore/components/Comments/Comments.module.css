@@ -1,0 +1,13 @@
+.commentInfo {
+    display: flex;
+}
+
+.commentInfo button {
+    margin-left: auto;
+}
+
+.commentCreatedAt {
+    color: grey;
+    font-size: 10px;
+    margin-bottom: 10px;
+}
