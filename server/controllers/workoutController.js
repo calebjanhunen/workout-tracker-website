@@ -17,15 +17,16 @@ export async function createWorkout(req, res) {
 }
 
 export async function getWorkouts(req, res) {
-    let filter =
+    const filter =
         req.query.shared === 'true'
             ? { public: true }
             : { owner: req.user._id };
 
+    const sort =
+        req.query.shared === 'true' ? { sharedAt: -1 } : { createdAt: -1 };
+
     try {
-        const data = await Workout.find(filter).sort({
-            createdAt: -1,
-        });
+        const data = await Workout.find(filter).sort(sort);
 
         res.json(data);
     } catch (err) {

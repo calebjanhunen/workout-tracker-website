@@ -23,6 +23,9 @@ const workoutSchema = mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    sharedAt: {
+        type: Date,
+    },
     likeCount: {
         type: Number,
         default: 0,

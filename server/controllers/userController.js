@@ -1,10 +1,10 @@
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
+import bcrypt from 'bcrypt';
+import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
 
-import { generateAccessToken } from "../utils/generateTokens.js";
-import User from "../models/users.js";
-import { REFRESH_TOKEN_COOKIE_EXPIRE_LENGTH } from "../utils/constants.js";
+import User from '../models/users.js';
+import { REFRESH_TOKEN_COOKIE_EXPIRE_LENGTH } from '../utils/constants.js';
+import { generateAccessToken } from '../utils/generateTokens.js';
 
 dotenv.config();
 
@@ -14,7 +14,7 @@ export async function registerUser(req, res) {
     try {
         const foundUser = await User.findOne({ username });
         if (foundUser)
-            return res.status(409).json({ message: "User already exists" });
+            return res.status(409).json({ message: 'User already exists' });
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -40,7 +40,7 @@ export async function loginUser(req, res) {
         if (!foundUser)
             return res
                 .status(401)
-                .json({ message: "Invalid username or password" });
+                .json({ message: 'Invalid username or password' });
 
         const validPassword = await bcrypt.compare(
             password,
@@ -49,7 +49,7 @@ export async function loginUser(req, res) {
         if (!validPassword)
             return res
                 .status(401)
-                .json({ message: "Invalid username or password" });
+                .json({ message: 'Invalid username or password' });
 
         //Create JWTs
         await foundUser.generateRefreshToken(req, res);
@@ -57,7 +57,7 @@ export async function loginUser(req, res) {
 
         res.json({ accessToken });
     } catch (err) {
-        res.status(400).json({ message: "Could not login user" });
+        res.status(400).json({ message: 'Could not login user' });
     }
 }
 
@@ -66,16 +66,16 @@ export async function logoutUser(req, res) {
 
     //cookie not found -> user not logged in
     if (!refreshToken)
-        return res.status(401).json({ message: "Not logged in" });
+        return res.status(401).json({ message: 'Not logged in' });
 
     try {
         const foundUser = await User.findOne({ refreshTokens: refreshToken });
 
         //cookie is found, user not found -> old cookie
         if (!foundUser) {
-            res.clearCookie("refreshToken", {
+            res.clearCookie('refreshToken', {
                 secure: true,
-                sameSite: "None",
+                sameSite: 'None',
                 httpOnly: true,
                 maxAge: REFRESH_TOKEN_COOKIE_EXPIRE_LENGTH,
             });
@@ -89,16 +89,16 @@ export async function logoutUser(req, res) {
         foundUser.refreshTokens = [...newRefreshTokenArr];
         await foundUser.save();
 
-        res.clearCookie("refreshToken", {
+        res.clearCookie('refreshToken', {
             secure: true,
-            sameSite: "None",
+            sameSite: 'None',
             httpOnly: true,
             maxAge: REFRESH_TOKEN_COOKIE_EXPIRE_LENGTH,
         });
 
-        res.json("Logged out successfully");
+        res.json('Logged out successfully');
     } catch (err) {
-        res.status(400).json({ message: "Could not logout user" });
+        res.status(400).json({ message: 'Could not logout user' });
     }
 }
 
@@ -106,12 +106,12 @@ export async function handleRefreshToken(req, res) {
     const { refreshToken } = req.cookies;
 
     if (!refreshToken)
-        return res.status(401).json({ message: "Not logged in" });
+        return res.status(401).json({ message: 'Not logged in' });
 
     try {
         const foundUser = await User.findOne({ refreshTokens: refreshToken });
         if (!foundUser)
-            return res.status(403).json({ message: "Invalid refresh token" });
+            return res.status(403).json({ message: 'Invalid refresh token' });
         // console.log(foundUser);
 
         //verify refresh token is not expired
@@ -122,7 +122,7 @@ export async function handleRefreshToken(req, res) {
                 if (err)
                     return res
                         .status(401)
-                        .json({ message: "Refresh token expired." });
+                        .json({ message: 'Refresh token expired.' });
 
                 const accessToken = generateAccessToken(decoded._id);
 
@@ -131,6 +131,18 @@ export async function handleRefreshToken(req, res) {
         );
     } catch (err) {
         console.log(err);
-        res.status(400).json({ message: "Could not refresh access token" });
+        res.status(400).json({ message: 'Could not refresh access token' });
+    }
+}
+
+export async function getUserById(req, res) {
+    try {
+        const user = await User.findById(req.params.id);
+
+        if (!user) return res.status(404).json({ message: 'User not found' });
+
+        res.json({ username: user.username });
+    } catch (err) {
+        res.status(400).json({ message: 'Could not retrieve user' });
     }
 }

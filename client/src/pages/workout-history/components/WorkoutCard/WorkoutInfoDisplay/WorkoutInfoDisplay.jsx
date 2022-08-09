@@ -12,7 +12,11 @@ const WorkoutCardInfo = ({ workoutInfo, setShowEditForm }) => {
     async function handleToggleShare(isShared) {
         isShared
             ? await updateWorkout({ ...workoutInfo, public: false })
-            : await updateWorkout({ ...workoutInfo, public: true });
+            : await updateWorkout({
+                  ...workoutInfo,
+                  public: true,
+                  sharedAt: Date.now(),
+              });
     }
 
     function displayWorkoutInfo() {
