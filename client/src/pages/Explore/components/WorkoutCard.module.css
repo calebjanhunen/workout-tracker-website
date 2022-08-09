@@ -17,3 +17,11 @@
     justify-content: center;
     align-items: center; */
 }
+
+.heartIconLiked {
+    color: red;
+}
+
+.heartIcon {
+    color: grey;
+}

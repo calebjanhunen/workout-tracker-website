@@ -50,7 +50,13 @@ export async function updateWorkout(req, res) {
     // console.log(mongoose.isValidObjectId(req.body.exercises[0].exerciseInfo[0]));
     try {
         const workoutToUpdate = await Workout.findByIdAndUpdate(_id, {
-            ...req.body,
+            _id: req.body._id,
+            name: req.body.name,
+            exercises: req.body.exercises,
+            createdAt: req.body.createdAt,
+            public: req.body.public,
+            sharedAt: req.body.sharedAt,
+            likedBy: req.body.likedBy,
         });
         res.json(workoutToUpdate);
     } catch (err) {

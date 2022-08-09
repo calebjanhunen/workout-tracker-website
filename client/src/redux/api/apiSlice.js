@@ -27,6 +27,7 @@ async function baseQueryWithReAuth(args, api) {
         api.dispatch(
             setCredentials({
                 user: refreshResult.data.username,
+                userId: refreshResult.data.userId,
                 accessToken: refreshResult.data.accessToken,
             })
         );

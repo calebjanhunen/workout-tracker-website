@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import styles from "./PersistLogin.module.css";
+import styles from './PersistLogin.module.css';
 
-import { setCredentials } from "redux/reducer/authSlice";
-import { useLazyRefreshAccessTokenQuery } from "redux/features/authApiSlice";
-import { Outlet } from "react-router-dom";
-import { Box, CircularProgress, Container } from "@material-ui/core";
+import { Box, CircularProgress, Container } from '@material-ui/core';
+import { Outlet } from 'react-router-dom';
+import { useLazyRefreshAccessTokenQuery } from 'redux/features/authApiSlice';
+import { setCredentials } from 'redux/reducer/authSlice';
 
 const PersistLogin = () => {
     const dispatch = useDispatch();
@@ -23,6 +23,7 @@ const PersistLogin = () => {
                     dispatch(
                         setCredentials({
                             user: data.data.username,
+                            userId: data.data.userId,
                             accessToken: data.data.accessToken,
                         })
                     );

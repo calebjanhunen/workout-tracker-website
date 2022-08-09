@@ -1,25 +1,25 @@
 import {
+    Box,
+    Button,
     Card,
     Container,
     TextField,
     Typography,
-    Box,
-    Button,
-} from "@material-ui/core";
-import { useState } from "react";
-import styles from "./login.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useLocation, Navigate } from "react-router-dom";
+} from '@material-ui/core';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import styles from './login.module.css';
 
-import { setCredentials } from "redux/reducer/authSlice";
-import { useLoginMutation } from "redux/features/authApiSlice";
+import { useLoginMutation } from 'redux/features/authApiSlice';
+import { setCredentials } from 'redux/reducer/authSlice';
 
 const LoginPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    const [user, setUser] = useState("");
-    const [pwd, setPwd] = useState("");
+    const [user, setUser] = useState('');
+    const [pwd, setPwd] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [login] = useLoginMutation();
     const accessToken = useSelector(state => state.auth.accessToken);
@@ -27,10 +27,10 @@ const LoginPage = () => {
     async function handleSubmitLogin(e) {
         e.preventDefault();
         if (user.length < 4) {
-            return console.log("username must be at least 4 characters long");
+            return console.log('username must be at least 4 characters long');
         }
         if (pwd.length < 8) {
-            return console.log("Password must be at least 8 characters long");
+            return console.log('Password must be at least 8 characters long');
         }
         try {
             setIsLoading(true);
@@ -40,15 +40,19 @@ const LoginPage = () => {
             }).unwrap();
 
             dispatch(
-                setCredentials({ user, accessToken: userData.accessToken })
+                setCredentials({
+                    user,
+                    userId: userData.userId,
+                    accessToken: userData.accessToken,
+                })
             );
 
-            setUser("");
-            setPwd("");
+            setUser('');
+            setPwd('');
 
             location.state
                 ? navigate(location.state.from.pathname)
-                : navigate("home");
+                : navigate('home');
         } catch (err) {
             console.log(err);
         } finally {

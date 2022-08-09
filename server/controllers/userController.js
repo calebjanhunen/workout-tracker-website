@@ -55,7 +55,7 @@ export async function loginUser(req, res) {
         await foundUser.generateRefreshToken(req, res);
         const accessToken = generateAccessToken(foundUser._id);
 
-        res.json({ accessToken });
+        res.json({ userId: foundUser._id, accessToken });
     } catch (err) {
         res.status(400).json({ message: 'Could not login user' });
     }
@@ -126,7 +126,11 @@ export async function handleRefreshToken(req, res) {
 
                 const accessToken = generateAccessToken(decoded._id);
 
-                res.json({ username: foundUser.username, accessToken });
+                res.json({
+                    username: foundUser.username,
+                    userId: foundUser._id,
+                    accessToken,
+                });
             }
         );
     } catch (err) {
