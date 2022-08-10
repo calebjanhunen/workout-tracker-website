@@ -16,7 +16,10 @@ const SingleTemplate = ({
             className={templateClasses}
             onClick={() => setMoreInfoTemplate(templateInfo)}
         >
-            <h3 className="workout-name">{templateInfo.workoutName}</h3>
+            <div className="template-info">
+                <h3 className="workout-name">{templateInfo.workoutName}</h3>
+                <p className="createdBy">{templateInfo.createdBy?.username}</p>
+            </div>
             <p className="num-exercises">
                 {templateInfo.exercises.length} exercises
             </p>

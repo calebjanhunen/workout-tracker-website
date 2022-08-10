@@ -1,6 +1,7 @@
 import { Check, MoreVert } from '@mui/icons-material';
 import React, { createRef, useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import { useSelector } from 'react-redux';
 
 import './WorkoutForm.css';
 
@@ -16,6 +17,7 @@ const WorkoutForm = ({
     setExerciseForm,
     templateOrWorkout,
 }) => {
+    const userId = useSelector(state => state.auth.userId);
     const [workoutName, setWorkoutName] = React.useState(
         workoutTemplate ? workoutTemplate.workoutName : ''
     );
@@ -50,6 +52,7 @@ const WorkoutForm = ({
             await createWorkoutTemplate({
                 workoutName,
                 exercises: exerciseForm,
+                createdBy: userId,
             });
         }
         setIsSubmitting(false);

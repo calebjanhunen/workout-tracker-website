@@ -17,6 +17,7 @@ import styles from './WorkoutCard.module.css';
 
 import { useGetuserByIdQuery } from 'redux/features/authApiSlice';
 import { useUpdateWorkoutMutation } from 'redux/features/workoutsApiSlice';
+import { useCreateWorkoutTemplateMutation } from 'redux/features/workoutTemplatesApiSlice';
 import Comments from '../Comments/Comments';
 
 const WorkoutCard = ({ workoutInfo }) => {
@@ -29,6 +30,7 @@ const WorkoutCard = ({ workoutInfo }) => {
         isError,
     } = useGetuserByIdQuery(workoutInfo.owner);
     const [updateWorkout] = useUpdateWorkoutMutation();
+    const [createWorkoutTemplate] = useCreateWorkoutTemplateMutation();
     const isLiked = workoutInfo.likedBy.includes(userId);
     const [comment, setComment] = useState('');
     const [showComments, setShowComments] = useState(true);
@@ -58,7 +60,13 @@ const WorkoutCard = ({ workoutInfo }) => {
         setComment('');
     }
 
-    async function handleSaveAsTemplate() {}
+    async function handleSaveAsTemplate() {
+        await createWorkoutTemplate({
+            workoutName: workoutInfo.name,
+            exercises: workoutInfo.exercises,
+            createdBy: workoutInfo.owner,
+        });
+    }
 
     async function handleRemoveSharedWorkout() {
         await updateWorkout({
@@ -145,7 +153,7 @@ const WorkoutCard = ({ workoutInfo }) => {
                 onClose={() => setAnchorEl(null)}
             >
                 {userId !== workoutInfo.owner ? (
-                    <MenuItem onclick={handleSaveAsTemplate}>
+                    <MenuItem onClick={handleSaveAsTemplate}>
                         Save as Template
                     </MenuItem>
                 ) : (

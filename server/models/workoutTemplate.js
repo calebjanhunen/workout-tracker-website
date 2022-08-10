@@ -1,11 +1,14 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const workoutTemplateSchema = mongoose.Schema({
     workoutName: {
         type: String,
         required: true,
     },
-    owner: mongoose.Schema.Types.ObjectId,
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Users',
+    },
     exercises: [
         {
             name: String,
@@ -22,10 +25,14 @@ const workoutTemplateSchema = mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Users',
+    },
 });
 
 const WorkoutTemplate = mongoose.model(
-    "WorkoutTemplate",
+    'WorkoutTemplate',
     workoutTemplateSchema
 );
 
