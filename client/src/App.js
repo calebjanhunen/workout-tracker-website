@@ -9,6 +9,7 @@ import {
     Home,
     Login,
     PageNotFound,
+    Profile,
     SelectWorkoutTemplate,
     WorkoutHistory,
 } from 'pages';
@@ -47,9 +48,8 @@ const App = () => {
                             element={<WorkoutHistory />}
                         />
                         <Route path="/explore" element={<Explore />} />
+                        <Route path="/profile" element={<Profile />} />
                     </Route>
-
-                    <Route path="/WorkoutForm" element={<WorkoutForm />} />
                 </Route>
 
                 <Route path="/*" element={<PageNotFound />} />

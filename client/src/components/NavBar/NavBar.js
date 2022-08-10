@@ -68,7 +68,15 @@ const NavBar = () => {
                 onClose={() => setAnchorEl(null)}
                 className="profile-menu"
             >
-                <MenuItem className="menu-item">Profile</MenuItem>
+                <MenuItem
+                    className="menu-item"
+                    onClick={() => {
+                        navigate('/profile');
+                        setAnchorEl(null);
+                    }}
+                >
+                    Profile
+                </MenuItem>
                 <MenuItem className="menu-item" onClick={handleLogout}>
                     Logout
                 </MenuItem>

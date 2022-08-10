@@ -4,5 +4,6 @@ export { default as Explore } from './Explore/Explore';
 export { default as Home } from './home/home';
 export { default as Login } from './login/login';
 export { default as PageNotFound } from './PageNotFound/PageNotFound';
+export { default as Profile } from './Profile/Profile';
 export { default as SelectWorkoutTemplate } from './SelectWorkoutTemplate/SelectWorkoutTemplate';
 export { default as WorkoutHistory } from './workout-history/WorkoutHistory';
