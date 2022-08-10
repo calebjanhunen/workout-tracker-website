@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 
+import { apiSlice } from 'redux/api/apiSlice';
 import { useLogoutMutation } from 'redux/features/authApiSlice';
 import { clearState } from 'redux/reducer/authSlice';
 
@@ -17,6 +18,7 @@ const NavBar = () => {
     async function handleLogout() {
         await logout();
         dispatch(clearState());
+        dispatch(apiSlice.util.resetApiState());
         navigate('/login');
     }
 
