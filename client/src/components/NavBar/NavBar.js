@@ -1,4 +1,5 @@
-import React from 'react';
+import { Menu, MenuItem } from '@material-ui/core';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 
@@ -14,6 +15,7 @@ const NavBar = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [logout] = useLogoutMutation();
+    const [anchorEl, setAnchorEl] = useState(null);
 
     async function handleLogout() {
         await logout();
@@ -51,10 +53,26 @@ const NavBar = () => {
                     <NavLink to="explore">Explore</NavLink>
                 </li>
             </ul>
-            <h3 className="navbar-username">{username}</h3>
-            <button className="logout-btn navbar-btn" onClick={handleLogout}>
+            <h3
+                className="navbar-username"
+                onClick={e => setAnchorEl(e.currentTarget)}
+            >
+                {username} &#129171;
+            </h3>
+            {/* <button className="logout-btn navbar-btn" onClick={handleLogout}>
                 Logout
-            </button>
+            </button> */}
+            <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={() => setAnchorEl(null)}
+                className="profile-menu"
+            >
+                <MenuItem className="menu-item">Profile</MenuItem>
+                <MenuItem className="menu-item" onClick={handleLogout}>
+                    Logout
+                </MenuItem>
+            </Menu>
         </nav>
     );
 };

@@ -35,6 +35,11 @@ nav ul li a {
 .navbar-username {
     margin-left: auto;
     margin-right: 10px;
+    cursor: pointer;
+}
+
+.profile-menu {
+    margin-top: 30px;
 }
 
 .navbar-btn {
