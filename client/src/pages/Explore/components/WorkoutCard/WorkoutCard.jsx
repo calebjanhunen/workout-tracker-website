@@ -5,6 +5,8 @@ import {
     CardContent,
     CardHeader,
     IconButton,
+    Menu,
+    MenuItem,
 } from '@material-ui/core';
 import { Favorite, MoreVert } from '@mui/icons-material';
 import moment from 'moment';
@@ -30,6 +32,7 @@ const WorkoutCard = ({ workoutInfo }) => {
     const isLiked = workoutInfo.likedBy.includes(userId);
     const [comment, setComment] = useState('');
     const [showComments, setShowComments] = useState(true);
+    const [anchorEl, setAnchorEl] = useState(null);
 
     async function handleToggleLike() {
         if (!isLiked)
@@ -55,6 +58,17 @@ const WorkoutCard = ({ workoutInfo }) => {
         setComment('');
     }
 
+    async function handleSaveAsTemplate() {}
+
+    async function handleRemoveSharedWorkout() {
+        await updateWorkout({
+            ...workoutInfo,
+            public: false,
+            likedBy: [],
+            comments: [],
+        });
+    }
+
     let workoutCardDisplay;
     if (isLoading) {
         workoutCardDisplay = <p>Loading...</p>;
@@ -64,7 +78,7 @@ const WorkoutCard = ({ workoutInfo }) => {
                 <CardHeader
                     avatar={<Avatar>{username.username[0]}</Avatar>}
                     action={
-                        <IconButton>
+                        <IconButton onClick={e => setAnchorEl(e.currentTarget)}>
                             <MoreVert />
                         </IconButton>
                     }
@@ -122,7 +136,26 @@ const WorkoutCard = ({ workoutInfo }) => {
         workoutCardDisplay = <p>Error displaying workout post</p>;
     }
 
-    return <>{workoutCardDisplay}</>;
+    return (
+        <>
+            {workoutCardDisplay}
+            <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={() => setAnchorEl(null)}
+            >
+                {userId !== workoutInfo.owner ? (
+                    <MenuItem onclick={handleSaveAsTemplate}>
+                        Save as Template
+                    </MenuItem>
+                ) : (
+                    <MenuItem onClick={handleRemoveSharedWorkout}>
+                        Remove
+                    </MenuItem>
+                )}
+            </Menu>
+        </>
+    );
 };
 
 export default WorkoutCard;

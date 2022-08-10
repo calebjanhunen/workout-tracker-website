@@ -6,10 +6,10 @@ import { useGetWorkoutsQuery } from 'redux/features/workoutsApiSlice';
 import WorkoutCard from './components/WorkoutCard/WorkoutCard';
 
 //Explore Page Ideas:
-//  - A feed with shared workouts from other users
+//  - A feed with shared workouts from other users ✓
 //  - Ability to save other users workouts as templates
-//  - Ability to like user's workouts
-//  - Ability to comment?
+//  - Ability to like user's workouts ✓
+//  - Ability to comment? ✓
 
 const Explore = () => {
     const {
