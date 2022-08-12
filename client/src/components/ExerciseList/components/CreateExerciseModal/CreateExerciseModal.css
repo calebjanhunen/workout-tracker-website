@@ -1,4 +1,5 @@
-*Create Exercise Modal*/ .blurred {
+/*Create Exercise Modal*/
+.blurred {
     filter: blur(2px);
     -webkit-filter: blur(2px);
     pointer-events: none;
